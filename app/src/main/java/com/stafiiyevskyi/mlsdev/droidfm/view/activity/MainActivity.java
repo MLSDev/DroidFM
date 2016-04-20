@@ -2,29 +2,32 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistSearchListFragment;
 
 import butterknife.Bind;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements Navigator {
     @Bind(R.id.drawer_layout)
     DrawerLayout drNavigation;
     @Bind(R.id.nav_view)
     NavigationView nvNavigation;
 
+    private FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragmentManager = getSupportFragmentManager();
+        navigateToArtistsSearchScreen();
+
         nvNavigation.setNavigationItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
@@ -32,6 +35,7 @@ public class MainActivity extends BaseActivity {
                     drNavigation.closeDrawers();
                     return true;
                 case R.id.artists_item:
+                    navigateToArtistsSearchScreen();
                     drNavigation.closeDrawers();
                     return true;
                 case R.id.charts_item:
@@ -68,5 +72,12 @@ public class MainActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void navigateToArtistsSearchScreen() {
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ArtistSearchListFragment.newInstance())
+                .commit();
     }
 }

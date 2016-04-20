@@ -1,4 +1,4 @@
-package com.stafiiyevskyi.mlsdev.droidfm.data;
+package com.stafiiyevskyi.mlsdev.droidfm.data.api;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -12,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LastFMRestClient {
 
     private static LastFMService service;
+
     private static final String BASE_URL = "http://ws.audioscrobbler.com/2.0/";
 
     private LastFMRestClient() {
@@ -20,12 +21,14 @@ public class LastFMRestClient {
 
     public static LastFMService getService() {
         if (service == null) {
+
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
             Retrofit retrofit = new Retrofit.Builder()
                     .client(client)
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
