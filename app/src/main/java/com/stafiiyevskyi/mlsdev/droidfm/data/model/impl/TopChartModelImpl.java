@@ -19,26 +19,24 @@ import rx.schedulers.Schedulers;
 public class TopChartModelImpl implements TopChartModel {
 
     private LastFMService service;
-    private Map<String, String> query;
 
     public TopChartModelImpl() {
         service = LastFMRestClient.getService();
-        query = new LinkedHashMap<>();
-        query.put("format", "json");
-        query.put("api_key", "c0cca0938e628d1582474f036955fcfa");
     }
 
     @Override
     public Observable<TopChartArtists> getTopChartArtists(int pageNumber) {
-        return service.getTopChartArtist(pageNumber, query)
+        return service.getTopChartArtist(pageNumber, LastFMRestClient.getAdditionalQuery())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io());
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io());
     }
 
     @Override
     public Observable<TopChartTags> getTopChartTags(int pageNumber) {
-        return service.getTopChartTags(pageNumber, query)
+        return service.getTopChartTags(pageNumber, LastFMRestClient.getAdditionalQuery())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io());
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io());
     }
 }
