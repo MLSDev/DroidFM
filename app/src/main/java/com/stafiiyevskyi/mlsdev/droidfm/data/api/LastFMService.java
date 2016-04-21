@@ -31,5 +31,5 @@ public interface LastFMService {
 
     // Artists Requests
     @GET("?method=artist.search")
-    Observable<SearchArtist> searchArtist(@Query("name") String searchName, @QueryMap Map<String, String> queryAdditional);
+    Observable<SearchArtist> searchArtist(@Query("artist") String searchName, @QueryMap Map<String, String> queryAdditional);
 }

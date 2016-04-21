@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.SearchArtist;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.TopChartArtists;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.TopChartTracks;
 
@@ -79,6 +80,26 @@ public class ArtistSearchListFragment extends BaseFragment {
                     @Override
                     public void onNext(TopChartTracks topChartTracks) {
                         Log.i("TopChartsTracks", topChartTracks.getTracks().getTrack().get(0).getName());
+                    }
+                });
+
+        LastFMRestClient.getService().searchArtist("Couldplay", query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SearchArtist>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("error response", e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(SearchArtist searchArtist) {
+                        Log.i("SearchArtist", searchArtist.getResults().getArtistmatches().getArtist().get(0).getName());
                     }
                 });
     }
