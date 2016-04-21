@@ -5,11 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistSearchListFragment;
 
 import butterknife.Bind;
@@ -57,6 +56,14 @@ public class MainActivity extends BaseActivity implements Navigator {
     public void navigateToArtistsSearchScreen() {
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, ArtistSearchListFragment.newInstance())
+                .commit();
+    }
+
+    @Override
+    public void navigateToArtistContentDetailsScreen(String mbid) {
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ArtistContentDetailsFragment.newInstance(mbid))
+                .addToBackStack(ArtistContentDetailsFragment.class.getName())
                 .commit();
     }
 }

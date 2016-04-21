@@ -6,4 +6,6 @@ package com.stafiiyevskyi.mlsdev.droidfm.view;
 public interface Navigator {
 
     void navigateToArtistsSearchScreen();
+
+    void navigateToArtistContentDetailsScreen(String mbid);
 }

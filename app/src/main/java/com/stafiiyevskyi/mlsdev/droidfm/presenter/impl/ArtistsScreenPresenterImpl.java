@@ -40,7 +40,7 @@ public class ArtistsScreenPresenterImpl extends BasePresenter implements Artists
                 .subscribe(new Observer<List<ArtistEntity>>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("onComplete","onComplete");
+
                     }
 
                     @Override

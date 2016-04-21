@@ -6,4 +6,8 @@
     <string name="albums_section_title">Albums Section</string>
     <string name="charts_item_title">Charts</string>
     <string name="artists_item_title">Artists</string>
+
+    <!--Artist content details-->
+    <string name="tab_title_top_tracks">Top Tracks</string>
+    <string name="tab_title_top_albums">Top Albums</string>
 </resources>

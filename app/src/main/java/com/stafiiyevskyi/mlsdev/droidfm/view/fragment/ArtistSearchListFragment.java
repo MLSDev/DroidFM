@@ -15,11 +15,13 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistsScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistsScreenPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistsScreenView;
+import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.ArtistsAdapter;
 
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by oleksandr on 20.04.16.
@@ -112,13 +114,20 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+        mPresenter.stop();
+    }
+
+    @Override
     protected int getResourceId() {
         return R.layout.fragment_artists_search_list;
     }
 
     @Override
     public void onArtistClick(ArtistEntity artist) {
-
+        ((Navigator) getActivity()).navigateToArtistContentDetailsScreen(artist.getArtisMbid());
     }
 
     @Override
