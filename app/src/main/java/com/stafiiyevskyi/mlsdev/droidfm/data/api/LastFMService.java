@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.data.api;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.SearchArtist;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.TopChartArtists;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.TopChartTags;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.TopChartTracks;
 
 import java.util.Map;
 
@@ -17,12 +18,18 @@ import rx.Observable;
 public interface LastFMService {
 
 
+    // CHART Requests
     @GET("?method=chart.gettopartists")
     Observable<TopChartArtists> getTopChartArtist(@Query("page") int pageNumber, @QueryMap Map<String, String> queryAdditional);
 
     @GET("?method=chart.gettoptags")
     Observable<TopChartTags> getTopChartTags(@Query("page") int pageNumber, @QueryMap Map<String, String> queryAdditional);
 
+    @GET("?method=chart.gettoptracks")
+    Observable<TopChartTracks> getTopChartTraks(@Query("page") int pageNumber, @QueryMap Map<String, String> queryAdditional);
+
+
+    // Artists Requests
     @GET("?method=artist.search")
     Observable<SearchArtist> searchArtist(@Query("name") String searchName, @QueryMap Map<String, String> queryAdditional);
 }

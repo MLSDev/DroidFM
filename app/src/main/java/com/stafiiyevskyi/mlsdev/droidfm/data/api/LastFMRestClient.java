@@ -1,9 +1,12 @@
 package com.stafiiyevskyi.mlsdev.droidfm.data.api;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -40,12 +43,11 @@ public class LastFMRestClient {
     public static LastFMService getService() {
         if (service == null) {
 
-            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+            HttpLoggingInterceptor interceptorLogging = new HttpLoggingInterceptor();
+            interceptorLogging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            builder.interceptors().add(interceptorLogging);
+            OkHttpClient client = builder.build();
 
             Retrofit retrofit = new Retrofit.Builder()
                     .client(client)

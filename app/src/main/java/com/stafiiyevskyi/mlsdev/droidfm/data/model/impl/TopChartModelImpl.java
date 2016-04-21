@@ -6,9 +6,6 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.TopChartArtists;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.TopChartTags;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.TopChartModel;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

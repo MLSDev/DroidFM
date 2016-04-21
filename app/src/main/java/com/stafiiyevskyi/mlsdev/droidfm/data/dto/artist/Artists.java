@@ -2,7 +2,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Attr;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.AttrResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class Artists {
     private List<Artist> artist = new ArrayList<Artist>();
     @SerializedName("@attr")
     @Expose
-    private com.stafiiyevskyi.mlsdev.droidfm.data.dto.Attr Attr;
+    private AttrResponse Attr;
 
     /**
      *
@@ -40,9 +40,9 @@ public class Artists {
     /**
      *
      * @return
-     * The Attr
+     * The AttrResponse
      */
-    public Attr getAttr() {
+    public AttrResponse getAttr() {
         return Attr;
     }
 
@@ -51,7 +51,7 @@ public class Artists {
      * @param Attr
      * The @attr
      */
-    public void setAttr(Attr Attr) {
+    public void setAttr(AttrResponse Attr) {
         this.Attr = Attr;
     }
 

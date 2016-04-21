@@ -1,4 +1,4 @@
-package com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag;
+package com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,29 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by oleksandr on 20.04.16.
+ * Created by oleksandr on 21.04.16.
  */
-public class Tags {
+public class Tracks {
 
-    @SerializedName("tag")
+    @SerializedName("track")
     @Expose
-    private List<Tag> tag = new ArrayList<Tag>();
+    private List<Track> track = new ArrayList<Track>();
     @SerializedName("@attr")
     @Expose
     private AttrResponse Attr;
 
     /**
-     * @return The tag
+     * @return The track
      */
-    public List<Tag> getTag() {
-        return tag;
+    public List<Track> getTrack() {
+        return track;
     }
 
     /**
-     * @param tag The tag
+     * @param track The track
      */
-    public void setTag(List<Tag> tag) {
-        this.tag = tag;
+    public void setTrack(List<Track> track) {
+        this.track = track;
     }
 
     /**

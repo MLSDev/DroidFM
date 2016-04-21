@@ -2,6 +2,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.AttrResponse;
 
 /**
  * Created by oleksandr on 20.04.16.
@@ -25,7 +26,7 @@ public class Results {
     private Artistmatches artistmatches;
     @SerializedName("@attr")
     @Expose
-    private com.stafiiyevskyi.mlsdev.droidfm.data.dto.Attr Attr;
+    private AttrResponse Attr;
 
     /**
      *
@@ -120,9 +121,9 @@ public class Results {
     /**
      *
      * @return
-     * The Attr
+     * The AttrResponse
      */
-    public com.stafiiyevskyi.mlsdev.droidfm.data.dto.Attr getAttr() {
+    public AttrResponse getAttr() {
         return Attr;
     }
 
@@ -131,7 +132,7 @@ public class Results {
      * @param Attr
      * The @attr
      */
-    public void setAttr(com.stafiiyevskyi.mlsdev.droidfm.data.dto.Attr Attr) {
+    public void setAttr(AttrResponse Attr) {
         this.Attr = Attr;
     }
 

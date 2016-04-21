@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by oleksandr on 20.04.16.
  */
-public class Attr {
+public class AttrResponse {
 
     @SerializedName("page")
     @Expose
