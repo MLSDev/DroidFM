@@ -11,6 +11,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.SearchArtist;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.TopChartArtists;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.ArtistTopTracks;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.TopChartTracks;
 
 import java.util.LinkedHashMap;
@@ -83,7 +84,7 @@ public class ArtistSearchListFragment extends BaseFragment {
                     }
                 });
 
-        LastFMRestClient.getService().searchArtist("Couldplay", query)
+        LastFMRestClient.getService().searchArtist("Couldplay", 1, query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SearchArtist>() {
@@ -100,6 +101,26 @@ public class ArtistSearchListFragment extends BaseFragment {
                     @Override
                     public void onNext(SearchArtist searchArtist) {
                         Log.i("SearchArtist", searchArtist.getResults().getArtistmatches().getArtist().get(0).getName());
+                    }
+                });
+
+        LastFMRestClient.getService().getArtistTopTracks("", "b95ce3ff-3d05-4e87-9e01-c97b66af13d4", query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ArtistTopTracks>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArtistTopTracks artistTopTracks) {
+                        Log.i("ArtistTopTracks", artistTopTracks.getToptracks().getTrack().get(0).getName());
                     }
                 });
     }

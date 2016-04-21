@@ -30,7 +30,7 @@ public class ArtistsScreenPresenterImpl extends BasePresenter implements Artists
 
     @Override
     public void searchArtist(String artistName, int page) {
-        Subscription subscription = artistModel.searchArtistByName(artistName)
+        Subscription subscription = artistModel.searchArtistByName(artistName,page)
                 .subscribe(new Observer<SearchArtist>() {
                     @Override
                     public void onCompleted() {
