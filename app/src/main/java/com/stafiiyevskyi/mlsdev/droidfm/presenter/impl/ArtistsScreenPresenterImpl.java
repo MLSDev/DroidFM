@@ -1,7 +1,7 @@
 package com.stafiiyevskyi.mlsdev.droidfm.presenter.impl;
 
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.SearchArtist;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.TopChartArtists;
+import android.util.Log;
+
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.ArtistModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.TopChartModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.ArtistModelImpl;
@@ -23,34 +23,34 @@ import rx.Subscription;
  */
 public class ArtistsScreenPresenterImpl extends BasePresenter implements ArtistsScreenPresenter {
 
-    private ArtistsScreenView view;
-    private TopChartModel topChartModel;
-    private ArtistModel artistModel;
+    private ArtistsScreenView mView;
+    private TopChartModel mTopChartModel;
+    private ArtistModel mArtistModel;
 
     public ArtistsScreenPresenterImpl(ArtistsScreenView view) {
-        this.view = view;
-        topChartModel = new TopChartModelImpl();
-        artistModel = new ArtistModelImpl();
+        this.mView = view;
+        mTopChartModel = new TopChartModelImpl();
+        mArtistModel = new ArtistModelImpl();
     }
 
     @Override
     public void searchArtist(String artistName, int page) {
-        Subscription subscription = artistModel.searchArtistByName(artistName, page)
+        Subscription subscription = mArtistModel.searchArtistByName(artistName, page)
                 .map(new SearchArtistMapper())
                 .subscribe(new Observer<List<ArtistEntity>>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.d("onComplete","onComplete");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        mView.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<ArtistEntity> artistEntities) {
-
+                        mView.showArtists(artistEntities);
                     }
                 });
         addSubscription(subscription);
@@ -58,7 +58,7 @@ public class ArtistsScreenPresenterImpl extends BasePresenter implements Artists
 
     @Override
     public void getTopArtists(int page) {
-        Subscription subscription = topChartModel.getTopChartArtists(page)
+        Subscription subscription = mTopChartModel.getTopChartArtists(page)
                 .map(new TopChartArtistMapper())
                 .subscribe(new Observer<List<ArtistEntity>>() {
                     @Override
@@ -68,12 +68,12 @@ public class ArtistsScreenPresenterImpl extends BasePresenter implements Artists
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showError(e.getMessage());
+                        mView.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<ArtistEntity> artistEntities) {
-                        view.showArtists(artistEntities);
+                        mView.showArtists(artistEntities);
                     }
                 });
         addSubscription(subscription);

@@ -6,6 +6,8 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.SearchArtist;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.ArtistModel;
 
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by oleksandr on 20.04.16.
@@ -20,6 +22,9 @@ public class ArtistModelImpl implements ArtistModel {
 
     @Override
     public Observable<SearchArtist> searchArtistByName(String name, int pageNumber) {
-        return service.searchArtist(name, pageNumber, LastFMRestClient.getAdditionalQuery());
+        return service.searchArtist(name, pageNumber, LastFMRestClient.getAdditionalQuery())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io());
     }
 }

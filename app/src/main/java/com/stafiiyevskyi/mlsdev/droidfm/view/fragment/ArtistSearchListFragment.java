@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -23,24 +24,28 @@ import butterknife.Bind;
 /**
  * Created by oleksandr on 20.04.16.
  */
-public class ArtistSearchListFragment extends BaseFragment implements ArtistsAdapter.OnArtistClickListener, ArtistsScreenView {
+public class ArtistSearchListFragment extends BaseFragment implements SearchView.OnQueryTextListener,
+        SearchView.OnCloseListener, ArtistsAdapter.OnArtistClickListener, ArtistsScreenView {
 
     @Bind(R.id.rv_artists)
     RecyclerView mRvArtists;
 
+    private SearchView mSearchView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArtistsAdapter mAdapter;
     private ArtistsScreenPresenter mPresenter;
 
     private boolean mIsLoading = true;
-    private int mCurrentPageNumber = 1;
+    private boolean mIsSearchFirstCall = false;
+    private boolean mIsSearchActivate = false;
+    private int mCurrentPageNumber = 2;
     private int mVisibleItemCount, mTotalItemCount;
     private int mLastVisibleItemPosition;
+    private String mSearchQuery = "";
 
     private RecyclerView.OnScrollListener mRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView,
-                                         int newState) {
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
         }
 
@@ -56,11 +61,17 @@ public class ArtistSearchListFragment extends BaseFragment implements ArtistsAda
                         && mLastVisibleItemPosition >= 0) {
                     mIsLoading = true;
                     mCurrentPageNumber = ++mCurrentPageNumber;
-                    mPresenter.getTopArtists(mCurrentPageNumber);
+                    if (mIsSearchActivate) {
+                        mPresenter.searchArtist(mSearchQuery, mCurrentPageNumber);
+                    } else {
+                        mPresenter.getTopArtists(mCurrentPageNumber);
+                    }
+
                 }
             }
         }
     };
+
 
     public static BaseFragment newInstance() {
         BaseFragment fragment = new ArtistSearchListFragment();
@@ -95,6 +106,9 @@ public class ArtistSearchListFragment extends BaseFragment implements ArtistsAda
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_artists_search_screen, menu);
+        mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        mSearchView.setOnQueryTextListener(this);
+        mSearchView.setOnCloseListener(this);
     }
 
     @Override
@@ -109,12 +123,39 @@ public class ArtistSearchListFragment extends BaseFragment implements ArtistsAda
 
     @Override
     public void showArtists(List<ArtistEntity> artistEntities) {
-        mAdapter.addData(artistEntities);
-        mIsLoading = false;
+
+        if (mIsSearchFirstCall) {
+            mAdapter.setData(artistEntities);
+            mIsSearchFirstCall = false;
+        } else {
+            mAdapter.addData(artistEntities);
+            mIsLoading = false;
+        }
+
     }
 
     @Override
     public void showError(String errorMessage) {
         Snackbar.make(mRvArtists, errorMessage, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public boolean onClose() {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        mIsSearchFirstCall = true;
+        mIsSearchActivate = true;
+        mCurrentPageNumber = 1;
+        mSearchQuery = query;
+        mPresenter.searchArtist(mSearchQuery, mCurrentPageNumber);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }

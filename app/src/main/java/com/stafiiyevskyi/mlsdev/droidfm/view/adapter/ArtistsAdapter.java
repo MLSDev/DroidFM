@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ImageEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +48,15 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
     @Override
     public void onBindViewHolder(ArtistVH holder, int position) {
         ArtistEntity entity = mData.get(position);
+        String imageUrl = "";
+        for (ImageEntity imageEntity : entity.getArtistImages()) {
+            if (imageEntity.getSize().equalsIgnoreCase("large")) {
+                imageUrl = imageEntity.getText();
+                break;
+            }
+        }
         holder.bindArtistName(entity.getArtistName());
-        holder.bindArtistPhoto(entity.getArtistImages().get(2).getText());
+        holder.bindArtistPhoto(imageUrl);
     }
 
     @Override
@@ -58,6 +66,11 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
 
     public void addData(List<ArtistEntity> data) {
         this.mData.addAll(data);
+        notifyDataSetChanged();
+    }
+
+    public void setData(List<ArtistEntity> data) {
+        this.mData = data;
         notifyDataSetChanged();
     }
 
@@ -93,9 +106,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
                     .listener(new RequestListener<String, GlideDrawable>() {
                         @Override
                         public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            if (target.getRequest().isFailed()) {
-                                target.getRequest().begin();
-                            }
+
                             return false;
                         }
 
