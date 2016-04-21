@@ -19,7 +19,7 @@ import rx.Observable;
 public interface LastFMService {
 
 
-    // CHART Requests
+    // Chart Requests
     @GET("?method=chart.gettopartists")
     Observable<TopChartArtists> getTopChartArtist(@Query("page") int pageNumber, @QueryMap Map<String, String> queryAdditional);
 

@@ -2,30 +2,36 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
-import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.SearchArtist;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.TopChartArtists;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.ArtistTopTracks;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.TopChartTracks;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistsScreenPresenter;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistsScreenPresenterImpl;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistsScreenView;
+import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.ArtistsAdapter;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import butterknife.Bind;
 
 /**
  * Created by oleksandr on 20.04.16.
  */
-public class ArtistSearchListFragment extends BaseFragment {
+public class ArtistSearchListFragment extends BaseFragment implements ArtistsAdapter.OnArtistClickListener, ArtistsScreenView {
 
+    @Bind(R.id.rv_artists)
+    RecyclerView mRvArtists;
+
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ArtistsAdapter mAdapter;
+    private ArtistsScreenPresenter mPresenter;
 
     public static BaseFragment newInstance() {
         BaseFragment fragment = new ArtistSearchListFragment();
@@ -41,88 +47,18 @@ public class ArtistSearchListFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Map<String, String> query = new LinkedHashMap<>();
-        query.put("format", "json");
-        query.put("api_key", getString(R.string.last_fm_api_key));
-        LastFMRestClient.getService().getTopChartArtist(1, query)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<TopChartArtists>() {
-                    @Override
-                    public void onCompleted() {
+        setupRecycler();
+        mPresenter = new ArtistsScreenPresenterImpl(this);
+        mPresenter.getTopArtists(1);
 
-                    }
+    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("error response", e.getMessage());
-                    }
+    private void setupRecycler() {
+        mAdapter = new ArtistsAdapter(this);
+        mLayoutManager = new GridLayoutManager(getActivity(),2);
+        mRvArtists.setLayoutManager(mLayoutManager);
+        mRvArtists.setAdapter(mAdapter);
 
-                    @Override
-                    public void onNext(TopChartArtists topChartArtists) {
-                        Log.i("TopChartsArtist", topChartArtists.getArtists().getArtist().get(0).getName());
-                    }
-                });
-
-        LastFMRestClient.getService().getTopChartTraks(1, query)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<TopChartTracks>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("error response", e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(TopChartTracks topChartTracks) {
-                        Log.i("TopChartsTracks", topChartTracks.getTracks().getTrack().get(0).getName());
-                    }
-                });
-
-        LastFMRestClient.getService().searchArtist("Couldplay", 1, query)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<SearchArtist>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("error response", e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(SearchArtist searchArtist) {
-                        Log.i("SearchArtist", searchArtist.getResults().getArtistmatches().getArtist().get(0).getName());
-                    }
-                });
-
-        LastFMRestClient.getService().getArtistTopTracks("", "b95ce3ff-3d05-4e87-9e01-c97b66af13d4", query)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ArtistTopTracks>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(ArtistTopTracks artistTopTracks) {
-                        Log.i("ArtistTopTracks", artistTopTracks.getToptracks().getTrack().get(0).getName());
-                    }
-                });
     }
 
     @Override
@@ -134,5 +70,20 @@ public class ArtistSearchListFragment extends BaseFragment {
     @Override
     protected int getResourceId() {
         return R.layout.fragment_artists_search_list;
+    }
+
+    @Override
+    public void onArtistClick(ArtistEntity artist) {
+
+    }
+
+    @Override
+    public void showArtists(List<ArtistEntity> artistEntities) {
+        mAdapter.setData(artistEntities);
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+        Snackbar.make(mRvArtists, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 }
