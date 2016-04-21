@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +32,36 @@ public class ArtistSearchListFragment extends BaseFragment implements ArtistsAda
     private ArtistsAdapter mAdapter;
     private ArtistsScreenPresenter mPresenter;
 
+    private boolean mIsLoading = true;
+    private int mCurrentPageNumber = 1;
+    private int mVisibleItemCount, mTotalItemCount;
+    private int mLastVisibleItemPosition;
+
+    private RecyclerView.OnScrollListener mRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView,
+                                         int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            mVisibleItemCount = mLayoutManager.getChildCount();
+            mTotalItemCount = mAdapter.getItemCount();
+            mLastVisibleItemPosition = ((GridLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+
+            if (!mIsLoading) {
+                if ((mVisibleItemCount + mLastVisibleItemPosition) >= mTotalItemCount
+                        && mLastVisibleItemPosition >= 0) {
+                    mIsLoading = true;
+                    mCurrentPageNumber = ++mCurrentPageNumber;
+                    mPresenter.getTopArtists(mCurrentPageNumber);
+                }
+            }
+        }
+    };
+
     public static BaseFragment newInstance() {
         BaseFragment fragment = new ArtistSearchListFragment();
         return fragment;
@@ -49,15 +78,16 @@ public class ArtistSearchListFragment extends BaseFragment implements ArtistsAda
         super.onViewCreated(view, savedInstanceState);
         setupRecycler();
         mPresenter = new ArtistsScreenPresenterImpl(this);
-        mPresenter.getTopArtists(1);
+        mPresenter.getTopArtists(mCurrentPageNumber);
 
     }
 
     private void setupRecycler() {
         mAdapter = new ArtistsAdapter(this);
-        mLayoutManager = new GridLayoutManager(getActivity(),2);
+        mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRvArtists.setLayoutManager(mLayoutManager);
         mRvArtists.setAdapter(mAdapter);
+        mRvArtists.addOnScrollListener(mRecyclerViewOnScrollListener);
 
     }
 
@@ -79,7 +109,8 @@ public class ArtistSearchListFragment extends BaseFragment implements ArtistsAda
 
     @Override
     public void showArtists(List<ArtistEntity> artistEntities) {
-        mAdapter.setData(artistEntities);
+        mAdapter.addData(artistEntities);
+        mIsLoading = false;
     }
 
     @Override
