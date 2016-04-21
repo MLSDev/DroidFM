@@ -19,7 +19,7 @@ public class ArtistModelImpl implements ArtistModel {
     }
 
     @Override
-    public Observable<SearchArtist> searchArtistyByName(String name) {
-        return service.searchArtist(name,LastFMRestClient.getAdditionalQuery());
+    public Observable<SearchArtist> searchArtistByName(String name, int pageNumber) {
+        return service.searchArtist(name, pageNumber, LastFMRestClient.getAdditionalQuery());
     }
 }

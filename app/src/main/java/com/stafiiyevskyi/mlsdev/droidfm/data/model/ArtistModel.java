@@ -9,5 +9,5 @@ import rx.Observable;
  */
 public interface ArtistModel {
 
-    Observable<SearchArtist> searchArtistyByName(String name);
+    Observable<SearchArtist> searchArtistByName(String name, int pageNumber);
 }
