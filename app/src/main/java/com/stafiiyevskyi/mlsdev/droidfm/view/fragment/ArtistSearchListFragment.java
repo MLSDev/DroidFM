@@ -9,6 +9,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistsScreenPresenter;
@@ -31,6 +32,8 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
 
     @Bind(R.id.rv_artists)
     RecyclerView mRvArtists;
+    @Bind(R.id.pb_progress)
+    ProgressBar mPbProgress;
 
     private SearchView mSearchView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -63,6 +66,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
                         && mLastVisibleItemPosition >= 0) {
                     mIsLoading = true;
                     mCurrentPageNumber = ++mCurrentPageNumber;
+                    mPbProgress.setVisibility(View.VISIBLE);
                     if (mIsSearchActivate) {
                         mPresenter.searchArtist(mSearchQuery, mCurrentPageNumber);
                     } else {
@@ -107,6 +111,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
         inflater.inflate(R.menu.menu_artists_search_screen, menu);
         mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
         mSearchView.setOnQueryTextListener(this);
@@ -132,7 +137,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
 
     @Override
     public void showArtists(List<ArtistEntity> artistEntities) {
-
+        mPbProgress.setVisibility(View.GONE);
         if (mIsSearchFirstCall) {
             mAdapter.setData(artistEntities);
             mIsSearchFirstCall = false;
@@ -155,6 +160,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        mPbProgress.setVisibility(View.VISIBLE);
         mIsSearchFirstCall = true;
         mIsSearchActivate = true;
         mCurrentPageNumber = 1;
