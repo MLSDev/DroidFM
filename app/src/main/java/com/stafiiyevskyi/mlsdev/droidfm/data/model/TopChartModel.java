@@ -2,6 +2,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.data.model;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.TopChartArtists;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.TopChartTags;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.TopChartTracks;
 
 import rx.Observable;
 
@@ -12,4 +13,6 @@ public interface TopChartModel {
     Observable<TopChartArtists> getTopChartArtists(int pageNumber);
 
     Observable<TopChartTags> getTopChartTags(int pageNumber);
+
+    Observable<TopChartTracks> getTopChartTracks(int pageNumber);
 }

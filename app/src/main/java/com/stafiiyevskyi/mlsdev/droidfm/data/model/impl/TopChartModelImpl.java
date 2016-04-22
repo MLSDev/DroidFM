@@ -4,6 +4,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
 import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMService;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.TopChartArtists;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.TopChartTags;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.TopChartTracks;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.TopChartModel;
 
 import rx.Observable;
@@ -32,6 +33,14 @@ public class TopChartModelImpl implements TopChartModel {
     @Override
     public Observable<TopChartTags> getTopChartTags(int pageNumber) {
         return service.getTopChartTags(pageNumber, LastFMRestClient.getAdditionalQuery())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<TopChartTracks> getTopChartTracks(int pageNumber) {
+        return service.getTopChartTraks(pageNumber, LastFMRestClient.getAdditionalQuery())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io());

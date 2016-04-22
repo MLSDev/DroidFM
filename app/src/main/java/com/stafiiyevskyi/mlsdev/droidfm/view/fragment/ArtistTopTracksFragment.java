@@ -34,7 +34,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
 
     @Bind(R.id.rv_toptracks)
     RecyclerView mRvToptracks;
-    @Bind(R.id.fl_progress)
+    @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
     private SearchView mSearchView;
 

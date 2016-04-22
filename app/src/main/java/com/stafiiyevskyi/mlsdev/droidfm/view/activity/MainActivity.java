@@ -13,8 +13,9 @@ import android.view.MenuItem;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
-import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistSearchListFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TopChartsContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
 
 import butterknife.Bind;
@@ -83,6 +84,7 @@ public class MainActivity extends BaseActivity implements Navigator {
                     drNavigation.closeDrawers();
                     return true;
                 case R.id.action_charts_item:
+                    navigateToChartsContentScreen();
                     drNavigation.closeDrawers();
                     return true;
                 default:
@@ -122,6 +124,14 @@ public class MainActivity extends BaseActivity implements Navigator {
     @Override
     public void navigateToArtistsSearchScreen() {
         mFirstFragment = ArtistSearchListFragment.newInstance();
+        mFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, mFirstFragment)
+                .commit();
+    }
+
+    @Override
+    public void navigateToChartsContentScreen() {
+        mFirstFragment = TopChartsContentFragment.newInstance();
         mFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, mFirstFragment)
                 .commit();

@@ -11,11 +11,11 @@ import rx.functions.Func1;
 /**
  * Created by oleksandr on 21.04.16.
  */
-public class TopTracksMapper implements Func1<ArtistTopTracks, List<TopTrackEntity>> {
+public class ArtistTopTracksMapper implements Func1<ArtistTopTracks, List<TopTrackEntity>> {
     @Override
     public List<TopTrackEntity> call(ArtistTopTracks artistTopTracks) {
         return Observable.from(artistTopTracks.getToptracks().getTrack())
-                .map(new TopTrackMapper())
+                .map(new ArtistTopTrackMapper())
                 .toList()
                 .toBlocking()
                 .first();

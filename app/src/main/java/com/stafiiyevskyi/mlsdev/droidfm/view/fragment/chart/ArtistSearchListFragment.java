@@ -1,4 +1,4 @@
-package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
+package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +18,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistsScreenPresenterImp
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistsScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.ArtistsAdapter;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
 
     @Bind(R.id.rv_artists)
     RecyclerView mRvArtists;
-    @Bind(R.id.fl_progress)
+    @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
 
     private SearchView mSearchView;

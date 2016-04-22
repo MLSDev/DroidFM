@@ -13,7 +13,7 @@ import rx.functions.Func1;
 /**
  * Created by oleksandr on 21.04.16.
  */
-public class TopTrackMapper implements Func1<ArtistTopTrack, TopTrackEntity> {
+public class ArtistTopTrackMapper implements Func1<ArtistTopTrack, TopTrackEntity> {
     @Override
     public TopTrackEntity call(ArtistTopTrack artistTopTrack) {
         List<ImageEntity> imageEntities = new ArrayList<>();
