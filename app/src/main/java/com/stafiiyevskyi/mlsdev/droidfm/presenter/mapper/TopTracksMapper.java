@@ -1,8 +1,7 @@
 package com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper;
 
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.ArtistTopTrack;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.ArtistTopTracks;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
 
 import java.util.List;
 
@@ -12,11 +11,11 @@ import rx.functions.Func1;
 /**
  * Created by oleksandr on 21.04.16.
  */
-public class TopTracksMapper implements Func1<ArtistTopTracks, List<TrackEntity>> {
+public class TopTracksMapper implements Func1<ArtistTopTracks, List<TopTrackEntity>> {
     @Override
-    public List<TrackEntity> call(ArtistTopTracks artistTopTracks) {
+    public List<TopTrackEntity> call(ArtistTopTracks artistTopTracks) {
         return Observable.from(artistTopTracks.getToptracks().getTrack())
-                .map(new TrackMapper())
+                .map(new TopTrackMapper())
                 .toList()
                 .toBlocking()
                 .first();

@@ -21,18 +21,22 @@ import butterknife.Bind;
  */
 public class ArtistContentDetailsFragment extends BaseFragment {
 
-    public static final String ARTIST_MBID_BUNDLE_KEY = "artist_conten_details_mbid";
+    public static final String ARTIST_MBID_BUNDLE_KEY = "artist_conten_details_fragment_mbid";
+    public static final String ARTIST_NAME_BUNDLE_KEY = "artist_conten_details_fragment_name";
 
     @Bind(R.id.vp_content)
     ViewPager mVpTabContent;
     @Bind(R.id.tabs)
     TabLayout mTlTabs;
 
+    private String mMbid;
+    private String mArtistName;
 
-    public static BaseFragment newInstance(@NonNull String artistMbid) {
+    public static BaseFragment newInstance(@NonNull String artistMbid, @NonNull String artistName) {
 
         Bundle args = new Bundle();
         args.putString(ARTIST_MBID_BUNDLE_KEY, artistMbid);
+        args.putString(ARTIST_NAME_BUNDLE_KEY, artistName);
         BaseFragment fragment = new ArtistContentDetailsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -41,16 +45,18 @@ public class ArtistContentDetailsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        setupViewPager(mVpTabContent, "");
+        Bundle args = getArguments();
+        mMbid = args.getString(ARTIST_MBID_BUNDLE_KEY);
+        mArtistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
+        setupViewPager(mVpTabContent);
         mTlTabs.setupWithViewPager(mVpTabContent);
     }
 
-    private void setupViewPager(ViewPager viewPager, String mbid) {
+    private void setupViewPager(ViewPager viewPager) {
 
         FragmentViewPagerAdapter adapter = new FragmentViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(ArtistSearchListFragment.newInstance(), getActivity().getString(R.string.tab_title_top_albums));
-        adapter.addFragment(ArtistSearchListFragment.newInstance(), getActivity().getString(R.string.tab_title_top_tracks));
+        adapter.addFragment(ArtistTopTracksFragment.newInstance(mMbid, mArtistName), getActivity().getString(R.string.tab_title_top_tracks));
         viewPager.setAdapter(adapter);
     }
 

@@ -4,7 +4,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.model.ArtistTopTracksModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.ArtistTopTracksModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistTopTracksScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.TopTracksMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistTopTracksScreenView;
 
@@ -30,7 +30,7 @@ public class ArtistTopTracksScreenPresenterImpl extends BasePresenter implements
     public void getArtistTopTracks(String artistName, String artistMbid, int page) {
         Subscription subscription = model.getArtistTopTracks(artistName, artistMbid, page)
                 .map(new TopTracksMapper())
-                .subscribe(new Observer<List<TrackEntity>>() {
+                .subscribe(new Observer<List<TopTrackEntity>>() {
                     @Override
                     public void onCompleted() {
 
@@ -42,7 +42,7 @@ public class ArtistTopTracksScreenPresenterImpl extends BasePresenter implements
                     }
 
                     @Override
-                    public void onNext(List<TrackEntity> trackEntities) {
+                    public void onNext(List<TopTrackEntity> trackEntities) {
                         mView.showTracks(trackEntities);
                     }
                 });

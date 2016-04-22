@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="height_top_track_image">50dp</dimen>
+    <dimen name="width_top_track_image">50dp</dimen>
 </resources>

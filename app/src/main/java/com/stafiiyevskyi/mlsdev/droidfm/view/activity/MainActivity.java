@@ -60,9 +60,9 @@ public class MainActivity extends BaseActivity implements Navigator {
     }
 
     @Override
-    public void navigateToArtistContentDetailsScreen(String mbid) {
+    public void navigateToArtistContentDetailsScreen(String mbid, String artistName) {
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, ArtistContentDetailsFragment.newInstance(mbid))
+                .add(R.id.fragment_container, ArtistContentDetailsFragment.newInstance(mbid,artistName))
                 .addToBackStack(ArtistContentDetailsFragment.class.getName())
                 .commit();
     }

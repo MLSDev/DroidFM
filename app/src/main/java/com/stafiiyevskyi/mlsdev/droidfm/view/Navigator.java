@@ -7,5 +7,5 @@ public interface Navigator {
 
     void navigateToArtistsSearchScreen();
 
-    void navigateToArtistContentDetailsScreen(String mbid);
+    void navigateToArtistContentDetailsScreen(String mbid, String artistName);
 }

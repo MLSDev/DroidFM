@@ -79,13 +79,13 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
     }
 
     public class ArtistVH extends RecyclerView.ViewHolder {
-        @Nullable
+
         @Bind(R.id.pb_progress)
         FrameLayout mFlProgress;
-        @Nullable
+
         @Bind(R.id.iv_artist)
         AppCompatImageView mIvArtistPhoto;
-        @Nullable
+
         @Bind(R.id.tv_artist_name)
         AppCompatTextView mTvArtistName;
 

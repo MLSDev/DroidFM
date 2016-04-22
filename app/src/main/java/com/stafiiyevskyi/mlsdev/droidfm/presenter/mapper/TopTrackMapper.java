@@ -3,7 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Image;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.ArtistTopTrack;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ImageEntity;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +13,9 @@ import rx.functions.Func1;
 /**
  * Created by oleksandr on 21.04.16.
  */
-public class TrackMapper implements Func1<ArtistTopTrack, TrackEntity> {
+public class TopTrackMapper implements Func1<ArtistTopTrack, TopTrackEntity> {
     @Override
-    public TrackEntity call(ArtistTopTrack artistTopTrack) {
+    public TopTrackEntity call(ArtistTopTrack artistTopTrack) {
         List<ImageEntity> imageEntities = new ArrayList<>();
 
         for (Image image : artistTopTrack.getImage()) {
@@ -24,7 +24,7 @@ public class TrackMapper implements Func1<ArtistTopTrack, TrackEntity> {
             imageEntity.setText(image.getText());
             imageEntities.add(imageEntity);
         }
-        TrackEntity trackEntity = new TrackEntity();
+        TopTrackEntity trackEntity = new TopTrackEntity();
         trackEntity.setName(artistTopTrack.getName());
         trackEntity.setTrackMbid(artistTopTrack.getMbid());
         trackEntity.setTracksImages(imageEntities);
