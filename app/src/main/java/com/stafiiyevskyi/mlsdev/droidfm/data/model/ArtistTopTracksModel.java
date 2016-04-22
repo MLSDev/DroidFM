@@ -1,7 +1,7 @@
 package com.stafiiyevskyi.mlsdev.droidfm.data.model;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.ArtistTopTracks;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.SearchTracks;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.search.TrackSearchResponse;
 
 import rx.Observable;
 
@@ -12,5 +12,5 @@ public interface ArtistTopTracksModel {
 
     Observable<ArtistTopTracks> getArtistTopTracks(String artistName, String artistMbid, int page);
 
-    Observable<SearchTracks> searchTrack(String artistName, String trackName, int page);
+    Observable<TrackSearchResponse> searchTrack(String artistName, String trackName, int page);
 }

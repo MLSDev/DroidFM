@@ -131,6 +131,11 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
     }
 
     @Override
+    public void updateToolbar() {
+        getActivity().invalidateOptionsMenu();
+    }
+
+    @Override
     public void onArtistClick(ArtistEntity artist) {
         ((Navigator) getActivity()).navigateToArtistContentDetailsScreen(artist.getArtisMbid(), artist.getArtistName());
     }

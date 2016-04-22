@@ -52,6 +52,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
     private int mVisibleItemCount, mTotalItemCount;
     private int mLastVisibleItemPosition;
     private String mSearchQuery = "";
+
     private RecyclerView.OnScrollListener mRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -72,7 +73,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
                     mCurrentPageNumber = ++mCurrentPageNumber;
                     mPbProgress.setVisibility(View.VISIBLE);
                     if (mIsSearchActivate) {
-                        mPresenter.searchArtistTracks(mSearchQuery, mMbid, mCurrentPageNumber);
+                        mPresenter.searchArtistTracks(mArtistName, mSearchQuery, mCurrentPageNumber);
                     } else {
                         mPresenter.getArtistTopTracks(mArtistName, mMbid, mCurrentPageNumber);
                     }
@@ -133,6 +134,11 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
         return R.layout.fragment_top_tracks;
     }
 
+    @Override
+    public void updateToolbar() {
+        getActivity().invalidateOptionsMenu();
+    }
+
     private void setupRvTracks() {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mAdapter = new TopTracksAdapter(this);
@@ -170,6 +176,12 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        mPbProgress.setVisibility(View.VISIBLE);
+        mIsSearchFirstCall = true;
+        mIsSearchActivate = true;
+        mCurrentPageNumber = 1;
+        mSearchQuery = query;
+        mPresenter.searchArtistTracks(mArtistName, mSearchQuery, mCurrentPageNumber);
         return false;
     }
 

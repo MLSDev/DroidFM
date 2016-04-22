@@ -1,18 +1,16 @@
-package com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks;
+package com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.search;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.AttrResponse;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.OpensearchQuery;
 
 /**
- * Created by oleksandr on 21.04.16.
+ * Created by oleksandr on 22.04.16.
  */
-public class ResultTrackSearch {
+public class TrackSearchResults {
 
     @SerializedName("opensearch:Query")
     @Expose
-    private OpensearchQuery opensearchQuery;
+    private OpensearchQueryTrack opensearchQuery;
     @SerializedName("opensearch:totalResults")
     @Expose
     private String opensearchTotalResults;
@@ -24,22 +22,22 @@ public class ResultTrackSearch {
     private String opensearchItemsPerPage;
     @SerializedName("trackmatches")
     @Expose
-    private Trackmatches trackmatches;
+    private TrackmatchesSearch trackmatches;
     @SerializedName("@attr")
     @Expose
-    private AttrResponse Attr;
+    private AttrTrackSearch Attr;
 
     /**
      * @return The opensearchQuery
      */
-    public OpensearchQuery getOpensearchQuery() {
+    public OpensearchQueryTrack getOpensearchQuery() {
         return opensearchQuery;
     }
 
     /**
      * @param opensearchQuery The opensearch:Query
      */
-    public void setOpensearchQuery(OpensearchQuery opensearchQuery) {
+    public void setOpensearchQuery(OpensearchQueryTrack opensearchQuery) {
         this.opensearchQuery = opensearchQuery;
     }
 
@@ -88,28 +86,28 @@ public class ResultTrackSearch {
     /**
      * @return The trackmatches
      */
-    public Trackmatches getTrackmatches() {
+    public TrackmatchesSearch getTrackmatches() {
         return trackmatches;
     }
 
     /**
      * @param trackmatches The trackmatches
      */
-    public void setTrackmatches(Trackmatches trackmatches) {
+    public void setTrackmatches(TrackmatchesSearch trackmatches) {
         this.trackmatches = trackmatches;
     }
 
     /**
      * @return The Attr
      */
-    public AttrResponse getAttr() {
+    public AttrTrackSearch getAttr() {
         return Attr;
     }
 
     /**
      * @param Attr The @attr
      */
-    public void setAttr(AttrResponse Attr) {
+    public void setAttr(AttrTrackSearch Attr) {
         this.Attr = Attr;
     }
 

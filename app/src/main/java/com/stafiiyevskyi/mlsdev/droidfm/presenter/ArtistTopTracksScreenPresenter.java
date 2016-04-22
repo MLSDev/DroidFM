@@ -7,6 +7,6 @@ public interface ArtistTopTracksScreenPresenter extends Presenter {
 
     void getArtistTopTracks(String artistName, String artistMbid, int page);
 
-    void searchArtistTracks(String trackName, String artistMbid, int page);
+    void searchArtistTracks(String artistName, String track, int page);
 
 }

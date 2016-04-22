@@ -2,7 +2,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.data.model.impl;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.ArtistTopTracks;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.SearchTracks;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.search.TrackSearchResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.ArtistTopTracksModel;
 
 import rx.Observable;
@@ -24,7 +24,7 @@ public class ArtistTopTracksModelImpl implements ArtistTopTracksModel {
     }
 
     @Override
-    public Observable<SearchTracks> searchTrack(String artistName, String trackName, int page) {
+    public Observable<TrackSearchResponse> searchTrack(String artistName, String trackName, int page) {
         return LastFMRestClient.getService()
                 .searchTrack(artistName, trackName, page, LastFMRestClient.getAdditionalQuery())
                 .observeOn(AndroidSchedulers.mainThread())

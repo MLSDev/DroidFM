@@ -5,6 +5,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.ArtistTopTracksModelImpl
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistTopTracksScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.SearchTracksListMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.TopTracksMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistTopTracksScreenView;
 
@@ -50,7 +51,25 @@ public class ArtistTopTracksScreenPresenterImpl extends BasePresenter implements
     }
 
     @Override
-    public void searchArtistTracks(String trackName, String artistMbid, int page) {
+    public void searchArtistTracks(String artistName, String trackName, int page) {
+        Subscription subscription = model.searchTrack(artistName, trackName, page)
+                .map(new SearchTracksListMapper())
+                .subscribe(new Observer<List<TopTrackEntity>>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(List<TopTrackEntity> topTrackEntities) {
+                        mView.showTracks(topTrackEntities);
+                    }
+                });
+        addSubscription(subscription);
     }
 }

@@ -19,7 +19,7 @@ import butterknife.Bind;
 /**
  * Created by oleksandr on 21.04.16.
  */
-public class ArtistContentDetailsFragment extends BaseFragment {
+public class ArtistContentDetailsFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
     public static final String ARTIST_MBID_BUNDLE_KEY = "artist_conten_details_fragment_mbid";
     public static final String ARTIST_NAME_BUNDLE_KEY = "artist_conten_details_fragment_name";
@@ -31,6 +31,7 @@ public class ArtistContentDetailsFragment extends BaseFragment {
 
     private String mMbid;
     private String mArtistName;
+    private FragmentViewPagerAdapter mAdapter;
 
     public static BaseFragment newInstance(@NonNull String artistMbid, @NonNull String artistName) {
 
@@ -54,16 +55,37 @@ public class ArtistContentDetailsFragment extends BaseFragment {
 
     private void setupViewPager(ViewPager viewPager) {
 
-        FragmentViewPagerAdapter adapter = new FragmentViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(ArtistSearchListFragment.newInstance(), getActivity().getString(R.string.tab_title_top_albums));
-        adapter.addFragment(ArtistTopTracksFragment.newInstance(mMbid, mArtistName), getActivity().getString(R.string.tab_title_top_tracks));
-        viewPager.setAdapter(adapter);
+        mAdapter = new FragmentViewPagerAdapter(getActivity().getSupportFragmentManager());
+        mAdapter.addFragment(ArtistSearchListFragment.newInstance(), getActivity().getString(R.string.tab_title_top_albums));
+        mAdapter.addFragment(ArtistTopTracksFragment.newInstance(mMbid, mArtistName), getActivity().getString(R.string.tab_title_top_tracks));
+        viewPager.setAdapter(mAdapter);
+        viewPager.addOnPageChangeListener(this);
     }
 
 
     @Override
     protected int getResourceId() {
         return R.layout.fragment_artist_content_details;
+    }
+
+    @Override
+    public void updateToolbar() {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        mAdapter.getItem(position).updateToolbar();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
     class FragmentViewPagerAdapter extends FragmentStatePagerAdapter {
