@@ -74,14 +74,7 @@ public class MainActivity extends BaseActivity implements Navigator {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerToggle = new ActionBarDrawerToggle(this, drNavigation,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, slideOffset);
-                mDrawerArrowDrawable.setPosition(Math.min(1f, Math.max(0, slideOffset)));
-            }
-        };
-
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         nvNavigation.setNavigationItemSelectedListener(item -> {
 
