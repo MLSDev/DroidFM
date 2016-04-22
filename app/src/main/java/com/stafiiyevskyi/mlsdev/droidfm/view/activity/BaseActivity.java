@@ -18,16 +18,25 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Nullable
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
         ButterKnife.bind(this);
-        if (toolbar!=null){
+        if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        navigateBack();
+    }
+
     public abstract int getContentViewId();
+
+    public abstract void navigateBack();
 }

@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
         mArtistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
         setupViewPager(mVpTabContent);
         mTlTabs.setupWithViewPager(mVpTabContent);
+        ((Navigator)getActivity()).setDrawerToggleNotEnabled();
     }
 
     private void setupViewPager(ViewPager viewPager) {

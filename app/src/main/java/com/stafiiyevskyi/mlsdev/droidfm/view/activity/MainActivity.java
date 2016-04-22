@@ -1,15 +1,22 @@
 package com.stafiiyevskyi.mlsdev.droidfm.view.activity;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.view.ContextThemeWrapper;
+import android.view.MenuItem;
+import android.view.View;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistSearchListFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
 
 import butterknife.Bind;
 
@@ -19,13 +26,62 @@ public class MainActivity extends BaseActivity implements Navigator {
     @Bind(R.id.nav_view)
     NavigationView nvNavigation;
 
-    private FragmentManager fragmentManager;
+    private FragmentManager mFragmentManager;
+
+
+    private ActionBarDrawerToggle mDrawerToggle;
+    private MenuArrowDrawable mDrawerArrowDrawable;
+    private BaseFragment mFirstFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragmentManager = getSupportFragmentManager();
+
+        mFragmentManager = getSupportFragmentManager();
+        setupNavigation();
         navigateToArtistsSearchScreen();
+
+    }
+
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        } else {
+            onBackPressed();
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    private void setupNavigation() {
+        mDrawerArrowDrawable = new MenuArrowDrawable(new ContextThemeWrapper(this, R.style.AppTheme_AppBarOverlay), getSupportActionBar());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        mDrawerToggle = new ActionBarDrawerToggle(this, drNavigation,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                mDrawerArrowDrawable.setPosition(Math.min(1f, Math.max(0, slideOffset)));
+            }
+        };
+
 
         nvNavigation.setNavigationItemSelectedListener(item -> {
 
@@ -51,19 +107,59 @@ public class MainActivity extends BaseActivity implements Navigator {
         return R.layout.activity_main;
     }
 
+    @Override
+    public void setDrawerToggleEnabled() {
+        backToMenu();
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        drNavigation.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        drNavigation.addDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    public void setDrawerToggleNotEnabled() {
+        menuToBack();
+        mDrawerToggle.setDrawerIndicatorEnabled(false);
+        drNavigation.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    public void menuToBack() {
+        this.mDrawerArrowDrawable.animateDrawable(true);
+    }
+
+    public void backToMenu() {
+        this.mDrawerArrowDrawable.animateDrawable(false);
+    }
 
     @Override
     public void navigateToArtistsSearchScreen() {
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ArtistSearchListFragment.newInstance())
+        mFirstFragment = ArtistSearchListFragment.newInstance();
+        mFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, mFirstFragment)
                 .commit();
     }
 
     @Override
     public void navigateToArtistContentDetailsScreen(String mbid, String artistName) {
-        fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, ArtistContentDetailsFragment.newInstance(mbid,artistName))
+        mFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, ArtistContentDetailsFragment.newInstance(mbid, artistName))
                 .addToBackStack(ArtistContentDetailsFragment.class.getName())
                 .commit();
+    }
+
+    @Override
+    public void navigateBack() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        int i = fragmentManager.getBackStackEntryCount();
+        if (i > 1) {
+            FragmentManager.BackStackEntry backEntry = fragmentManager
+                    .getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 2);
+            String str = backEntry.getName();
+            BaseFragment currentFragment = (BaseFragment) fragmentManager.findFragmentByTag(str);
+            if (currentFragment != null) {
+                currentFragment.updateToolbar();
+            }
+        } else {
+            mFirstFragment.updateToolbar();
+        }
     }
 }

@@ -132,6 +132,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
 
     @Override
     public void updateToolbar() {
+        ((Navigator) getActivity()).setDrawerToggleEnabled();
         getActivity().invalidateOptionsMenu();
     }
 

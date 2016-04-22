@@ -8,4 +8,7 @@ public interface Navigator {
     void navigateToArtistsSearchScreen();
 
     void navigateToArtistContentDetailsScreen(String mbid, String artistName);
+
+    void setDrawerToggleEnabled();
+    void setDrawerToggleNotEnabled();
 }
