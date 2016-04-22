@@ -96,7 +96,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
         setupRecycler();
         mPresenter = new ArtistsScreenPresenterImpl(this);
         mPresenter.getTopArtists(mCurrentPageNumber);
-
+        ((Navigator) getActivity()).setDrawerToggleEnabled();
     }
 
     private void setupRecycler() {
@@ -132,8 +132,9 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
 
     @Override
     public void updateToolbar() {
+        getActivity().supportInvalidateOptionsMenu();
         ((Navigator) getActivity()).setDrawerToggleEnabled();
-        getActivity().invalidateOptionsMenu();
+
     }
 
     @Override

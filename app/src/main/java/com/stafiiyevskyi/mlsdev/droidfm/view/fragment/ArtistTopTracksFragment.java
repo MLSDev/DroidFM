@@ -115,12 +115,13 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
-        inflater.inflate(R.menu.menu_artist_top_tracks_screen, menu);
-        mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        mSearchView.setOnQueryTextListener(this);
-        mSearchView.setOnCloseListener(this);
-
+        if (isVisible()) {
+            menu.clear();
+            inflater.inflate(R.menu.menu_artist_top_tracks_screen, menu);
+            mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
+            mSearchView.setOnQueryTextListener(this);
+            mSearchView.setOnCloseListener(this);
+        }
     }
 
     @Override
@@ -137,7 +138,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
 
     @Override
     public void updateToolbar() {
-        getActivity().invalidateOptionsMenu();
+        getActivity().supportInvalidateOptionsMenu();
     }
 
     private void setupRvTracks() {

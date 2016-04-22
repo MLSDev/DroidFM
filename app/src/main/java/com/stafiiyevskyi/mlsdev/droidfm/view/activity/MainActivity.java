@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
@@ -36,7 +35,6 @@ public class MainActivity extends BaseActivity implements Navigator {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mFragmentManager = getSupportFragmentManager();
         setupNavigation();
         navigateToArtistsSearchScreen();
@@ -59,7 +57,6 @@ public class MainActivity extends BaseActivity implements Navigator {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         } else {
@@ -67,7 +64,6 @@ public class MainActivity extends BaseActivity implements Navigator {
             return super.onOptionsItemSelected(item);
         }
     }
-
 
     private void setupNavigation() {
         mDrawerArrowDrawable = new MenuArrowDrawable(new ContextThemeWrapper(this, R.style.AppTheme_AppBarOverlay), getSupportActionBar());

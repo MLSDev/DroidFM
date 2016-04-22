@@ -98,7 +98,7 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
+        if (isVisible()) menu.clear();
     }
 
     @Override
@@ -123,7 +123,7 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
 
     @Override
     public void updateToolbar() {
-        getActivity().invalidateOptionsMenu();
+        getActivity().supportInvalidateOptionsMenu();
     }
 
     @Override
