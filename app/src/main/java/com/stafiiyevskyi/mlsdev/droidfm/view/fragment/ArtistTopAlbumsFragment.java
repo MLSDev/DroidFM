@@ -32,7 +32,7 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
 
     @Bind(R.id.rv_topalbums)
     RecyclerView mRvAlbums;
-    @Bind(R.id.fl_progress)
+    @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
 
     private String mMbid;
