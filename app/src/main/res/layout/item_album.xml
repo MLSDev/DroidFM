@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/iv_artist"
+            android:id="@+id/iv_album"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_alignParentTop="true" />
@@ -20,12 +20,12 @@
             android:id="@+id/text_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/iv_artist"
+            android:layout_alignBottom="@+id/iv_album"
             android:background="@color/colorAccent"
             android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_artist_name"
+                android:id="@+id/tv_album_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"

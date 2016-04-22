@@ -32,7 +32,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
 
     @Bind(R.id.rv_artists)
     RecyclerView mRvArtists;
-    @Bind(R.id.pb_progress)
+    @Bind(R.id.fl_progress)
     ProgressBar mPbProgress;
 
     private SearchView mSearchView;

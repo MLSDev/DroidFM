@@ -14,48 +14,50 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.AlbumEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ImageEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 /**
- * Created by oleksandr on 21.04.16.
+ * Created by oleksandr on 22.04.16.
  */
-public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH> {
+public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.TopAlbumsVH> {
 
-    private List<ArtistEntity> mData = new ArrayList<>();
-    private OnArtistClickListener mListener;
+    private List<AlbumEntity> mData = new ArrayList<>();
+    private OnAlbumClickListener mListener;
     private Context mContext;
 
-    public ArtistsAdapter(OnArtistClickListener mListener) {
+    public TopAlbumsAdapter(OnAlbumClickListener mListener) {
         this.mListener = mListener;
     }
 
-    @Override
-    public ArtistVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (mContext == null) mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_artist, parent, false);
-        ArtistVH artistVH = new ArtistVH(view);
-        return artistVH;
+    public void addData(List<AlbumEntity> data) {
+        this.mData.addAll(data);
+        notifyDataSetChanged();
     }
 
     @Override
-    public void onBindViewHolder(ArtistVH holder, int position) {
-        ArtistEntity entity = mData.get(position);
+    public TopAlbumsVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (mContext == null) mContext = parent.getContext();
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_album, parent, false);
+        TopAlbumsVH vh = new TopAlbumsVH(view);
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(TopAlbumsVH holder, int position) {
+        AlbumEntity albumEntity = mData.get(position);
         String imageUrl = "";
-        for (ImageEntity imageEntity : entity.getArtistImages()) {
+        for (ImageEntity imageEntity : albumEntity.getImage()) {
             if (imageEntity.getSize().equalsIgnoreCase("large")) {
                 imageUrl = imageEntity.getText();
                 break;
             }
         }
-        holder.bindArtistName(entity.getArtistName());
-        holder.bindArtistPhoto(imageUrl);
+        holder.bindAlbumIcon(imageUrl);
+        holder.bindAlbumName(albumEntity.getName());
     }
 
     @Override
@@ -63,42 +65,29 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
         return mData.size();
     }
 
-    public void addData(List<ArtistEntity> data) {
-        this.mData.addAll(data);
-        notifyDataSetChanged();
+    public interface OnAlbumClickListener {
+        void onAlbumClick(AlbumEntity album);
     }
 
-    public void setData(List<ArtistEntity> data) {
-        this.mData = data;
-        notifyDataSetChanged();
-    }
+    public class TopAlbumsVH extends RecyclerView.ViewHolder {
 
-    public interface OnArtistClickListener {
-        void onArtistClick(ArtistEntity artist);
-    }
+        private AppCompatTextView mTvAlbumName;
+        private AppCompatImageView mIvAlbumIcon;
+        private FrameLayout mFlProgress;
 
-    public class ArtistVH extends RecyclerView.ViewHolder {
-
-        @Bind(R.id.fl_progress)
-        FrameLayout mFlProgress;
-
-        @Bind(R.id.iv_artist)
-        AppCompatImageView mIvArtistPhoto;
-
-        @Bind(R.id.tv_artist_name)
-        AppCompatTextView mTvArtistName;
-
-        public ArtistVH(View itemView) {
+        public TopAlbumsVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(view -> mListener.onArtistClick(mData.get(getAdapterPosition())));
+            mIvAlbumIcon = (AppCompatImageView) itemView.findViewById(R.id.iv_album);
+            mTvAlbumName = (AppCompatTextView) itemView.findViewById(R.id.tv_album_name);
+            mFlProgress = (FrameLayout) itemView.findViewById(R.id.fl_progress);
+            itemView.setOnClickListener(view -> mListener.onAlbumClick(mData.get(getAdapterPosition())));
         }
 
-        public void bindArtistName(String artistName) {
-            mTvArtistName.setText(artistName);
+        public void bindAlbumName(String albumName) {
+            mTvAlbumName.setText(albumName);
         }
 
-        public void bindArtistPhoto(String url) {
+        public void bindAlbumIcon(String url) {
             Glide.with(mContext)
                     .load(url)
                     .centerCrop()
@@ -115,7 +104,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
                             return false;
                         }
                     })
-                    .into(mIvArtistPhoto);
+                    .into(mIvAlbumIcon);
         }
     }
 }

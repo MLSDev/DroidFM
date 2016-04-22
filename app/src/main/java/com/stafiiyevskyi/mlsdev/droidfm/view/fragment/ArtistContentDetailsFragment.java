@@ -56,7 +56,7 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
     private void setupViewPager(ViewPager viewPager) {
 
         mAdapter = new FragmentViewPagerAdapter(getActivity().getSupportFragmentManager());
-        mAdapter.addFragment(ArtistSearchListFragment.newInstance(), getActivity().getString(R.string.tab_title_top_albums));
+        mAdapter.addFragment(ArtistTopAlbumsFragment.newInstance(mMbid, mArtistName), getActivity().getString(R.string.tab_title_top_albums));
         mAdapter.addFragment(ArtistTopTracksFragment.newInstance(mMbid, mArtistName), getActivity().getString(R.string.tab_title_top_tracks));
         viewPager.setAdapter(mAdapter);
         viewPager.addOnPageChangeListener(this);

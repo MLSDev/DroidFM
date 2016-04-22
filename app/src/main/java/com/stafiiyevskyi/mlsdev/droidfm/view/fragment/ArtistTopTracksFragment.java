@@ -2,6 +2,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -33,7 +34,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
 
     @Bind(R.id.rv_toptracks)
     RecyclerView mRvToptracks;
-    @Bind(R.id.pb_progress)
+    @Bind(R.id.fl_progress)
     ProgressBar mPbProgress;
     private SearchView mSearchView;
 
@@ -48,7 +49,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
     private boolean mIsLoading = true;
     private boolean mIsSearchFirstCall = false;
     private boolean mIsSearchActivate = false;
-    private int mCurrentPageNumber = 2;
+    private int mCurrentPageNumber = 1;
     private int mVisibleItemCount, mTotalItemCount;
     private int mLastVisibleItemPosition;
     private String mSearchQuery = "";
@@ -166,7 +167,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
 
     @Override
     public void showError(String errorMessage) {
-
+        Snackbar.make(mRvToptracks, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
