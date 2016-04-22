@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_top_artists"
+        android:icon="@mipmap/ic_launcher"
+        android:title="Top Artist" />
+    <item
+        android:id="@+id/action_top_tracks"
+        android:icon="@mipmap/ic_launcher"
+        android:title="Top Tracks" />
+    <item
+        android:id="@+id/action_top_albums"
+        android:icon="@mipmap/ic_launcher"
+        android:title="Top Albums" />
+</menu>

@@ -113,7 +113,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.menu_artists_search_screen, menu);
-        mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setOnCloseListener(this);
     }
@@ -162,6 +162,11 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
 
     @Override
     public boolean onClose() {
+        mIsSearchFirstCall = true;
+        mIsSearchActivate = false;
+        mCurrentPageNumber = 1;
+        mPbProgress.setVisibility(View.VISIBLE);
+        mPresenter.getTopArtists(mCurrentPageNumber);
         return false;
     }
 

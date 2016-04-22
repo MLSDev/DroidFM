@@ -69,7 +69,8 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
     }
 
     public void setData(List<ArtistEntity> data) {
-        this.mData = data;
+        this.mData.clear();
+        this.mData.addAll(data);
         notifyDataSetChanged();
     }
 

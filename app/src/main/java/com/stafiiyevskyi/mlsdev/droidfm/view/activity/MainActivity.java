@@ -75,14 +75,14 @@ public class MainActivity extends BaseActivity implements Navigator {
         nvNavigation.setNavigationItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
-                case R.id.albums_item:
+                case R.id.action_albums_item:
                     drNavigation.closeDrawers();
                     return true;
-                case R.id.artists_item:
+                case R.id.action_artists_item:
                     navigateToArtistsSearchScreen();
                     drNavigation.closeDrawers();
                     return true;
-                case R.id.charts_item:
+                case R.id.action_charts_item:
                     drNavigation.closeDrawers();
                     return true;
                 default:

@@ -118,7 +118,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
         if (isVisible()) {
             menu.clear();
             inflater.inflate(R.menu.menu_artist_top_tracks_screen, menu);
-            mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
+            mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
             mSearchView.setOnQueryTextListener(this);
             mSearchView.setOnCloseListener(this);
         }
@@ -173,6 +173,11 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
 
     @Override
     public boolean onClose() {
+        mIsSearchActivate = false;
+        mIsSearchFirstCall = true;
+        mCurrentPageNumber = 1;
+        mPbProgress.setVisibility(View.VISIBLE);
+        mPresenter.getArtistTopTracks(mArtistName, mMbid, mCurrentPageNumber);
         return false;
     }
 
