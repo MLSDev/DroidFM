@@ -23,6 +23,7 @@ public class TopChartsContentFragment extends BaseFragment {
     AHBottomNavigation mBnNavigation;
 
     private FragmentManager mFragmentManager;
+    private BaseFragment mCurrentFragment;
 
     public static BaseFragment newInstance() {
 
@@ -52,13 +53,16 @@ public class TopChartsContentFragment extends BaseFragment {
         mBnNavigation.setOnTabSelectedListener((position, wasSelected) -> {
             switch (position) {
                 case 0:
-                    selectTopArtist();
+                    if (!(mCurrentFragment instanceof ArtistSearchListFragment))
+                        selectTopArtist();
                     break;
                 case 1:
-                    selectTopTracks();
+                    if (!(mCurrentFragment instanceof ChartTopTracksFragment))
+                        selectTopTracks();
                     break;
                 case 2:
-                    selectTopTags();
+                    if (!(mCurrentFragment instanceof ChartTopTagsFragment))
+                        selectTopTags();
                 default:
                     break;
             }
@@ -78,20 +82,23 @@ public class TopChartsContentFragment extends BaseFragment {
     }
 
     private void selectTopArtist() {
+        mCurrentFragment = ArtistSearchListFragment.newInstance();
         mFragmentManager.beginTransaction()
-                .replace(R.id.fl_chart_content, ArtistSearchListFragment.newInstance())
+                .replace(R.id.fl_chart_content, mCurrentFragment)
                 .commit();
     }
 
     private void selectTopTracks() {
+        mCurrentFragment = ChartTopTracksFragment.newInstance();
         mFragmentManager.beginTransaction()
-                .replace(R.id.fl_chart_content, ChartTopTracksFragment.newInstance())
+                .replace(R.id.fl_chart_content, mCurrentFragment)
                 .commit();
     }
 
     private void selectTopTags() {
+        mCurrentFragment = ChartTopTagsFragment.newInstance();
         mFragmentManager.beginTransaction()
-                .replace(R.id.fl_chart_content, ChartTopTagsFragment.newInstance())
+                .replace(R.id.fl_chart_content, mCurrentFragment)
                 .commit();
     }
 }

@@ -11,6 +11,8 @@ public interface Navigator {
 
     void navigateToArtistContentDetailsScreen(String mbid, String artistName);
 
+    void navigateToTopTracksScreen();
+
     void setDrawerToggleEnabled();
 
     void setDrawerToggleNotEnabled();

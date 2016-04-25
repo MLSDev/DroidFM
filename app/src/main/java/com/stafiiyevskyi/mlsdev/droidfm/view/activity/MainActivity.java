@@ -16,6 +16,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragme
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TopChartsContentFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
 
 import butterknife.Bind;
@@ -76,15 +77,19 @@ public class MainActivity extends BaseActivity implements Navigator {
         nvNavigation.setNavigationItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
-                case R.id.action_albums_item:
+                case R.id.action_tracks_item:
+                    if (!(mFirstFragment instanceof ChartTopTracksFragment))
+                        navigateToTopTracksScreen();
                     drNavigation.closeDrawers();
                     return true;
                 case R.id.action_artists_item:
-                    navigateToArtistsSearchScreen();
+                    if (!(mFirstFragment instanceof ArtistSearchListFragment))
+                        navigateToArtistsSearchScreen();
                     drNavigation.closeDrawers();
                     return true;
                 case R.id.action_charts_item:
-                    navigateToChartsContentScreen();
+                    if (!(mFirstFragment instanceof TopChartsContentFragment))
+                        navigateToChartsContentScreen();
                     drNavigation.closeDrawers();
                     return true;
                 default:
@@ -142,6 +147,15 @@ public class MainActivity extends BaseActivity implements Navigator {
         mFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, ArtistContentDetailsFragment.newInstance(mbid, artistName))
                 .addToBackStack(ArtistContentDetailsFragment.class.getName())
+                .commit();
+    }
+
+    @Override
+    public void navigateToTopTracksScreen() {
+        mFirstFragment = ChartTopTracksFragment.newInstance();
+        mFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, mFirstFragment)
+                .addToBackStack(ChartTopTracksFragment.class.getName())
                 .commit();
     }
 

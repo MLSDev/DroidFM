@@ -7,9 +7,9 @@
             android:title="@string/artists_item_title" />
 
         <item
-            android:id="@+id/action_albums_item"
+            android:id="@+id/action_tracks_item"
             android:checked="false"
-            android:title="@string/albums_section_title" />
+            android:title="@string/tracks_section_title" />
 
         <item
             android:id="@+id/action_charts_item"

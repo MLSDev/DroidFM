@@ -9,6 +9,7 @@ public class TopTrackEntity {
     private List<ImageEntity> tracksImages;
     private String trackMbid;
     private String name;
+    private String artistName;
 
 
     public List<ImageEntity> getTracksImages() {
@@ -35,4 +36,11 @@ public class TopTrackEntity {
         this.name = name;
     }
 
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
 }

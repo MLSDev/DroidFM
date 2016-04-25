@@ -28,6 +28,7 @@ public class SearchTrackMapper implements Func1<TrackSearch, TopTrackEntity> {
             imageEntities.add(imageEntity);
         }
         topTrackEntity.setTracksImages(imageEntities);
+        topTrackEntity.setArtistName(track.getArtist());
         return topTrackEntity;
     }
 }

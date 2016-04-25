@@ -27,6 +27,7 @@ public class ChartTopTrackMapper implements Func1<Track, TopTrackEntity> {
             imageEntities.add(imageEntity);
         }
         entity.setTracksImages(imageEntities);
+        entity.setArtistName(track.getArtist().getName());
         return entity;
     }
 }

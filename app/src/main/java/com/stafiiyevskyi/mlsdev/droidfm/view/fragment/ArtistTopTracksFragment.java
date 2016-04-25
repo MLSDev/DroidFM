@@ -16,6 +16,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistTopTracksScreenPresenter
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistTopTracksScreenPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistTopTracksScreenView;
+import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.ArtistTopTracksAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.TopTracksAdapter;
 
 import java.util.List;
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
  * Created by oleksandr on 22.04.16.
  */
 public class ArtistTopTracksFragment extends BaseFragment implements SearchView.OnQueryTextListener,
-        SearchView.OnCloseListener, TopTracksAdapter.OnTopTrackClickListener, ArtistTopTracksScreenView {
+        SearchView.OnCloseListener, ArtistTopTracksAdapter.OnTopTrackClickListener, ArtistTopTracksScreenView {
 
     public static final String ARTIST_MBID_BUNDLE_KEY = "artist_top_tracks_fragment_mbid";
     public static final String ARTIST_NAME_BUNDLE_KEY = "artist_top_tracks_fragment_name";
@@ -42,7 +43,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
     private String mArtistName;
 
     private RecyclerView.LayoutManager mLayoutManager;
-    private TopTracksAdapter mAdapter;
+    private ArtistTopTracksAdapter mAdapter;
     private ArtistTopTracksScreenPresenter mPresenter;
 
 
@@ -143,7 +144,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
 
     private void setupRvTracks() {
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new TopTracksAdapter(this);
+        mAdapter = new ArtistTopTracksAdapter(this);
         mRvToptracks.setLayoutManager(mLayoutManager);
         mRvToptracks.setAdapter(mAdapter);
         mRvToptracks.addOnScrollListener(mRecyclerViewOnScrollListener);

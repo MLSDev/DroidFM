@@ -28,6 +28,7 @@ public class ArtistTopTrackMapper implements Func1<ArtistTopTrack, TopTrackEntit
         trackEntity.setName(artistTopTrack.getName());
         trackEntity.setTrackMbid(artistTopTrack.getMbid());
         trackEntity.setTracksImages(imageEntities);
+        trackEntity.setArtistName(artistTopTrack.getArtist().getName());
 
         return trackEntity;
     }

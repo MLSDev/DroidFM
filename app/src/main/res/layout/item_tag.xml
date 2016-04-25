@@ -5,7 +5,7 @@
     android:layout_margin="@dimen/activity_horizontal_margin">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
@@ -14,6 +14,8 @@
             android:id="@+id/tv_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="sdsd"
             android:textColor="@color/colorAccent"
             android:textSize="22sp" />
 
