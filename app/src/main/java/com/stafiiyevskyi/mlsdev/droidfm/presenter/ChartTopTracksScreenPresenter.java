@@ -5,4 +5,6 @@ package com.stafiiyevskyi.mlsdev.droidfm.presenter;
  */
 public interface ChartTopTracksScreenPresenter extends Presenter {
     void getChartTopTracks(int pageNumber);
+
+    void searchTracks(String track, int page);
 }

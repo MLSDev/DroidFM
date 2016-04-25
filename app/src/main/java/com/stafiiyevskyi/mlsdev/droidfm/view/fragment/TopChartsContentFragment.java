@@ -10,6 +10,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTagsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
 
 import butterknife.Bind;
@@ -55,6 +56,9 @@ public class TopChartsContentFragment extends BaseFragment {
                     break;
                 case 1:
                     selectTopTracks();
+                    break;
+                case 2:
+                    selectTopTags();
                 default:
                     break;
             }
@@ -86,6 +90,8 @@ public class TopChartsContentFragment extends BaseFragment {
     }
 
     private void selectTopTags() {
-
+        mFragmentManager.beginTransaction()
+                .replace(R.id.fl_chart_content, ChartTopTagsFragment.newInstance())
+                .commit();
     }
 }
