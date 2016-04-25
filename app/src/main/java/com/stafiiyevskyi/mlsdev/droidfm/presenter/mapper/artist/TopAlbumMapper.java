@@ -1,4 +1,4 @@
-package com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper;
+package com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.artist;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Image;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.Album;

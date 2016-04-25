@@ -1,4 +1,4 @@
-package com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper;
+package com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.chart;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.TopChartTracks;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;

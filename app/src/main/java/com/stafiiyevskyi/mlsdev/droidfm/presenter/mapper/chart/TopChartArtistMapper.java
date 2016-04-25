@@ -1,7 +1,8 @@
-package com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper;
+package com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.chart;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.TopChartArtists;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.artist.ArtistMapper;
 
 import java.util.List;
 

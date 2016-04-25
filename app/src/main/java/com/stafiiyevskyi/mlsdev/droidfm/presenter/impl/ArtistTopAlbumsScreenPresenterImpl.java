@@ -1,11 +1,11 @@
 package com.stafiiyevskyi.mlsdev.droidfm.presenter.impl;
 
-import com.stafiiyevskyi.mlsdev.droidfm.data.model.ArtistTopAlbumModel;
-import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.ArtistTopAlbumModelImpl;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.ArtistModel;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.ArtistModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistTopAlbumsPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.AlbumEntity;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.TopAlbumsListMapper;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.artist.TopAlbumsListMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistTopAlbumsScreenView;
 
 import java.util.List;
@@ -18,12 +18,12 @@ import rx.Subscription;
  */
 public class ArtistTopAlbumsScreenPresenterImpl extends BasePresenter implements ArtistTopAlbumsPresenter {
 
-    private ArtistTopAlbumModel mModel;
+    private ArtistModel mModel;
     private ArtistTopAlbumsScreenView mView;
 
     public ArtistTopAlbumsScreenPresenterImpl(ArtistTopAlbumsScreenView mView) {
         this.mView = mView;
-        mModel = new ArtistTopAlbumModelImpl();
+        mModel = new ArtistModelImpl();
     }
 
     @Override

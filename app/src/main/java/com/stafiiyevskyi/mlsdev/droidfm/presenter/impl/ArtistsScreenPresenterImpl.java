@@ -1,7 +1,5 @@
 package com.stafiiyevskyi.mlsdev.droidfm.presenter.impl;
 
-import android.util.Log;
-
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.ArtistModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.TopChartModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.ArtistModelImpl;
@@ -9,8 +7,8 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.TopChartModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistsScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistEntity;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.SearchArtistMapper;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.TopChartArtistMapper;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.artist.SearchArtistMapper;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.chart.TopChartArtistMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistsScreenView;
 
 import java.util.List;

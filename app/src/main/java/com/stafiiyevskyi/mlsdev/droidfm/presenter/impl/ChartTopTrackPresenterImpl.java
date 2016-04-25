@@ -5,7 +5,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.TopChartModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.ChartTopTracksScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.ChartTopTrackListMapper;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.chart.ChartTopTrackListMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ChartTopTracksScreenView;
 
 import java.util.List;

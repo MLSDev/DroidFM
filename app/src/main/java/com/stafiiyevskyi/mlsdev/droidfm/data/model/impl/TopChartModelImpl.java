@@ -24,7 +24,7 @@ public class TopChartModelImpl implements TopChartModel {
 
     @Override
     public Observable<TopChartArtists> getTopChartArtists(int pageNumber) {
-        return service.getTopChartArtist(pageNumber, LastFMRestClient.getAdditionalQuery())
+        return service.getTopChartArtist(pageNumber)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io());
@@ -32,7 +32,7 @@ public class TopChartModelImpl implements TopChartModel {
 
     @Override
     public Observable<TopChartTags> getTopChartTags(int pageNumber) {
-        return service.getTopChartTags(pageNumber, LastFMRestClient.getAdditionalQuery())
+        return service.getTopChartTags(pageNumber)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io());
@@ -40,7 +40,7 @@ public class TopChartModelImpl implements TopChartModel {
 
     @Override
     public Observable<TopChartTracks> getTopChartTracks(int pageNumber) {
-        return service.getTopChartTraks(pageNumber, LastFMRestClient.getAdditionalQuery())
+        return service.getTopChartTraks(pageNumber)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io());

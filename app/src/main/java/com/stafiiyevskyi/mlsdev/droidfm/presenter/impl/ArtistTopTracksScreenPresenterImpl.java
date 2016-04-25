@@ -1,12 +1,14 @@
 package com.stafiiyevskyi.mlsdev.droidfm.presenter.impl;
 
-import com.stafiiyevskyi.mlsdev.droidfm.data.model.ArtistTopTracksModel;
-import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.ArtistTopTracksModelImpl;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.ArtistModel;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.TrackModel;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.ArtistModelImpl;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.TrackModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistTopTracksScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.SearchTracksListMapper;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.ArtistTopTracksMapper;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.track.SearchTracksListMapper;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.artist.ArtistTopTracksMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistTopTracksScreenView;
 
 import java.util.List;
@@ -20,16 +22,18 @@ import rx.Subscription;
 public class ArtistTopTracksScreenPresenterImpl extends BasePresenter implements ArtistTopTracksScreenPresenter {
 
     private ArtistTopTracksScreenView mView;
-    private ArtistTopTracksModel model;
+    private ArtistModel artistModel;
+    private TrackModel trackModel;
 
     public ArtistTopTracksScreenPresenterImpl(ArtistTopTracksScreenView mView) {
         this.mView = mView;
-        model = new ArtistTopTracksModelImpl();
+        artistModel = new ArtistModelImpl();
+        trackModel = new TrackModelImpl();
     }
 
     @Override
     public void getArtistTopTracks(String artistName, String artistMbid, int page) {
-        Subscription subscription = model.getArtistTopTracks(artistName, artistMbid, page)
+        Subscription subscription = artistModel.getArtistTopTracks(artistName, artistMbid, page)
                 .map(new ArtistTopTracksMapper())
                 .subscribe(new Observer<List<TopTrackEntity>>() {
                     @Override
@@ -52,7 +56,7 @@ public class ArtistTopTracksScreenPresenterImpl extends BasePresenter implements
 
     @Override
     public void searchArtistTracks(String artistName, String trackName, int page) {
-        Subscription subscription = model.searchTrack(artistName, trackName, page)
+        Subscription subscription = trackModel.searchTrack(artistName, trackName, page)
                 .map(new SearchTracksListMapper())
                 .subscribe(new Observer<List<TopTrackEntity>>() {
                     @Override

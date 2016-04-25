@@ -1,4 +1,4 @@
-package com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper;
+package com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.track;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.search.TrackSearchResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;

@@ -23,35 +23,32 @@ public interface LastFMService {
 
     // Chart Requests /////////////////////////////////////////////////////
     @GET("?method=chart.gettopartists")
-    Observable<TopChartArtists> getTopChartArtist(@Query("page") int pageNumber
-            , @QueryMap Map<String, String> queryAdditional);
+    Observable<TopChartArtists> getTopChartArtist(@Query("page") int pageNumber);
 
     @GET("?method=chart.gettoptags")
-    Observable<TopChartTags> getTopChartTags(@Query("page") int pageNumber
-            , @QueryMap Map<String, String> queryAdditional);
+    Observable<TopChartTags> getTopChartTags(@Query("page") int pageNumber);
 
     @GET("?method=chart.gettoptracks")
-    Observable<TopChartTracks> getTopChartTraks(@Query("page") int pageNumber
-            , @QueryMap Map<String, String> queryAdditional);
+    Observable<TopChartTracks> getTopChartTraks(@Query("page") int pageNumber);
 
 
     // Artists Requests////////////////////////////////////////////////////
     @GET("?method=artist.search")
     Observable<SearchArtist> searchArtist(@Query("artist") String searchName
-            , @Query("page") int page, @QueryMap Map<String, String> queryAdditional);
+            , @Query("page") int page);
 
     @GET("?method=artist.gettoptracks")
     Observable<ArtistTopTracks> getArtistTopTracks(@Query("artist") String artistName
-            , @Query("mbid") String mbid, @Query("page") int pageNumber, @QueryMap Map<String, String> queryAdditional);
+            , @Query("mbid") String mbid, @Query("page") int pageNumber);
 
     @GET("?method=artist.gettopalbums")
     Observable<ArtistTopAlbumsResponse> getArtistTopAlbums(@Query("artist") String artistName
-            , @Query("mbid") String mbid, @Query("page") int pageNumber, @QueryMap Map<String, String> queryAdditional);
+            , @Query("mbid") String mbid, @Query("page") int pageNumber);
 
 
     // Track Requests /////////////////////////////////////////////////////
     @GET("?method=track.search")
     Observable<TrackSearchResponse> searchTrack(@Query("artist") String artistName, @Query("track") String trackName
-            , @Query("page") int pageNumber, @QueryMap Map<String, String> queryAdditional);
+            , @Query("page") int pageNumber);
 
 }

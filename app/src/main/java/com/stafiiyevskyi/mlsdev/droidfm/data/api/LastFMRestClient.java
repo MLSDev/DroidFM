@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -42,11 +44,18 @@ public class LastFMRestClient {
 
     public static LastFMService getService() {
         if (service == null) {
-
+            Interceptor interceptor = chain -> {
+                Request request = chain.request();
+                HttpUrl url = request.url().newBuilder().addQueryParameter("format", "json")
+                        .addQueryParameter("api_key", "c0cca0938e628d1582474f036955fcfa").build();
+                request = request.newBuilder().url(url).build();
+                return chain.proceed(request);
+            };
             HttpLoggingInterceptor interceptorLogging = new HttpLoggingInterceptor();
             interceptorLogging.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.interceptors().add(interceptorLogging);
+            builder.interceptors().add(interceptor);
             OkHttpClient client = builder.build();
 
             Retrofit retrofit = new Retrofit.Builder()
