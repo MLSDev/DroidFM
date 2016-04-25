@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -139,8 +140,10 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
     }
 
     @Override
-    public void onArtistClick(ArtistEntity artist) {
-        ((Navigator) getActivity()).navigateToArtistContentDetailsScreen(artist.getArtisMbid(), artist.getArtistName(), artist.getArtistImages().get(3).getText());
+    public void onArtistClick(ArtistEntity artist, AppCompatImageView imageView) {
+        ((Navigator) getActivity())
+                .navigateToArtistContentDetailsScreen(artist.getArtisMbid()
+                        , artist.getArtistName(), artist.getArtistImages().get(3).getText(), imageView);
     }
 
     @Override

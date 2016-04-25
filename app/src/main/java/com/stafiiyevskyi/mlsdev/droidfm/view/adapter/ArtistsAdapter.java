@@ -75,7 +75,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
     }
 
     public interface OnArtistClickListener {
-        void onArtistClick(ArtistEntity artist);
+        void onArtistClick(ArtistEntity artist, AppCompatImageView imageView);
     }
 
     public class ArtistVH extends RecyclerView.ViewHolder {
@@ -92,7 +92,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
         public ArtistVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(view -> mListener.onArtistClick(mData.get(getAdapterPosition())));
+            itemView.setOnClickListener(view -> mListener.onArtistClick(mData.get(getAdapterPosition()), mIvArtistPhoto));
         }
 
         public void bindArtistName(String artistName) {

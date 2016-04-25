@@ -1,13 +1,17 @@
 package com.stafiiyevskyi.mlsdev.droidfm.view.activity;
 
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.view.ContextThemeWrapper;
+import android.support.v7.widget.AppCompatImageView;
+import android.transition.Fade;
 import android.view.MenuItem;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
@@ -18,9 +22,11 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFrag
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TopChartsContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.transition.DetailsTransition;
 import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
 
 import butterknife.Bind;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends BaseActivity implements Navigator {
     @Bind(R.id.drawer_layout)
@@ -144,9 +150,19 @@ public class MainActivity extends BaseActivity implements Navigator {
     }
 
     @Override
-    public void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl) {
+    public void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl, AppCompatImageView imageView) {
+        BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
+        ViewCompat.setTransitionName(imageView, getString(R.string.transition_artist_image));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            fragment.setSharedElementEnterTransition(new DetailsTransition());
+            fragment.setEnterTransition(new Fade());
+            fragment.setExitTransition(new Fade());
+            fragment.setSharedElementReturnTransition(new DetailsTransition());
+        }
         mFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl))
+                .replace(R.id.fragment_container, fragment)
+                .addSharedElement(imageView, getString(R.string.transition_artist_image))
                 .addToBackStack(ArtistContentDetailsFragment.class.getName())
                 .commit();
     }
