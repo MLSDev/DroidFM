@@ -140,7 +140,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
 
     @Override
     public void onArtistClick(ArtistEntity artist) {
-        ((Navigator) getActivity()).navigateToArtistContentDetailsScreen(artist.getArtisMbid(), artist.getArtistName());
+        ((Navigator) getActivity()).navigateToArtistContentDetailsScreen(artist.getArtisMbid(), artist.getArtistName(), artist.getArtistImages().get(3).getText());
     }
 
     @Override

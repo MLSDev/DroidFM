@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.data.api;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.ArtistTopAlbumsResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.SearchArtist;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.TopChartArtists;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.detail.ArtistInfoResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.TopChartTags;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.ArtistTopTracks;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.TopChartTracks;
@@ -44,6 +45,9 @@ public interface LastFMService {
     @GET("?method=artist.gettopalbums")
     Observable<ArtistTopAlbumsResponse> getArtistTopAlbums(@Query("artist") String artistName
             , @Query("mbid") String mbid, @Query("page") int pageNumber);
+
+    @GET("?method=artist.getinfo")
+    Observable<ArtistInfoResponse> getArtistInfo(@Query("mbid") String mbid);
 
 
     // Track Requests /////////////////////////////////////////////////////

@@ -9,9 +9,11 @@ public interface Navigator {
 
     void navigateToChartsContentScreen();
 
-    void navigateToArtistContentDetailsScreen(String mbid, String artistName);
+    void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl);
 
     void navigateToTopTracksScreen();
+
+    void navigateToArtistFullDetailsScreen(String mbid);
 
     void setDrawerToggleEnabled();
 

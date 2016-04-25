@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TopChartsContentFragment;
@@ -143,9 +144,9 @@ public class MainActivity extends BaseActivity implements Navigator {
     }
 
     @Override
-    public void navigateToArtistContentDetailsScreen(String mbid, String artistName) {
+    public void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl) {
         mFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, ArtistContentDetailsFragment.newInstance(mbid, artistName))
+                .add(R.id.fragment_container, ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl))
                 .addToBackStack(ArtistContentDetailsFragment.class.getName())
                 .commit();
     }
@@ -160,14 +161,21 @@ public class MainActivity extends BaseActivity implements Navigator {
     }
 
     @Override
+    public void navigateToArtistFullDetailsScreen(String mbid) {
+        mFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, ArtistDetailFullFragment.newInstance(mbid))
+                .addToBackStack(ArtistDetailFullFragment.class.getName())
+                .commit();
+    }
+
+    @Override
     public void navigateBack() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        int i = fragmentManager.getBackStackEntryCount();
-        if (i > 1) {
-            FragmentManager.BackStackEntry backEntry = fragmentManager
-                    .getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 2);
+        int i = mFragmentManager.getBackStackEntryCount();
+        if (i >= 1) {
+            FragmentManager.BackStackEntry backEntry = mFragmentManager
+                    .getBackStackEntryAt(mFragmentManager.getBackStackEntryCount() - 1);
             String str = backEntry.getName();
-            BaseFragment currentFragment = (BaseFragment) fragmentManager.findFragmentByTag(str);
+            BaseFragment currentFragment = (BaseFragment) mFragmentManager.findFragmentByTag(str);
             if (currentFragment != null) {
                 currentFragment.updateToolbar();
             }

@@ -4,6 +4,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
 import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMService;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.ArtistTopAlbumsResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.SearchArtist;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.detail.ArtistInfoResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.ArtistTopTracks;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.ArtistModel;
 
@@ -43,6 +44,15 @@ public class ArtistModelImpl implements ArtistModel {
     public Observable<ArtistTopAlbumsResponse> getArtistTopAlbums(String artistName, String mbid, int pageNumber) {
         return LastFMRestClient.getService()
                 .getArtistTopAlbums(artistName, mbid, pageNumber)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<ArtistInfoResponse> getArtistInfo(String mbid) {
+        return LastFMRestClient.getService()
+                .getArtistInfo(mbid)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io());

@@ -23,6 +23,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by oleksandr on 25.04.16.
@@ -68,6 +69,13 @@ public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter
         if (isVisible()) {
             menu.clear();
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+        mPresenter.stop();
     }
 
     private void setupRvTags() {
