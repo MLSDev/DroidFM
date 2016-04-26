@@ -1,45 +1,47 @@
-package com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.detail;
+package com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.Album;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.ArtistNotFull;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.ItemWiki;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Image;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Streamable;
 
 /**
  * Created by oleksandr on 26.04.16.
  */
-public class AlbumDetail {
+public class TrackDetail {
 
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("artist")
-    @Expose
-    private String artist;
     @SerializedName("mbid")
     @Expose
     private String mbid;
     @SerializedName("url")
     @Expose
     private String url;
-    @SerializedName("image")
+    @SerializedName("duration")
     @Expose
-    private List<Image> image = new ArrayList<Image>();
+    private String duration;
+    @SerializedName("streamable")
+    @Expose
+    private Streamable streamable;
     @SerializedName("listeners")
     @Expose
     private String listeners;
     @SerializedName("playcount")
     @Expose
     private String playcount;
-    @SerializedName("tracks")
+    @SerializedName("artist")
     @Expose
-    private AlbumsTrackList tracks;
-    @SerializedName("tags")
+    private ArtistNotFull artist;
+    @SerializedName("album")
     @Expose
-    private AlbumsTagList tags;
+    private Album album;
+    @SerializedName("toptags")
+    @Expose
+    private ToptagsDetail toptags;
     @SerializedName("wiki")
     @Expose
     private ItemWiki wiki;
@@ -60,24 +62,6 @@ public class AlbumDetail {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     *
-     * @return
-     * The artist
-     */
-    public String getArtist() {
-        return artist;
-    }
-
-    /**
-     *
-     * @param artist
-     * The artist
-     */
-    public void setArtist(String artist) {
-        this.artist = artist;
     }
 
     /**
@@ -119,19 +103,37 @@ public class AlbumDetail {
     /**
      *
      * @return
-     * The image
+     * The duration
      */
-    public List<Image> getImage() {
-        return image;
+    public String getDuration() {
+        return duration;
     }
 
     /**
      *
-     * @param image
-     * The image
+     * @param duration
+     * The duration
      */
-    public void setImage(List<Image> image) {
-        this.image = image;
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    /**
+     *
+     * @return
+     * The streamable
+     */
+    public Streamable getStreamable() {
+        return streamable;
+    }
+
+    /**
+     *
+     * @param streamable
+     * The streamable
+     */
+    public void setStreamable(Streamable streamable) {
+        this.streamable = streamable;
     }
 
     /**
@@ -173,37 +175,55 @@ public class AlbumDetail {
     /**
      *
      * @return
-     * The tracks
+     * The artist
      */
-    public AlbumsTrackList getTracks() {
-        return tracks;
+    public ArtistNotFull getArtist() {
+        return artist;
     }
 
     /**
      *
-     * @param tracks
-     * The tracks
+     * @param artist
+     * The artist
      */
-    public void setTracks(AlbumsTrackList tracks) {
-        this.tracks = tracks;
+    public void setArtist(ArtistNotFull artist) {
+        this.artist = artist;
     }
 
     /**
      *
      * @return
-     * The tags
+     * The album
      */
-    public AlbumsTagList getTags() {
-        return tags;
+    public Album getAlbum() {
+        return album;
     }
 
     /**
      *
-     * @param tags
-     * The tags
+     * @param album
+     * The album
      */
-    public void setTags(AlbumsTagList tags) {
-        this.tags = tags;
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
+    /**
+     *
+     * @return
+     * The toptags
+     */
+    public ToptagsDetail getToptags() {
+        return toptags;
+    }
+
+    /**
+     *
+     * @param toptags
+     * The toptags
+     */
+    public void setToptags(ToptagsDetail toptags) {
+        this.toptags = toptags;
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.detail;
+package com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by oleksandr on 26.04.16.
  */
-public class AlbumsTagList {
+public class ToptagsDetail {
 
     @SerializedName("tag")
     @Expose

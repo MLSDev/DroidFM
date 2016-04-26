@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Image;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Streamable;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.ArtistTopNotFullByTag;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.ArtistNotFull;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.AttrItem;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class TopTrackByTag {
     private Streamable streamable;
     @SerializedName("artist")
     @Expose
-    private ArtistTopNotFullByTag artist;
+    private ArtistNotFull artist;
     @SerializedName("image")
     @Expose
     private List<Image> image = new ArrayList<Image>();
@@ -113,14 +113,14 @@ public class TopTrackByTag {
     /**
      * @return The artist
      */
-    public ArtistTopNotFullByTag getArtist() {
+    public ArtistNotFull getArtist() {
         return artist;
     }
 
     /**
      * @param artist The artist
      */
-    public void setArtist(ArtistTopNotFullByTag artist) {
+    public void setArtist(ArtistNotFull artist) {
         this.artist = artist;
     }
 

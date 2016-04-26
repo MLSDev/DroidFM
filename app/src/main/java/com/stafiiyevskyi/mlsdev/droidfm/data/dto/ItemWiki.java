@@ -1,4 +1,4 @@
-package com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.detail;
+package com.stafiiyevskyi.mlsdev.droidfm.data.dto;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by oleksandr on 26.04.16.
  */
-public class AlbumWiki {
+public class ItemWiki {
 
     @SerializedName("published")
     @Expose

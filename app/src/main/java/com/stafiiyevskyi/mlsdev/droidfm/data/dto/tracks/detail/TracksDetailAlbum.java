@@ -1,10 +1,8 @@
-package com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.topalbums;
+package com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Image;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.ArtistNotFull;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.AttrItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,39 +10,53 @@ import java.util.List;
 /**
  * Created by oleksandr on 26.04.16.
  */
-public class TopAlbumByTag {
+public class TracksDetailAlbum {
 
-    @SerializedName("name")
+    @SerializedName("artist")
     @Expose
-    private String name;
+    private String artist;
+    @SerializedName("title")
+    @Expose
+    private String title;
     @SerializedName("mbid")
     @Expose
     private String mbid;
     @SerializedName("url")
     @Expose
     private String url;
-    @SerializedName("artist")
-    @Expose
-    private ArtistNotFull artist;
     @SerializedName("image")
     @Expose
     private List<Image> image = new ArrayList<Image>();
     @SerializedName("@attr")
     @Expose
-    private AttrItem Attr;
+    private AttrTrackDetail Attr;
 
     /**
-     * @return The name
+     * @return The artist
      */
-    public String getName() {
-        return name;
+    public String getArtist() {
+        return artist;
     }
 
     /**
-     * @param name The name
+     * @param artist The artist
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    /**
+     * @return The title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title The title
+     */
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
@@ -76,20 +88,6 @@ public class TopAlbumByTag {
     }
 
     /**
-     * @return The artist
-     */
-    public ArtistNotFull getArtist() {
-        return artist;
-    }
-
-    /**
-     * @param artist The artist
-     */
-    public void setArtist(ArtistNotFull artist) {
-        this.artist = artist;
-    }
-
-    /**
      * @return The image
      */
     public List<Image> getImage() {
@@ -106,14 +104,14 @@ public class TopAlbumByTag {
     /**
      * @return The Attr
      */
-    public AttrItem getAttr() {
+    public AttrTrackDetail getAttr() {
         return Attr;
     }
 
     /**
      * @param Attr The @attr
      */
-    public void setAttr(AttrItem Attr) {
+    public void setAttr(AttrTrackDetail Attr) {
         this.Attr = Attr;
     }
 

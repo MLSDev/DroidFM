@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.AttrItem;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Streamable;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.TracksArtist;
 
 /**
  * Created by oleksandr on 26.04.16.
