@@ -23,6 +23,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TopChartsContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.transition.DetailsTransition;
+import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
 
 import butterknife.Bind;
@@ -152,14 +153,7 @@ public class MainActivity extends BaseActivity implements Navigator {
     @Override
     public void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl, AppCompatImageView imageView) {
         BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
-        ViewCompat.setTransitionName(imageView, getString(R.string.transition_artist_image));
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fragment.setSharedElementEnterTransition(new DetailsTransition());
-            fragment.setEnterTransition(new Fade());
-            fragment.setExitTransition(new Fade());
-            fragment.setSharedElementReturnTransition(new DetailsTransition());
-        }
+        AnimationUtil.detailTransition(fragment, imageView, getString(R.string.transition_artist_image));
         mFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .addSharedElement(imageView, getString(R.string.transition_artist_image))
