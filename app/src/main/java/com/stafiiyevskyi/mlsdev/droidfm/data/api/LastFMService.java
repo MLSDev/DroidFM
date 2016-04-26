@@ -5,6 +5,9 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.SearchArtist;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.TopChartArtists;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.detail.ArtistInfoResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.TopChartTags;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.topalbums.TagTopAlbumsResponse;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.topartists.TagTopArtistsResponse;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.toptracks.TagTopTracksResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.ArtistTopTracks;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.TopChartTracks;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.search.TrackSearchResponse;
@@ -54,5 +57,17 @@ public interface LastFMService {
     @GET("?method=track.search")
     Observable<TrackSearchResponse> searchTrack(@Query("artist") String artistName, @Query("track") String trackName
             , @Query("page") int pageNumber);
+
+
+    // Tag Requests ///////////////////////////////////////////////////////
+
+    @GET("?method=tag.gettopalbums")
+    Observable<TagTopAlbumsResponse> getTagsTopAlbums(@Query("tag") String tag, @Query("page") int pageNumber);
+
+    @GET("?method=tag.gettopartists")
+    Observable<TagTopArtistsResponse> getTagsTopArtists(@Query("tag") String tag, @Query("page") int pageNumber);
+
+    @GET("?method=tag.gettoptracks")
+    Observable<TagTopTracksResponse> getTagsTopTracks(@Query("tag") String tag, @Query("page") int pageNumber);
 
 }

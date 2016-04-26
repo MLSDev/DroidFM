@@ -5,7 +5,6 @@ import android.support.v4.view.ViewCompat;
 import android.transition.Fade;
 import android.view.View;
 
-import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.transition.DetailsTransition;
 

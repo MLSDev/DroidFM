@@ -19,6 +19,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TopChartsContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag.TagTopContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
 
@@ -157,9 +158,9 @@ public class MainActivity extends BaseActivity implements Navigator {
         BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
         AnimationUtil.detailTransition(fragment, imageView, getString(R.string.transition_artist_image));
         mFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .add(R.id.fragment_container, fragment)
                 .addSharedElement(imageView, getString(R.string.transition_artist_image))
-                .addToBackStack(ArtistContentDetailsFragment.class.getName())
+                .addToBackStack(ArtistContentDetailsFragment.class.getName()+mbid)
                 .commit();
     }
 
@@ -176,7 +177,16 @@ public class MainActivity extends BaseActivity implements Navigator {
     public void navigateToArtistFullDetailsScreen(String mbid) {
         mFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, ArtistDetailFullFragment.newInstance(mbid))
-                .addToBackStack(ArtistDetailFullFragment.class.getName())
+                .addToBackStack(ArtistDetailFullFragment.class.getName()+mbid)
+                .commit();
+    }
+
+    @Override
+    public void navigateToTagTopContent(String tag) {
+        getSupportActionBar().setSubtitle(tag);
+        mFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, TagTopContentFragment.newInstance(tag))
+                .addToBackStack(TagTopContentFragment.class.getName()+tag)
                 .commit();
     }
 

@@ -1,9 +1,10 @@
-package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
+package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,11 +12,12 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistTopAlbumsPresenter;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.AlbumEntity;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistTopAlbumsScreenPresenterImpl;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistTopAlbumsScreenView;
-import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.TopAlbumsAdapter;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.TagTopTracksPresenter;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.TagTopTracksPresenterImpl;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.TagTopTracksScreenView;
+import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.TopTracksAdapter;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.List;
 
@@ -23,24 +25,20 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by oleksandr on 22.04.16.
+ * Created by oleksandr on 26.04.16.
  */
-public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapter.OnAlbumClickListener, ArtistTopAlbumsScreenView {
+public class TagTopTracksFragment extends BaseFragment implements TagTopTracksScreenView, TopTracksAdapter.OnTopTrackClickListener {
 
-    public static final String ARTIST_MBID_BUNDLE_KEY = "artist_top_albums_fragment_mbid";
-    public static final String ARTIST_NAME_BUNDLE_KEY = "artist_top_albums_fragment_name";
+    private static final String TAG_BUNDLE_KEY = "tag_bundle_key_tag_top_tracks_fragment";
 
-    @Bind(R.id.rv_topalbums)
-    RecyclerView mRvAlbums;
+    @Bind(R.id.rv_toptracks)
+    RecyclerView mRvTracks;
     @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
 
-    private String mMbid;
-    private String mArtistName;
-
     private RecyclerView.LayoutManager mLayoutManager;
-    private TopAlbumsAdapter mAdapter;
-    private ArtistTopAlbumsPresenter mPresenter;
+    private TopTracksAdapter mAdapter;
+    private TagTopTracksPresenter mPresenter;
 
 
     private boolean mIsLoading = true;
@@ -48,6 +46,8 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     private int mVisibleItemCount, mTotalItemCount;
     private int mLastVisibleItemPosition;
 
+
+    private String mTag;
 
     private RecyclerView.OnScrollListener mRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -60,7 +60,7 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
             super.onScrolled(recyclerView, dx, dy);
             mVisibleItemCount = mLayoutManager.getChildCount();
             mTotalItemCount = mAdapter.getItemCount();
-            mLastVisibleItemPosition = ((GridLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+            mLastVisibleItemPosition = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
 
             if (!mIsLoading) {
                 if ((mVisibleItemCount + mLastVisibleItemPosition) >= mTotalItemCount
@@ -68,17 +68,16 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
                     mIsLoading = true;
                     mCurrentPageNumber = ++mCurrentPageNumber;
                     mPbProgress.setVisibility(View.VISIBLE);
-                    mPresenter.getArtistTopAlbums(mArtistName, mMbid, mCurrentPageNumber);
+                    mPresenter.getTopTracks(mTag, mCurrentPageNumber);
                 }
             }
         }
     };
 
-    public static BaseFragment newInstance(String artistMbid, String artistName) {
+    public static BaseFragment newInstance(String tag) {
         Bundle args = new Bundle();
-        args.putString(ARTIST_NAME_BUNDLE_KEY, artistName);
-        args.putString(ARTIST_MBID_BUNDLE_KEY, artistMbid);
-        BaseFragment fragment = new ArtistTopAlbumsFragment();
+        args.putString(TAG_BUNDLE_KEY, tag);
+        BaseFragment fragment = new TagTopTracksFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,11 +86,9 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
-        Bundle args = getArguments();
-        mMbid = args.getString(ARTIST_MBID_BUNDLE_KEY);
-        mArtistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
-        mPresenter = new ArtistTopAlbumsScreenPresenterImpl(this);
-        mPresenter.getArtistTopAlbums(mArtistName, mMbid, mCurrentPageNumber);
+        mTag = getArguments().getString(TAG_BUNDLE_KEY);
+        mPresenter = new TagTopTracksPresenterImpl(this);
+        mPresenter.getTopTracks(mTag, mCurrentPageNumber);
         setupRvTracks();
     }
 
@@ -109,16 +106,16 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     }
 
     private void setupRvTracks() {
-        mLayoutManager = new GridLayoutManager(getActivity(), 2);
-        mAdapter = new TopAlbumsAdapter(this);
-        mRvAlbums.setLayoutManager(mLayoutManager);
-        mRvAlbums.setAdapter(mAdapter);
-        mRvAlbums.addOnScrollListener(mRecyclerViewOnScrollListener);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mAdapter = new TopTracksAdapter(this);
+        mRvTracks.setLayoutManager(mLayoutManager);
+        mRvTracks.setAdapter(mAdapter);
+        mRvTracks.addOnScrollListener(mRecyclerViewOnScrollListener);
     }
 
     @Override
     protected int getResourceId() {
-        return R.layout.fragment_top_albums;
+        return R.layout.fragment_top_tracks;
     }
 
     @Override
@@ -126,20 +123,22 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
         getActivity().supportInvalidateOptionsMenu();
     }
 
-    @Override
-    public void onAlbumClick(AlbumEntity album) {
 
+    @Override
+    public void showError(String errorMessage) {
+        Snackbar.make(mRvTracks, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
+
     @Override
-    public void showArtistTopAlbums(List<AlbumEntity> albumEntities) {
+    public void showTopArtists(List<TopTrackEntity> topTrackEntities) {
         mPbProgress.setVisibility(View.GONE);
-        mAdapter.addData(albumEntities);
+        mAdapter.addData(topTrackEntities);
         mIsLoading = false;
     }
 
     @Override
-    public void showError(String errorMessage) {
-        Snackbar.make(mRvAlbums, errorMessage, Snackbar.LENGTH_LONG).show();
+    public void onTopTrackClick(TopTrackEntity topTrack) {
+
     }
 }

@@ -10,6 +10,7 @@
     <!--Artist content details-->
     <string name="tab_title_top_tracks">Top Tracks</string>
     <string name="tab_title_top_albums">Top Albums</string>
+    <string name="tab_title_top_artists">Top Artists</string>
 
 
     <string name="navigation_drawer_open">Close menu</string>

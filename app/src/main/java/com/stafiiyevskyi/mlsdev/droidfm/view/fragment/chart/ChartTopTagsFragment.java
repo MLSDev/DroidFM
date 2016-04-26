@@ -17,6 +17,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.ChartTopTagScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTagEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ChartTopTagScreenPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ChartTopTagScreenView;
+import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.TopTagsAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
@@ -97,7 +98,7 @@ public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter
 
     @Override
     public void onTagClick(TopTagEntity tag) {
-
+        ((Navigator) getActivity()).navigateToTagTopContent(tag.getName());
     }
 
     @Override

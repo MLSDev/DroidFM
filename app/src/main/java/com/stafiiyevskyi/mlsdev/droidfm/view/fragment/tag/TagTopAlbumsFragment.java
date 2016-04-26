@@ -1,4 +1,4 @@
-package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
+package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,11 +11,12 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistTopAlbumsPresenter;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.TagTopAlbumsPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.AlbumEntity;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistTopAlbumsScreenPresenterImpl;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistTopAlbumsScreenView;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.TagTopAlbumsPresenterImpl;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.TagTopAlbumsScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.TopAlbumsAdapter;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.List;
 
@@ -23,24 +24,20 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by oleksandr on 22.04.16.
+ * Created by oleksandr on 26.04.16.
  */
-public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapter.OnAlbumClickListener, ArtistTopAlbumsScreenView {
+public class TagTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapter.OnAlbumClickListener, TagTopAlbumsScreenView {
 
-    public static final String ARTIST_MBID_BUNDLE_KEY = "artist_top_albums_fragment_mbid";
-    public static final String ARTIST_NAME_BUNDLE_KEY = "artist_top_albums_fragment_name";
+    private static final String TAG_BUNDLE_KEY = "tag_bundle_key_tag_top_albums_fragment";
 
     @Bind(R.id.rv_topalbums)
     RecyclerView mRvAlbums;
     @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
 
-    private String mMbid;
-    private String mArtistName;
-
     private RecyclerView.LayoutManager mLayoutManager;
     private TopAlbumsAdapter mAdapter;
-    private ArtistTopAlbumsPresenter mPresenter;
+    private TagTopAlbumsPresenter mPresenter;
 
 
     private boolean mIsLoading = true;
@@ -48,6 +45,8 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     private int mVisibleItemCount, mTotalItemCount;
     private int mLastVisibleItemPosition;
 
+
+    private String mTag;
 
     private RecyclerView.OnScrollListener mRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -68,17 +67,16 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
                     mIsLoading = true;
                     mCurrentPageNumber = ++mCurrentPageNumber;
                     mPbProgress.setVisibility(View.VISIBLE);
-                    mPresenter.getArtistTopAlbums(mArtistName, mMbid, mCurrentPageNumber);
+                    mPresenter.getTopAlbums(mTag, mCurrentPageNumber);
                 }
             }
         }
     };
 
-    public static BaseFragment newInstance(String artistMbid, String artistName) {
+    public static BaseFragment newInstance(String tag) {
         Bundle args = new Bundle();
-        args.putString(ARTIST_NAME_BUNDLE_KEY, artistName);
-        args.putString(ARTIST_MBID_BUNDLE_KEY, artistMbid);
-        BaseFragment fragment = new ArtistTopAlbumsFragment();
+        args.putString(TAG_BUNDLE_KEY, tag);
+        BaseFragment fragment = new TagTopAlbumsFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,11 +85,9 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
-        Bundle args = getArguments();
-        mMbid = args.getString(ARTIST_MBID_BUNDLE_KEY);
-        mArtistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
-        mPresenter = new ArtistTopAlbumsScreenPresenterImpl(this);
-        mPresenter.getArtistTopAlbums(mArtistName, mMbid, mCurrentPageNumber);
+        mTag = getArguments().getString(TAG_BUNDLE_KEY);
+        mPresenter = new TagTopAlbumsPresenterImpl(this);
+        mPresenter.getTopAlbums(mTag, mCurrentPageNumber);
         setupRvTracks();
     }
 
@@ -132,14 +128,14 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     }
 
     @Override
-    public void showArtistTopAlbums(List<AlbumEntity> albumEntities) {
-        mPbProgress.setVisibility(View.GONE);
-        mAdapter.addData(albumEntities);
-        mIsLoading = false;
+    public void showError(String errorMessage) {
+        Snackbar.make(mRvAlbums, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
-    public void showError(String errorMessage) {
-        Snackbar.make(mRvAlbums, errorMessage, Snackbar.LENGTH_LONG).show();
+    public void showTopAlbums(List<AlbumEntity> albumEntities) {
+        mPbProgress.setVisibility(View.GONE);
+        mAdapter.addData(albumEntities);
+        mIsLoading = false;
     }
 }

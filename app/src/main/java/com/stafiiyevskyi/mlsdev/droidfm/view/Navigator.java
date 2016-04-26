@@ -17,6 +17,8 @@ public interface Navigator {
 
     void navigateToArtistFullDetailsScreen(String mbid);
 
+    void navigateToTagTopContent(String tag);
+
     void setDrawerToggleEnabled();
 
     void setDrawerToggleNotEnabled();

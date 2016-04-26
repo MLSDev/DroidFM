@@ -9,6 +9,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.activity.BaseActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTagsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
@@ -77,6 +78,7 @@ public class TopChartsContentFragment extends BaseFragment {
 
     @Override
     public void updateToolbar() {
+        ((BaseActivity)getActivity()).getSupportActionBar().setSubtitle(R.string.charts_section_title);
         getActivity().supportInvalidateOptionsMenu();
         ((Navigator) getActivity()).setDrawerToggleEnabled();
     }
