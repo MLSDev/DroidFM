@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.AlbumsDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
@@ -160,7 +161,7 @@ public class MainActivity extends BaseActivity implements Navigator {
         mFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment)
                 .addSharedElement(imageView, getString(R.string.transition_artist_image))
-                .addToBackStack(ArtistContentDetailsFragment.class.getName()+mbid)
+                .addToBackStack(ArtistContentDetailsFragment.class.getName() + mbid)
                 .commit();
     }
 
@@ -177,7 +178,7 @@ public class MainActivity extends BaseActivity implements Navigator {
     public void navigateToArtistFullDetailsScreen(String mbid) {
         mFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, ArtistDetailFullFragment.newInstance(mbid))
-                .addToBackStack(ArtistDetailFullFragment.class.getName()+mbid)
+                .addToBackStack(ArtistDetailFullFragment.class.getName() + mbid)
                 .commit();
     }
 
@@ -186,7 +187,15 @@ public class MainActivity extends BaseActivity implements Navigator {
         getSupportActionBar().setSubtitle(tag);
         mFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, TagTopContentFragment.newInstance(tag))
-                .addToBackStack(TagTopContentFragment.class.getName()+tag)
+                .addToBackStack(TagTopContentFragment.class.getName() + tag)
+                .commit();
+    }
+
+    @Override
+    public void navigateToAlbumDetails(String mbid, String coverUrl) {
+        mFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, AlbumsDetailsFragment.newInstance(mbid))
+                .addToBackStack(AlbumsDetailsFragment.class.getName() + mbid)
                 .commit();
     }
 

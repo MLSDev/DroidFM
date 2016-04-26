@@ -15,6 +15,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.TagTopAlbumsPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.AlbumEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.TagTopAlbumsPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.TagTopAlbumsScreenView;
+import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.TopAlbumsAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
@@ -124,7 +125,7 @@ public class TagTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapt
 
     @Override
     public void onAlbumClick(AlbumEntity album) {
-
+        ((Navigator) getActivity()).navigateToAlbumDetails(album.getMbid(), album.getImage().get(3).getText());
     }
 
     @Override

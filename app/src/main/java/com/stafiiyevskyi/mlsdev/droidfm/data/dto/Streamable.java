@@ -1,4 +1,4 @@
-package com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks;
+package com.stafiiyevskyi.mlsdev.droidfm.data.dto;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

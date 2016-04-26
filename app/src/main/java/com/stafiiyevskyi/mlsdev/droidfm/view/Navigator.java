@@ -19,6 +19,8 @@ public interface Navigator {
 
     void navigateToTagTopContent(String tag);
 
+    void navigateToAlbumDetails(String mbid, String coverUrl);
+
     void setDrawerToggleEnabled();
 
     void setDrawerToggleNotEnabled();

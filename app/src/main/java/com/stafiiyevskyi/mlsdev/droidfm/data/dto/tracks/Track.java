@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Image;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Streamable;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.Artist;
 
 import java.util.ArrayList;

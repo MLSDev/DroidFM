@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Image;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.ArtistTopNotFullByTag;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.AttrTopItemByTag;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.AttrItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class TopAlbumByTag {
     private List<Image> image = new ArrayList<Image>();
     @SerializedName("@attr")
     @Expose
-    private AttrTopItemByTag Attr;
+    private AttrItem Attr;
 
     /**
      * @return The name
@@ -106,14 +106,14 @@ public class TopAlbumByTag {
     /**
      * @return The Attr
      */
-    public AttrTopItemByTag getAttr() {
+    public AttrItem getAttr() {
         return Attr;
     }
 
     /**
      * @param Attr The @attr
      */
-    public void setAttr(AttrTopItemByTag Attr) {
+    public void setAttr(AttrItem Attr) {
         this.Attr = Attr;
     }
 

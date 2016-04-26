@@ -28,6 +28,7 @@ public class TopAlbumMapper implements Func1<Album, AlbumEntity> {
         entity.setArtistName(album.getArtist().getName());
         entity.setPlaycount(album.getPlaycount());
         entity.setImage(imageEntities);
+        entity.setMbid(album.getMbid());
         return entity;
     }
 }
