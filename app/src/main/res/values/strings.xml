@@ -3,10 +3,9 @@
     <string name="action_settings">Settings</string>
     <string name="last_fm_api_key">c0cca0938e628d1582474f036955fcfa</string>
     <string name="last_fm_shared_secret">fa8286042ffb474f318a755e33b11142</string>
-    <string name="albums_section_title">Albums</string>
     <string name="tracks_section_title">Tracks</string>
-    <string name="charts_item_title">Charts</string>
-    <string name="artists_item_title">Artists</string>
+    <string name="charts_section_title">Charts</string>
+    <string name="artists_section_title">Artists</string>
 
     <!--Artist content details-->
     <string name="tab_title_top_tracks">Top Tracks</string>

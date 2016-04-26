@@ -4,7 +4,7 @@
         <item
             android:id="@+id/action_artists_item"
             android:checked="true"
-            android:title="@string/artists_item_title" />
+            android:title="@string/artists_section_title" />
 
         <item
             android:id="@+id/action_tracks_item"
@@ -14,6 +14,6 @@
         <item
             android:id="@+id/action_charts_item"
             android:checked="false"
-            android:title="@string/charts_item_title" />
+            android:title="@string/charts_section_title" />
     </group>
 </menu>

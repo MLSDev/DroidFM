@@ -1,33 +1,28 @@
 package com.stafiiyevskyi.mlsdev.droidfm.view.activity;
 
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatImageView;
-import android.transition.Fade;
 import android.view.MenuItem;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
-import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TopChartsContentFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
-import com.stafiiyevskyi.mlsdev.droidfm.view.transition.DetailsTransition;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
 
 import butterknife.Bind;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends BaseActivity implements Navigator {
     @Bind(R.id.drawer_layout)
@@ -47,8 +42,8 @@ public class MainActivity extends BaseActivity implements Navigator {
         super.onCreate(savedInstanceState);
         mFragmentManager = getSupportFragmentManager();
         setupNavigation();
+        getSupportActionBar().setSubtitle(getString(R.string.artists_section_title));
         navigateToArtistsSearchScreen();
-
     }
 
 
@@ -86,18 +81,25 @@ public class MainActivity extends BaseActivity implements Navigator {
 
             switch (item.getItemId()) {
                 case R.id.action_tracks_item:
-                    if (!(mFirstFragment instanceof ChartTopTracksFragment))
+                    if (!(mFirstFragment instanceof ChartTopTracksFragment)) {
                         navigateToTopTracksScreen();
+                        getSupportActionBar().setSubtitle(getString(R.string.tracks_section_title));
+                    }
                     drNavigation.closeDrawers();
                     return true;
                 case R.id.action_artists_item:
-                    if (!(mFirstFragment instanceof ArtistSearchListFragment))
+                    if (!(mFirstFragment instanceof ArtistSearchListFragment)) {
                         navigateToArtistsSearchScreen();
+                        getSupportActionBar().setSubtitle(getString(R.string.artists_section_title));
+                    }
+
                     drNavigation.closeDrawers();
                     return true;
                 case R.id.action_charts_item:
-                    if (!(mFirstFragment instanceof TopChartsContentFragment))
+                    if (!(mFirstFragment instanceof TopChartsContentFragment)) {
                         navigateToChartsContentScreen();
+                        getSupportActionBar().setSubtitle(getString(R.string.charts_section_title));
+                    }
                     drNavigation.closeDrawers();
                     return true;
                 default:
