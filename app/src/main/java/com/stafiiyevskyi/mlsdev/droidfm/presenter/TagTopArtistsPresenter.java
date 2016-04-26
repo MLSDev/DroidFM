@@ -5,4 +5,6 @@ package com.stafiiyevskyi.mlsdev.droidfm.presenter;
  */
 public interface TagTopArtistsPresenter extends Presenter {
     void getTopArtists(String tag, int pageNumber);
+
+    void searchArtist(String artistName, int pageNumber);
 }

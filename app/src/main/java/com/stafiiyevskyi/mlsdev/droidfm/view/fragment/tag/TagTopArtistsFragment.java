@@ -47,7 +47,7 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
     private boolean mIsLoading = true;
     private boolean mIsFirstCall = false;
     private boolean mIsSearchActivate = false;
-    private int mCurrentPageNumber = 2;
+    private int mCurrentPageNumber = 1;
     private int mVisibleItemCount, mTotalItemCount;
     private int mLastVisibleItemPosition;
     private String mSearchQuery = "";
@@ -73,7 +73,7 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
                     mCurrentPageNumber = ++mCurrentPageNumber;
                     mPbProgress.setVisibility(View.VISIBLE);
                     if (mIsSearchActivate) {
-//                        mPresenter.searchArtist(mSearchQuery, mCurrentPageNumber);
+                        mPresenter.searchArtist(mSearchQuery, mCurrentPageNumber);
                     } else {
                         mPresenter.getTopArtists(mTag, mCurrentPageNumber);
                     }
@@ -176,7 +176,7 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
         mIsSearchActivate = true;
         mCurrentPageNumber = 1;
         mSearchQuery = query;
-//        mPresenter.searchArtist(mSearchQuery, mCurrentPageNumber);
+        mPresenter.searchArtist(mSearchQuery, mCurrentPageNumber);
         return false;
     }
 

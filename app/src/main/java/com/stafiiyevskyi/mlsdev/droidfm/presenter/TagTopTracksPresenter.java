@@ -5,4 +5,6 @@ package com.stafiiyevskyi.mlsdev.droidfm.presenter;
  */
 public interface TagTopTracksPresenter extends Presenter {
     void getTopTracks(String tag, int pageNumber);
+
+    void searchTracks(String trackName, int pageNumber);
 }

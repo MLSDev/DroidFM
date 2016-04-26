@@ -3,9 +3,9 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -27,7 +27,8 @@ import butterknife.ButterKnife;
 /**
  * Created by oleksandr on 26.04.16.
  */
-public class TagTopTracksFragment extends BaseFragment implements TagTopTracksScreenView, TopTracksAdapter.OnTopTrackClickListener {
+public class TagTopTracksFragment extends BaseFragment implements SearchView.OnQueryTextListener,
+        SearchView.OnCloseListener, TagTopTracksScreenView, TopTracksAdapter.OnTopTrackClickListener {
 
     private static final String TAG_BUNDLE_KEY = "tag_bundle_key_tag_top_tracks_fragment";
 
@@ -42,10 +43,12 @@ public class TagTopTracksFragment extends BaseFragment implements TagTopTracksSc
 
 
     private boolean mIsLoading = true;
+    private boolean mIsFirstCall = false;
+    private boolean mIsSearchActivate = false;
     private int mCurrentPageNumber = 1;
     private int mVisibleItemCount, mTotalItemCount;
     private int mLastVisibleItemPosition;
-
+    private String mSearchQuery = "";
 
     private String mTag;
 
@@ -65,14 +68,20 @@ public class TagTopTracksFragment extends BaseFragment implements TagTopTracksSc
             if (!mIsLoading) {
                 if ((mVisibleItemCount + mLastVisibleItemPosition) >= mTotalItemCount
                         && mLastVisibleItemPosition >= 0) {
+
                     mIsLoading = true;
                     mCurrentPageNumber = ++mCurrentPageNumber;
                     mPbProgress.setVisibility(View.VISIBLE);
-                    mPresenter.getTopTracks(mTag, mCurrentPageNumber);
+                    if (mIsSearchActivate) {
+                        mPresenter.searchTracks(mSearchQuery, mCurrentPageNumber);
+                    } else {
+                        mPresenter.getTopTracks(mTag, mCurrentPageNumber);
+                    }
                 }
             }
         }
     };
+    private SearchView mSearchView;
 
     public static BaseFragment newInstance(String tag) {
         Bundle args = new Bundle();
@@ -95,7 +104,13 @@ public class TagTopTracksFragment extends BaseFragment implements TagTopTracksSc
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (isVisible()) menu.clear();
+        if (isVisible()) {
+            menu.clear();
+            inflater.inflate(R.menu.menu_artists_search_screen, menu);
+            mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+            mSearchView.setOnQueryTextListener(this);
+            mSearchView.setOnCloseListener(this);
+        }
     }
 
     @Override
@@ -133,12 +148,43 @@ public class TagTopTracksFragment extends BaseFragment implements TagTopTracksSc
     @Override
     public void showTopArtists(List<TopTrackEntity> topTrackEntities) {
         mPbProgress.setVisibility(View.GONE);
-        mAdapter.addData(topTrackEntities);
-        mIsLoading = false;
+        if (mIsFirstCall) {
+            mAdapter.setData(topTrackEntities);
+            mIsFirstCall = false;
+        } else {
+            mAdapter.addData(topTrackEntities);
+            mIsLoading = false;
+        }
     }
 
     @Override
     public void onTopTrackClick(TopTrackEntity topTrack) {
 
+    }
+
+    @Override
+    public boolean onClose() {
+        mIsFirstCall = true;
+        mIsSearchActivate = false;
+        mCurrentPageNumber = 1;
+        mPbProgress.setVisibility(View.VISIBLE);
+        mPresenter.getTopTracks(mTag, mCurrentPageNumber);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        mPbProgress.setVisibility(View.VISIBLE);
+        mIsFirstCall = true;
+        mIsSearchActivate = true;
+        mCurrentPageNumber = 1;
+        mSearchQuery = query;
+        mPresenter.searchTracks(mSearchQuery, mCurrentPageNumber);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }
