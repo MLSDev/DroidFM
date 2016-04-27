@@ -24,23 +24,8 @@ public class LastFMRestClient {
     private static final String BASE_URL = "http://ws.audioscrobbler.com/2.0/";
 
 
-    private static Map<String, String> query;
-
     private LastFMRestClient() {
     }
-
-    public static Map<String, String> getAdditionalQuery() {
-        if (query != null) {
-            return query;
-        } else {
-            query = new LinkedHashMap<>();
-            query.put("format", "json");
-            query.put("api_key", "c0cca0938e628d1582474f036955fcfa");
-            return query;
-        }
-
-    }
-
 
     public static LastFMService getService() {
         if (service == null) {
