@@ -13,8 +13,8 @@ import rx.schedulers.Schedulers;
  */
 public class AlbumModelImpl implements AlbumModel {
     @Override
-    public Observable<AlbumDetailResponse> getAlbumDetails(String mbid) {
-        return LastFMRestClient.getService().getAlbumDetails(mbid)
+    public Observable<AlbumDetailResponse> getAlbumDetails(String artist, String album, String mbid) {
+        return LastFMRestClient.getService().getAlbumDetails(artist, album, mbid)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io());

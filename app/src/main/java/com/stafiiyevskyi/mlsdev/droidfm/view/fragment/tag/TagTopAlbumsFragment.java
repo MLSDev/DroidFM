@@ -125,7 +125,7 @@ public class TagTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapt
 
     @Override
     public void onAlbumClick(AlbumEntity album) {
-        ((Navigator) getActivity()).navigateToAlbumDetails(album.getMbid(), album.getImage().get(3).getText());
+        ((Navigator) getActivity()).navigateToAlbumDetails(album.getArtistName(), album.getName(), album.getMbid());
     }
 
     @Override

@@ -192,9 +192,9 @@ public class MainActivity extends BaseActivity implements Navigator {
     }
 
     @Override
-    public void navigateToAlbumDetails(String mbid, String coverUrl) {
+    public void navigateToAlbumDetails(String artist, String album, String mbid) {
         mFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, AlbumsDetailsFragment.newInstance(mbid))
+                .add(R.id.fragment_container, AlbumsDetailsFragment.newInstance(artist, album, mbid))
                 .addToBackStack(AlbumsDetailsFragment.class.getName() + mbid)
                 .commit();
     }

@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -30,6 +31,9 @@ import butterknife.Bind;
 public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsScreenView, AlbumsTracksAdapter.OnTopTrackClickListener {
 
     private static final String MBID_BUNDLE_KEY = "mbid_bundle_key_albums_detail_fragment";
+    private static final String ARTIST_BUNDLE_KEY = "artist_bundle_key_albums_detail_fragment";
+    private static final String ALBUM_BUNDLE_KEY = "album_bundle_key_albums_detail_fragment";
+
     @Bind(R.id.tv_album_name)
     AppCompatTextView mTvAlbumName;
     @Bind(R.id.tv_artist_name)
@@ -48,11 +52,15 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     private AlbumsTracksAdapter mAdapter;
 
     private String mMbid;
+    private String mArtist;
+    private String mAlbum;
 
-    public static AlbumsDetailsFragment newInstance(String mbid) {
+    public static AlbumsDetailsFragment newInstance(String artist, String album, String mbid) {
 
         Bundle args = new Bundle();
         args.putString(MBID_BUNDLE_KEY, mbid);
+        args.putString(ARTIST_BUNDLE_KEY, artist);
+        args.putString(ALBUM_BUNDLE_KEY, album);
         AlbumsDetailsFragment fragment = new AlbumsDetailsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -68,10 +76,13 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mMbid = getArguments().getString(MBID_BUNDLE_KEY);
+        Bundle arg = getArguments();
+        mArtist = arg.getString(ARTIST_BUNDLE_KEY);
+        mAlbum = arg.getString(ALBUM_BUNDLE_KEY);
+        mMbid = arg.getString(MBID_BUNDLE_KEY);
         setupRvTracks();
         mPresenter = new AlbumsDetailScreenPresenterImpl(this);
-        mPresenter.getAlbumsDetails(mMbid);
+        mPresenter.getAlbumsDetails(mArtist, mAlbum, mMbid);
     }
 
     @Override
@@ -101,15 +112,20 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     public void showAlbumsDetails(AlbumsDetailEntity album) {
         mPbProgress.setVisibility(View.GONE);
         mTvAlbumArtistName.setText(album.getArtistName());
-        mTvAlbumContent.setMovementMethod(LinkMovementMethod.getInstance());
-        mTvAlbumContent.setText(Html.fromHtml(album.getContent()));
+        if (album.getContent() != null) {
+            mTvAlbumPublished.setText(album.getPublished());
+            mTvAlbumContent.setMovementMethod(LinkMovementMethod.getInstance());
+            mTvAlbumContent.setText(Html.fromHtml(album.getContent()));
+        }
+
         mTvAlbumName.setText(album.getName());
-        mTvAlbumPublished.setText(album.getPublished());
         mAdapter.setData(album.getTracks());
     }
 
     @Override
     public void showError(String errorMessage) {
+        mPbProgress.setVisibility(View.GONE);
+        Log.e("AlbumsDetail", errorMessage);
         Snackbar.make(mRvTracks, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 

@@ -8,5 +8,5 @@ import rx.Observable;
  * Created by oleksandr on 26.04.16.
  */
 public interface AlbumModel {
-    Observable<AlbumDetailResponse> getAlbumDetails(String mbid);
+    Observable<AlbumDetailResponse> getAlbumDetails(String artist, String album, String mbid);
 }

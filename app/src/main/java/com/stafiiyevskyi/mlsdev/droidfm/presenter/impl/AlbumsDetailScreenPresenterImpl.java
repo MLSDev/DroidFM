@@ -27,8 +27,8 @@ public class AlbumsDetailScreenPresenterImpl extends BasePresenter implements Al
     }
 
     @Override
-    public void getAlbumsDetails(String mbid) {
-        Subscription subscription = mAlbumModel.getAlbumDetails(mbid)
+    public void getAlbumsDetails(String artist, String album, String mbid) {
+        Subscription subscription = mAlbumModel.getAlbumDetails(artist, album, mbid)
                 .map(this::unwrapResponse)
                 .map(new AlbumsDetailMapper())
                 .subscribe(new Observer<AlbumsDetailEntity>() {

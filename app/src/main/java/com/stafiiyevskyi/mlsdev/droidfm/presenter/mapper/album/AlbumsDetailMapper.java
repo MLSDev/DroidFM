@@ -20,9 +20,11 @@ public class AlbumsDetailMapper implements Func1<AlbumDetail, AlbumsDetailEntity
         entity.setName(albumDetail.getName());
         entity.setMbid(albumDetail.getMbid());
         entity.setArtistName(albumDetail.getArtist());
-        entity.setContent(albumDetail.getWiki().getContent());
-        entity.setSummary(albumDetail.getWiki().getSummary());
-        entity.setPublished(albumDetail.getWiki().getPublished());
+        if (albumDetail.getWiki() != null) {
+            entity.setContent(albumDetail.getWiki().getContent());
+            entity.setSummary(albumDetail.getWiki().getSummary());
+            entity.setPublished(albumDetail.getWiki().getPublished());
+        }
 
         List<TrackEntity> tracks = Observable.from(albumDetail.getTracks().getTrack())
                 .map(albumsTrack -> {
