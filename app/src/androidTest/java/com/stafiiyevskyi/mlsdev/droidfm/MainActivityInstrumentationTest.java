@@ -4,6 +4,7 @@ import android.support.design.widget.NavigationView;
 import android.support.test.rule.ActivityTestRule;
 import android.view.Gravity;
 
+import com.squareup.spoon.Spoon;
 import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 
 import org.junit.Rule;
@@ -15,6 +16,7 @@ import static android.support.test.espresso.contrib.DrawerActions.open;
 import static android.support.test.espresso.contrib.DrawerMatchers.isClosed;
 import static android.support.test.espresso.core.deps.guava.base.Preconditions.checkNotNull;
 import static android.support.test.espresso.core.deps.guava.base.Preconditions.checkPositionIndex;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
@@ -32,10 +34,15 @@ public class MainActivityInstrumentationTest {
         onView(withId(R.id.drawer_layout))
                 .check(matches(isClosed(Gravity.LEFT)))
                 .perform(open());
+        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
+        Spoon.screenshot(activityTestRule.getActivity(), MainActivity.class.getSimpleName());
+    }
 
+    @Test
+    public void testNavigationViewItemsCount() {
         NavigationView navigationView = (NavigationView) activityTestRule.getActivity().findViewById(R.id.nav_view);
         checkNotNull(navigationView, "navigationView is null");
         final int count = navigationView.getMenu().size();
-        checkPositionIndex(0, count, "No 1 index " + count + " size");
+        checkPositionIndex(3, count, count + " size");
     }
 }
