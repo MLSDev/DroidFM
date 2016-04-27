@@ -19,6 +19,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.AlbumsDetailEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.AlbumsDetailScreenPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.AlbumDetailsScreenView;
+import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.AlbumsTracksAdapter;
 
 import butterknife.Bind;
@@ -114,6 +115,6 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
     @Override
     public void onTrackClick(TrackEntity topTrack) {
-
+        ((Navigator) getActivity()).navigateToTrackDetails(topTrack.getArtistName(), topTrack.getName(), "");
     }
 }

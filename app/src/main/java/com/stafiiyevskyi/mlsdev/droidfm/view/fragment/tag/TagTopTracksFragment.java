@@ -16,6 +16,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.TagTopTracksPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.TagTopTracksPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.TagTopTracksScreenView;
+import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.TopTracksAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
@@ -159,7 +160,7 @@ public class TagTopTracksFragment extends BaseFragment implements SearchView.OnQ
 
     @Override
     public void onTopTrackClick(TopTrackEntity topTrack) {
-
+        ((Navigator) getActivity()).navigateToTrackDetails(topTrack.getArtistName(), topTrack.getName(), topTrack.getTrackMbid());
     }
 
     @Override

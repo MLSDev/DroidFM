@@ -1,5 +1,7 @@
 package com.stafiiyevskyi.mlsdev.droidfm.presenter.entity;
 
+import java.util.List;
+
 /**
  * Created by oleksandr on 26.04.16.
  */
@@ -11,6 +13,7 @@ public class TrackDetailEntity {
     private String published;
     private String duration;
     private String mbid;
+    private List<TagWithUrlEntity> tags;
 
     public String getName() {
         return name;
@@ -58,5 +61,13 @@ public class TrackDetailEntity {
 
     public void setMbid(String mbid) {
         this.mbid = mbid;
+    }
+
+    public List<TagWithUrlEntity> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<TagWithUrlEntity> tags) {
+        this.tags = tags;
     }
 }

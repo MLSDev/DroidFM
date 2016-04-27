@@ -4,7 +4,6 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail.TrackDetailResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.search.TrackSearchResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.TrackModel;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -24,9 +23,9 @@ public class TrackModelImpl implements TrackModel {
     }
 
     @Override
-    public Observable<TrackDetailResponse> getTrackDetail(String mbid) {
+    public Observable<TrackDetailResponse> getTrackDetail(String artist, String track, String mbid) {
         return LastFMRestClient.getService()
-                .getTrackDetails(mbid)
+                .getTrackDetails(artist, track, mbid)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io());

@@ -18,6 +18,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragme
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TopChartsContentFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TrackDetailFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag.TagTopContentFragment;
@@ -169,8 +170,7 @@ public class MainActivity extends BaseActivity implements Navigator {
     public void navigateToTopTracksScreen() {
         mFirstFragment = ChartTopTracksFragment.newInstance();
         mFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, mFirstFragment)
-                .addToBackStack(ChartTopTracksFragment.class.getName())
+                .replace(R.id.fragment_container, mFirstFragment)
                 .commit();
     }
 
@@ -196,6 +196,14 @@ public class MainActivity extends BaseActivity implements Navigator {
         mFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, AlbumsDetailsFragment.newInstance(mbid))
                 .addToBackStack(AlbumsDetailsFragment.class.getName() + mbid)
+                .commit();
+    }
+
+    @Override
+    public void navigateToTrackDetails(String artist, String track, String mbid) {
+        mFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, TrackDetailFragment.newInstance(artist, track, mbid))
+                .addToBackStack(TrackDetailFragment.class.getName() + mbid)
                 .commit();
     }
 

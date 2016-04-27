@@ -21,6 +21,8 @@ public interface Navigator {
 
     void navigateToAlbumDetails(String mbid, String coverUrl);
 
+    void navigateToTrackDetails(String artist, String track, String mbid);
+
     void setDrawerToggleEnabled();
 
     void setDrawerToggleNotEnabled();

@@ -2,7 +2,6 @@ package com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.Album;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.ArtistNotFull;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.ItemWiki;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Streamable;
@@ -11,6 +10,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Streamable;
  * Created by oleksandr on 26.04.16.
  */
 public class TrackDetail {
+
 
     @SerializedName("name")
     @Expose
@@ -38,7 +38,7 @@ public class TrackDetail {
     private ArtistNotFull artist;
     @SerializedName("album")
     @Expose
-    private Album album;
+    private TracksDetailAlbum album;
     @SerializedName("toptags")
     @Expose
     private ToptagsDetail toptags;
@@ -47,198 +47,154 @@ public class TrackDetail {
     private ItemWiki wiki;
 
     /**
-     *
-     * @return
-     * The name
+     * @return The name
      */
     public String getName() {
         return name;
     }
 
     /**
-     *
-     * @param name
-     * The name
+     * @param name The name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     *
-     * @return
-     * The mbid
+     * @return The mbid
      */
     public String getMbid() {
         return mbid;
     }
 
     /**
-     *
-     * @param mbid
-     * The mbid
+     * @param mbid The mbid
      */
     public void setMbid(String mbid) {
         this.mbid = mbid;
     }
 
     /**
-     *
-     * @return
-     * The url
+     * @return The url
      */
     public String getUrl() {
         return url;
     }
 
     /**
-     *
-     * @param url
-     * The url
+     * @param url The url
      */
     public void setUrl(String url) {
         this.url = url;
     }
 
     /**
-     *
-     * @return
-     * The duration
+     * @return The duration
      */
     public String getDuration() {
         return duration;
     }
 
     /**
-     *
-     * @param duration
-     * The duration
+     * @param duration The duration
      */
     public void setDuration(String duration) {
         this.duration = duration;
     }
 
     /**
-     *
-     * @return
-     * The streamable
+     * @return The streamable
      */
     public Streamable getStreamable() {
         return streamable;
     }
 
     /**
-     *
-     * @param streamable
-     * The streamable
+     * @param streamable The streamable
      */
     public void setStreamable(Streamable streamable) {
         this.streamable = streamable;
     }
 
     /**
-     *
-     * @return
-     * The listeners
+     * @return The listeners
      */
     public String getListeners() {
         return listeners;
     }
 
     /**
-     *
-     * @param listeners
-     * The listeners
+     * @param listeners The listeners
      */
     public void setListeners(String listeners) {
         this.listeners = listeners;
     }
 
     /**
-     *
-     * @return
-     * The playcount
+     * @return The playcount
      */
     public String getPlaycount() {
         return playcount;
     }
 
     /**
-     *
-     * @param playcount
-     * The playcount
+     * @param playcount The playcount
      */
     public void setPlaycount(String playcount) {
         this.playcount = playcount;
     }
 
     /**
-     *
-     * @return
-     * The artist
+     * @return The artist
      */
     public ArtistNotFull getArtist() {
         return artist;
     }
 
     /**
-     *
-     * @param artist
-     * The artist
+     * @param artist The artist
      */
     public void setArtist(ArtistNotFull artist) {
         this.artist = artist;
     }
 
     /**
-     *
-     * @return
-     * The album
+     * @return The album
      */
-    public Album getAlbum() {
+    public TracksDetailAlbum getAlbum() {
         return album;
     }
 
     /**
-     *
-     * @param album
-     * The album
+     * @param album The album
      */
-    public void setAlbum(Album album) {
+    public void setAlbum(TracksDetailAlbum album) {
         this.album = album;
     }
 
     /**
-     *
-     * @return
-     * The toptags
+     * @return The toptags
      */
     public ToptagsDetail getToptags() {
         return toptags;
     }
 
     /**
-     *
-     * @param toptags
-     * The toptags
+     * @param toptags The toptags
      */
     public void setToptags(ToptagsDetail toptags) {
         this.toptags = toptags;
     }
 
     /**
-     *
-     * @return
-     * The wiki
+     * @return The wiki
      */
     public ItemWiki getWiki() {
         return wiki;
     }
 
     /**
-     *
-     * @param wiki
-     * The wiki
+     * @param wiki The wiki
      */
     public void setWiki(ItemWiki wiki) {
         this.wiki = wiki;

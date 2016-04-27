@@ -63,7 +63,7 @@ public interface LastFMService {
             , @Query("page") int pageNumber);
 
     @GET("?method=track.getinfo")
-    Observable<TrackDetailResponse> getTrackDetails(@Query("mbid") String mbid);
+    Observable<TrackDetailResponse> getTrackDetails(@Query("artist") String artist, @Query("track") String track, @Query("mbid") String mbid);
 
     // Tag Requests ///////////////////////////////////////////////////////
 

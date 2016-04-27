@@ -16,6 +16,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.ChartTopTracksScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ChartTopTrackPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ChartTopTracksScreenView;
+import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.TopTracksAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
@@ -131,12 +132,14 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
 
     @Override
     public void updateToolbar() {
+        if (isVisible())
+            ((Navigator) getActivity()).setDrawerToggleEnabled();
         getActivity().supportInvalidateOptionsMenu();
     }
 
     @Override
     public void onTopTrackClick(TopTrackEntity topTrack) {
-
+        ((Navigator) getActivity()).navigateToTrackDetails(topTrack.getArtistName(), topTrack.getName(), topTrack.getTrackMbid());
     }
 
     @Override

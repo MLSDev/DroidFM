@@ -12,6 +12,6 @@ public interface TrackModel {
 
     Observable<TrackSearchResponse> searchTrack(String artistName, String trackName, int page);
 
-    Observable<TrackDetailResponse> getTrackDetail(String mbid);
+    Observable<TrackDetailResponse> getTrackDetail(String artist, String track, String mbid);
 
 }

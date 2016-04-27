@@ -16,4 +16,6 @@
     <string name="navigation_drawer_open">Close menu</string>
     <string name="navigation_drawer_close">Open menu</string>
     <string name="transition_artist_image">artistImage</string>
+
+    <string name="duration">duration: %1$2s</string>
 </resources>
