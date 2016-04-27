@@ -1,5 +1,16 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+
+
+def PROJECT_NAME = "DroidFM"
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 0
+def versionBuild = 0
+
+def VERSION_CODE = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+def VERSION_NAME = "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -12,13 +23,23 @@ android {
         applicationId "com.stafiiyevskyi.mlsdev.droidfm"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    def APK_NAME = PROJECT_NAME + "-" + VERSION_NAME + ".apk"
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            if (variant.buildType.name.equals("debug")) {
+                output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace("app-debug.apk", APK_NAME))
+            } else {
+                output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace("app-release.apk", APK_NAME))
+            }
         }
     }
 }
