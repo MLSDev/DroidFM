@@ -33,6 +33,22 @@ public class TestAssets {
         return getStringFromFile(context, "track_detail_response.json");
     }
 
+    public static String getRihannaAlbumsResponse(Context context) {
+        return getStringFromFile(context, "top_rihanna_albums_response.json");
+    }
+
+    public static String getRihannaTracksResponse(Context context) {
+        return getStringFromFile(context, "top_rihanna_tracks_response.json");
+    }
+
+    public static String getRihannaAlbumDetailResponse(Context context) {
+        return getStringFromFile(context, "rihanna_album_detail_response.json");
+    }
+
+    public static String getRihannaTrackDetailResponse(Context context) {
+        return getStringFromFile(context, "rihanna_track_detail_response.json");
+    }
+
 
     private static String getStringFromFile(Context context, String filePath) {
         String result = null;

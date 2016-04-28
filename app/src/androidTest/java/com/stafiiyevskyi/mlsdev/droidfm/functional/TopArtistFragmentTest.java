@@ -1,15 +1,14 @@
 package com.stafiiyevskyi.mlsdev.droidfm.functional;
 
-import android.content.Intent;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.squareup.spoon.Spoon;
+import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
 import com.stafiiyevskyi.mlsdev.droidfm.utils.CheckValues;
-import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.utils.TestDispatcher;
 import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 
@@ -26,6 +25,7 @@ import java.io.IOException;
 import okhttp3.mockwebserver.MockWebServer;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -44,6 +44,7 @@ public class TopArtistFragmentTest {
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule =
             new ActivityTestRule<>(MainActivity.class);
+
     static {
         JUnitTestHelper.getInstance().setJUnitRunning();
     }
@@ -77,6 +78,24 @@ public class TopArtistFragmentTest {
         onView(withId(R.id.rv_artists)).perform(RecyclerViewActions.scrollToPosition(49));
         onView(withId(R.id.rv_artists)).perform(RecyclerViewActions.scrollToPosition(CheckValues.TOP_ARTISTS_SECOND_PAGE));
         onView(withId(R.id.rv_artists)).check(matches(hasDescendant(withText(CheckValues.TITLE_FROM_TOP_ARTISTS_SECOND_PAGE))));
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+    }
+
+    @Test
+    public void testC_OnAlbumClick() {
+        initWithExpectedResponse();
+        onView(withText("Rihanna")).perform(click());
+        onView(withText("Good Girl Gone Bad")).perform(click());
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+    }
+
+    @Test
+    public void testD_OnTrackClick() {
+        initWithExpectedResponse();
+        onView(withText("Rihanna")).perform(click());
+        onView(withText("Top Tracks")).perform(click());
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+        onView(withText("Umbrella")).perform(click());
         Spoon.screenshot(activityTestRule.getActivity(), TAG);
     }
 

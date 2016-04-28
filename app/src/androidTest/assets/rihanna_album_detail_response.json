@@ -1,0 +1,341 @@
+{
+  "album": {
+    "name": "Good Girl Gone Bad",
+    "artist": "Rihanna",
+    "mbid": "e0d582b5-5f0b-4dda-b1c2-3c34b7ecab8c",
+    "url": "http://www.last.fm/music/Rihanna/Good+Girl+Gone+Bad",
+    "image": [
+      {
+        "#text": "http://img2-ak.lst.fm/i/u/34s/aa254b77897ce330348b1be77edfe6bf.png",
+        "size": "small"
+      },
+      {
+        "#text": "http://img2-ak.lst.fm/i/u/64s/aa254b77897ce330348b1be77edfe6bf.png",
+        "size": "medium"
+      },
+      {
+        "#text": "http://img2-ak.lst.fm/i/u/174s/aa254b77897ce330348b1be77edfe6bf.png",
+        "size": "large"
+      },
+      {
+        "#text": "http://img2-ak.lst.fm/i/u/300x300/aa254b77897ce330348b1be77edfe6bf.png",
+        "size": "extralarge"
+      },
+      {
+        "#text": "http://img2-ak.lst.fm/i/u/aa254b77897ce330348b1be77edfe6bf.png",
+        "size": "mega"
+      },
+      {
+        "#text": "http://img2-ak.lst.fm/i/u/arQ/aa254b77897ce330348b1be77edfe6bf.png",
+        "size": ""
+      }
+    ],
+    "listeners": "1539633",
+    "playcount": "16320428",
+    "tracks": {
+      "track": [
+        {
+          "name": "Umbrella",
+          "url": "http://www.last.fm/music/Rihanna/_/Umbrella",
+          "duration": "276",
+          "@attr": {
+            "rank": "1"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Push Up on Me",
+          "url": "http://www.last.fm/music/Rihanna/_/Push+Up+on+Me",
+          "duration": "195",
+          "@attr": {
+            "rank": "2"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Don't Stop the Music",
+          "url": "http://www.last.fm/music/Rihanna/_/Don%27t+Stop+the+Music",
+          "duration": "267",
+          "@attr": {
+            "rank": "3"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Breakin' Dishes",
+          "url": "http://www.last.fm/music/Rihanna/_/Breakin%27+Dishes",
+          "duration": "196",
+          "@attr": {
+            "rank": "4"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Shut Up and Drive",
+          "url": "http://www.last.fm/music/Rihanna/_/Shut+Up+and+Drive",
+          "duration": "212",
+          "@attr": {
+            "rank": "5"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Hate That I Love You",
+          "url": "http://www.last.fm/music/Rihanna/_/Hate+That+I+Love+You",
+          "duration": "219",
+          "@attr": {
+            "rank": "6"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Say It",
+          "url": "http://www.last.fm/music/Rihanna/_/Say+It",
+          "duration": "251",
+          "@attr": {
+            "rank": "7"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Sell Me Candy",
+          "url": "http://www.last.fm/music/Rihanna/_/Sell+Me+Candy",
+          "duration": "165",
+          "@attr": {
+            "rank": "8"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Lemme Get That",
+          "url": "http://www.last.fm/music/Rihanna/_/Lemme+Get+That",
+          "duration": "221",
+          "@attr": {
+            "rank": "9"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Rehab",
+          "url": "http://www.last.fm/music/Rihanna/_/Rehab",
+          "duration": "295",
+          "@attr": {
+            "rank": "10"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Question Existing",
+          "url": "http://www.last.fm/music/Rihanna/_/Question+Existing",
+          "duration": "246",
+          "@attr": {
+            "rank": "11"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Good Girl Gone Bad",
+          "url": "http://www.last.fm/music/Rihanna/_/Good+Girl+Gone+Bad",
+          "duration": "213",
+          "@attr": {
+            "rank": "12"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Cry",
+          "url": "http://www.last.fm/music/Rihanna/_/Cry",
+          "duration": "234",
+          "@attr": {
+            "rank": "13"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Disturbia",
+          "url": "http://www.last.fm/music/Rihanna/_/Disturbia",
+          "duration": "239",
+          "@attr": {
+            "rank": "14"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "Take A Bow (Main)",
+          "url": "http://www.last.fm/music/Rihanna/_/Take+A+Bow+(Main)",
+          "duration": "228",
+          "@attr": {
+            "rank": "15"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        },
+        {
+          "name": "If I Never See Your Face Again",
+          "url": "http://www.last.fm/music/Rihanna/_/If+I+Never+See+Your+Face+Again",
+          "duration": "198",
+          "@attr": {
+            "rank": "16"
+          },
+          "streamable": {
+            "#text": "0",
+            "fulltrack": "0"
+          },
+          "artist": {
+            "name": "Rihanna",
+            "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+            "url": "http://www.last.fm/music/Rihanna"
+          }
+        }
+      ]
+    },
+    "tags": {
+      "tag": [
+        {
+          "name": "pop",
+          "url": "http://www.last.fm/tag/pop"
+        },
+        {
+          "name": "Rihanna",
+          "url": "http://www.last.fm/tag/Rihanna"
+        },
+        {
+          "name": "rnb",
+          "url": "http://www.last.fm/tag/rnb"
+        },
+        {
+          "name": "albums I own",
+          "url": "http://www.last.fm/tag/albums+I+own"
+        },
+        {
+          "name": "dance",
+          "url": "http://www.last.fm/tag/dance"
+        }
+      ]
+    },
+    "wiki": {
+      "published": "07 Sep 2008, 12:56",
+      "summary": "Good Girl Gone Bad is the third studio album by pop singer Rihanna, released on June 4, 2007 in most European countries and on June 5, 2007 in the United States. The album has achieved considerable worldwide success and its singles have become major hits—these include the worldwide number-one hit single \"Umbrella\", the European and Australian number-one \"Don't Stop the Music\" (which also became a top three hit in the U.S. and Canada), \"Hate That I Love You\" and \"Shut Up and Drive\", which became top ten and top twenty hits on the U. <a href=\"http://www.last.fm/music/Rihanna/Good+Girl+Gone+Bad\">Read more on Last.fm</a>.",
+      "content": "Good Girl Gone Bad is the third studio album by pop singer Rihanna, released on June 4, 2007 in most European countries and on June 5, 2007 in the United States. The album has achieved considerable worldwide success and its singles have become major hits—these include the worldwide number-one hit single \"Umbrella\", the European and Australian number-one \"Don't Stop the Music\" (which also became a top three hit in the U.S. and Canada), \"Hate That I Love You\" and \"Shut Up and Drive\", which became top ten and top twenty hits on the U.S. Billboard Hot 100.\n\nThe album was re-released in June 2008, a year after its original release, under the title Good Girl Gone Bad: Reloaded. The double-disc deluxe edition package includes three new singles: the U.S., Canadian and UK number-one \"Take a Bow\", \"If I Never See Your Face Again\" (which debuted at number fifty-seven on the Billboard Hot 100) and \"Disturbia\", which became the third single from the album to reach number one on the Billboard Hot 100. The album has been certified two times Platinum by the RIAA, denoting shipments to U.S. retailers of two million copies. <a href=\"http://www.last.fm/music/Rihanna/Good+Girl+Gone+Bad\">Read more on Last.fm</a>. User-contributed text is available under the Creative Commons By-SA License; additional terms may apply."
+    }
+  }
+}

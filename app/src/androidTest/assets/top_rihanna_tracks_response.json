@@ -1,0 +1,1707 @@
+{
+  "toptracks": {
+    "track": [
+      {
+        "name": "Don't Stop the Music",
+        "playcount": "4002313",
+        "listeners": "821857",
+        "mbid": "a5e848c5-7155-4dfc-931d-df4b01f3a989",
+        "url": "http://www.last.fm/music/Rihanna/_/Don%27t+Stop+the+Music",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "1"
+        }
+      },
+      {
+        "name": "Umbrella",
+        "playcount": "4080401",
+        "listeners": "766084",
+        "mbid": "0b4b1b0c-e057-4d8d-9a47-12a97ff6fb3d",
+        "url": "http://www.last.fm/music/Rihanna/_/Umbrella",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "2"
+        }
+      },
+      {
+        "name": "Rude Boy",
+        "playcount": "4667285",
+        "listeners": "730032",
+        "mbid": "3d3ef666-880f-4dd8-b17f-4e58a7b35c4c",
+        "url": "http://www.last.fm/music/Rihanna/_/Rude+Boy",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "3"
+        }
+      },
+      {
+        "name": "Disturbia",
+        "playcount": "4667162",
+        "listeners": "717748",
+        "mbid": "1bd93bdf-8f54-489d-be5b-98d85c160b5c",
+        "url": "http://www.last.fm/music/Rihanna/_/Disturbia",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "4"
+        }
+      },
+      {
+        "name": "We Found Love (feat. Calvin Harris)",
+        "playcount": "7025159",
+        "listeners": "653702",
+        "url": "http://www.last.fm/music/Rihanna/_/We+Found+Love+(feat.+Calvin+Harris)",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "5"
+        }
+      },
+      {
+        "name": "Unfaithful",
+        "playcount": "2970856",
+        "listeners": "633536",
+        "mbid": "f79daa5e-448f-427b-b881-a897a0a79326",
+        "url": "http://www.last.fm/music/Rihanna/_/Unfaithful",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "6"
+        }
+      },
+      {
+        "name": "Shut Up and Drive",
+        "playcount": "2636244",
+        "listeners": "549534",
+        "mbid": "627693f3-776d-4646-9ade-2c8bc8e83316",
+        "url": "http://www.last.fm/music/Rihanna/_/Shut+Up+and+Drive",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "7"
+        }
+      },
+      {
+        "name": "Only Girl (In the World)",
+        "playcount": "5933937",
+        "listeners": "540965",
+        "mbid": "e6d894a9-8593-4b90-966a-9ce743365c3e",
+        "url": "http://www.last.fm/music/Rihanna/_/Only+Girl+(In+the+World)",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "8"
+        }
+      },
+      {
+        "name": "S&M",
+        "playcount": "4806429",
+        "listeners": "537243",
+        "mbid": "5a5056f9-1bec-426e-bc39-2ba1d22bb13b",
+        "url": "http://www.last.fm/music/Rihanna/_/S&M",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "9"
+        }
+      },
+      {
+        "name": "Russian Roulette",
+        "playcount": "3278029",
+        "listeners": "513421",
+        "mbid": "64f83227-6a8e-4f10-99b8-d39fab286807",
+        "url": "http://www.last.fm/music/Rihanna/_/Russian+Roulette",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "10"
+        }
+      },
+      {
+        "name": "Diamonds",
+        "playcount": "5705466",
+        "listeners": "509783",
+        "mbid": "f281056d-5696-43d0-bb2e-61677ef65309",
+        "url": "http://www.last.fm/music/Rihanna/_/Diamonds",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "11"
+        }
+      },
+      {
+        "name": "Rehab",
+        "playcount": "2702559",
+        "listeners": "463770",
+        "mbid": "947dc1a5-cb9d-4a09-b97a-743cc1289b31",
+        "url": "http://www.last.fm/music/Rihanna/_/Rehab",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "12"
+        }
+      },
+      {
+        "name": "Take a Bow",
+        "playcount": "2448833",
+        "listeners": "460932",
+        "mbid": "fa515490-6b24-4e54-9387-aed958600304",
+        "url": "http://www.last.fm/music/Rihanna/_/Take+a+Bow",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "13"
+        }
+      },
+      {
+        "name": "Where Have You Been",
+        "playcount": "4157125",
+        "listeners": "413257",
+        "mbid": "3d409b8b-7161-4787-8c89-ccee7b232d5d",
+        "url": "http://www.last.fm/music/Rihanna/_/Where+Have+You+Been",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "14"
+        }
+      },
+      {
+        "name": "Te Amo",
+        "playcount": "2674640",
+        "listeners": "408245",
+        "mbid": "69da9f64-8d53-4d12-b658-60d72ecf5936",
+        "url": "http://www.last.fm/music/Rihanna/_/Te+Amo",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "15"
+        }
+      },
+      {
+        "name": "Pon de Replay",
+        "playcount": "1558416",
+        "listeners": "352290",
+        "mbid": "f9845fce-5ab7-456f-8579-6a1fcfa8cf25",
+        "url": "http://www.last.fm/music/Rihanna/_/Pon+de+Replay",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "16"
+        }
+      },
+      {
+        "name": "Man Down",
+        "playcount": "2839898",
+        "listeners": "341131",
+        "mbid": "5be1dcbf-1b22-45df-a584-4ddf526eb274",
+        "url": "http://www.last.fm/music/Rihanna/_/Man+Down",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "17"
+        }
+      },
+      {
+        "name": "Hate That I Love You",
+        "playcount": "2075391",
+        "listeners": "330081",
+        "mbid": "f6efdc15-38e6-42c2-9575-645b5dabc1be",
+        "url": "http://www.last.fm/music/Rihanna/_/Hate+That+I+Love+You",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "18"
+        }
+      },
+      {
+        "name": "California King Bed",
+        "playcount": "2364632",
+        "listeners": "291175",
+        "mbid": "a1e93c24-0d41-474f-b266-cd8ab1e76909",
+        "url": "http://www.last.fm/music/Rihanna/_/California+King+Bed",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "19"
+        }
+      },
+      {
+        "name": "Cheers (Drink to That)",
+        "playcount": "1985018",
+        "listeners": "281269",
+        "mbid": "38a0e25d-40ce-4598-b1d1-254b3a84889a",
+        "url": "http://www.last.fm/music/Rihanna/_/Cheers+(Drink+to+That)",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "20"
+        }
+      },
+      {
+        "name": "You Da One",
+        "playcount": "2392122",
+        "listeners": "277635",
+        "mbid": "c914e7e3-3ae6-4f2b-80ed-d8d58846f489",
+        "url": "http://www.last.fm/music/Rihanna/_/You+Da+One",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "21"
+        }
+      },
+      {
+        "name": "SOS",
+        "playcount": "1178382",
+        "listeners": "264801",
+        "mbid": "6cf1ce5a-40a5-4b40-8bab-6d998de8a7c0",
+        "url": "http://www.last.fm/music/Rihanna/_/SOS",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "22"
+        }
+      },
+      {
+        "name": "Breakin' Dishes",
+        "playcount": "1398024",
+        "listeners": "257602",
+        "mbid": "ca188360-acf7-487e-9305-a4ab9b5f893f",
+        "url": "http://www.last.fm/music/Rihanna/_/Breakin%27+Dishes",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "23"
+        }
+      },
+      {
+        "name": "Good Girl Gone Bad",
+        "playcount": "1224538",
+        "listeners": "217026",
+        "mbid": "3603cfe2-0ec8-4714-84ed-151ab10573fd",
+        "url": "http://www.last.fm/music/Rihanna/_/Good+Girl+Gone+Bad",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "24"
+        }
+      },
+      {
+        "name": "Push Up on Me",
+        "playcount": "968941",
+        "listeners": "212613",
+        "mbid": "a3660057-3b2e-4c1d-aec9-4b0ae159817e",
+        "url": "http://www.last.fm/music/Rihanna/_/Push+Up+on+Me",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "25"
+        }
+      },
+      {
+        "name": "FourFiveSeconds",
+        "playcount": "1146134",
+        "listeners": "198347",
+        "url": "http://www.last.fm/music/Rihanna/_/FourFiveSeconds",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "26"
+        }
+      },
+      {
+        "name": "Bitch Better Have My Money",
+        "playcount": "1792391",
+        "listeners": "194441",
+        "url": "http://www.last.fm/music/Rihanna/_/Bitch+Better+Have+My+Money",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "27"
+        }
+      },
+      {
+        "name": "Birthday Cake",
+        "playcount": "1627820",
+        "listeners": "193113",
+        "mbid": "a8ac4e32-1ecb-420e-a445-ffbda3583a1f",
+        "url": "http://www.last.fm/music/Rihanna/_/Birthday+Cake",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "28"
+        }
+      },
+      {
+        "name": "What's My Name?",
+        "playcount": "1177698",
+        "listeners": "185432",
+        "url": "http://www.last.fm/music/Rihanna/_/What%27s+My+Name%3F",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "29"
+        }
+      },
+      {
+        "name": "We Ride",
+        "playcount": "780384",
+        "listeners": "180171",
+        "mbid": "bbd9821f-e69a-49aa-abc6-54888172b499",
+        "url": "http://www.last.fm/music/Rihanna/_/We+Ride",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "30"
+        }
+      },
+      {
+        "name": "Fading",
+        "playcount": "1183635",
+        "listeners": "175831",
+        "mbid": "57444c3a-4a0e-4dfa-832a-651fb66a0257",
+        "url": "http://www.last.fm/music/Rihanna/_/Fading",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "31"
+        }
+      },
+      {
+        "name": "Sell Me Candy",
+        "playcount": "857317",
+        "listeners": "174373",
+        "mbid": "5ca0a3ec-271d-41cb-9fef-556a771a71c1",
+        "url": "http://www.last.fm/music/Rihanna/_/Sell+Me+Candy",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "32"
+        }
+      },
+      {
+        "name": "Stay",
+        "playcount": "1057741",
+        "listeners": "170081",
+        "mbid": "77617256-c2ce-46b5-b8e5-9ff7894a5397",
+        "url": "http://www.last.fm/music/Rihanna/_/Stay",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "33"
+        }
+      },
+      {
+        "name": "Skin",
+        "playcount": "1212378",
+        "listeners": "166011",
+        "mbid": "e0cba862-0223-40fa-b2f4-7b0c42631a91",
+        "url": "http://www.last.fm/music/Rihanna/_/Skin",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "34"
+        }
+      },
+      {
+        "name": "Pour It Up",
+        "playcount": "1584845",
+        "listeners": "162147",
+        "mbid": "d4e0d27d-8243-46a4-bcf7-f2afa27b6212",
+        "url": "http://www.last.fm/music/Rihanna/_/Pour+It+Up",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "35"
+        }
+      },
+      {
+        "name": "Talk That Talk",
+        "playcount": "863875",
+        "listeners": "161214",
+        "url": "http://www.last.fm/music/Rihanna/_/Talk+That+Talk",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "36"
+        }
+      },
+      {
+        "name": "Wait Your Turn",
+        "playcount": "1082864",
+        "listeners": "159743",
+        "mbid": "357f1971-588b-4ec3-8a5a-7225f1961d62",
+        "url": "http://www.last.fm/music/Rihanna/_/Wait+Your+Turn",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "37"
+        }
+      },
+      {
+        "name": "Lemme Get That",
+        "playcount": "690303",
+        "listeners": "156284",
+        "mbid": "b73a5606-8a5e-41d7-b3d4-cb6fd60a493d",
+        "url": "http://www.last.fm/music/Rihanna/_/Lemme+Get+That",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "38"
+        }
+      },
+      {
+        "name": "Cockiness (Love It)",
+        "playcount": "1260549",
+        "listeners": "153976",
+        "mbid": "973a4561-e997-4ea9-845d-277d67cdddbb",
+        "url": "http://www.last.fm/music/Rihanna/_/Cockiness+(Love+It)",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "39"
+        }
+      },
+      {
+        "name": "Say It",
+        "playcount": "596466",
+        "listeners": "153786",
+        "mbid": "318ab388-70e6-4d15-8d0a-b5f510ff15d8",
+        "url": "http://www.last.fm/music/Rihanna/_/Say+It",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "40"
+        }
+      },
+      {
+        "name": "Complicated",
+        "playcount": "1071847",
+        "listeners": "151967",
+        "mbid": "3ac570b4-5069-4592-a9e3-730eb91eca1d",
+        "url": "http://www.last.fm/music/Rihanna/_/Complicated",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "41"
+        }
+      },
+      {
+        "name": "Question Existing",
+        "playcount": "679726",
+        "listeners": "151197",
+        "mbid": "547f8280-8ce5-49bb-aa4e-675b9901ebef",
+        "url": "http://www.last.fm/music/Rihanna/_/Question+Existing",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "42"
+        }
+      },
+      {
+        "name": "What Now",
+        "playcount": "1276216",
+        "listeners": "150337",
+        "mbid": "4348756a-76db-4e4b-a83b-bd64ccbdee92",
+        "url": "http://www.last.fm/music/Rihanna/_/What+Now",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "43"
+        }
+      },
+      {
+        "name": "Cry",
+        "playcount": "959173",
+        "listeners": "149927",
+        "mbid": "9b3fbbec-cef2-4295-b98a-4c3e4b24019e",
+        "url": "http://www.last.fm/music/Rihanna/_/Cry",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "44"
+        }
+      },
+      {
+        "name": "Stupid in Love",
+        "playcount": "915444",
+        "listeners": "147610",
+        "mbid": "1961750a-fdad-4d69-a604-09734126de72",
+        "url": "http://www.last.fm/music/Rihanna/_/Stupid+in+Love",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "45"
+        }
+      },
+      {
+        "name": "Drunk on Love",
+        "playcount": "1207771",
+        "listeners": "145916",
+        "mbid": "0552ac06-85b7-480c-9263-2ca50a25c824",
+        "url": "http://www.last.fm/music/Rihanna/_/Drunk+on+Love",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "46"
+        }
+      },
+      {
+        "name": "Mad House",
+        "playcount": "751311",
+        "listeners": "144469",
+        "mbid": "f1f89369-a11e-41cd-8315-75a5cb551844",
+        "url": "http://www.last.fm/music/Rihanna/_/Mad+House",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "47"
+        }
+      },
+      {
+        "name": "Work",
+        "playcount": "992114",
+        "listeners": "138301",
+        "url": "http://www.last.fm/music/Rihanna/_/Work",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "48"
+        }
+      },
+      {
+        "name": "Hard",
+        "playcount": "807783",
+        "listeners": "131753",
+        "mbid": "04ce01ab-7340-4c49-a715-45703498fb0d",
+        "url": "http://www.last.fm/music/Rihanna/_/Hard",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "49"
+        }
+      },
+      {
+        "name": "Fire Bomb",
+        "playcount": "1050920",
+        "listeners": "129673",
+        "mbid": "a1780603-2004-4f6a-a68e-6ca0de9e542e",
+        "url": "http://www.last.fm/music/Rihanna/_/Fire+Bomb",
+        "streamable": "0",
+        "artist": {
+          "name": "Rihanna",
+          "mbid": "db36a76f-4cdf-43ac-8cd0-5e48092d2bae",
+          "url": "http://www.last.fm/music/Rihanna"
+        },
+        "image": [
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/34s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "small"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/64s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "medium"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/174s/77bce6700f56a5748202134973ccfd08.png",
+            "size": "large"
+          },
+          {
+            "#text": "http://img2-ak.lst.fm/i/u/300x300/77bce6700f56a5748202134973ccfd08.png",
+            "size": "extralarge"
+          }
+        ],
+        "@attr": {
+          "rank": "50"
+        }
+      }
+    ],
+    "@attr": {
+      "artist": "Rihanna",
+      "page": "1",
+      "perPage": "50",
+      "totalPages": "2003",
+      "total": "100118"
+    }
+  }
+}
