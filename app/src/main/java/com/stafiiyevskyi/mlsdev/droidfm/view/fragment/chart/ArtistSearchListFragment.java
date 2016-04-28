@@ -45,7 +45,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
     private boolean mIsLoading = true;
     private boolean mIsSearchFirstCall = false;
     private boolean mIsSearchActivate = false;
-    private int mCurrentPageNumber = 2;
+    private int mCurrentPageNumber = 1;
     private int mVisibleItemCount, mTotalItemCount;
     private int mLastVisibleItemPosition;
     private String mSearchQuery = "";

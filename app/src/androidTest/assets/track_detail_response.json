@@ -1,0 +1,42 @@
+{
+  "track": {
+    "name": "Stressed Out",
+    "url": "http://www.last.fm/music/Twenty+One+Pilots/_/Stressed+Out",
+    "duration": "202000",
+    "streamable": {
+      "#text": "0",
+      "fulltrack": "0"
+    },
+    "listeners": "186543",
+    "playcount": "1516304",
+    "artist": {
+      "name": "Twenty One Pilots",
+      "mbid": "a6c6897a-7415-4f8d-b5a5-3a5e05f3be67",
+      "url": "http://www.last.fm/music/Twenty+One+Pilots"
+    },
+    "toptags": {
+      "tag": [
+        {
+          "name": "indie",
+          "url": "http://www.last.fm/tag/indie"
+        },
+        {
+          "name": "Awesome",
+          "url": "http://www.last.fm/tag/Awesome"
+        },
+        {
+          "name": "love at first listen",
+          "url": "http://www.last.fm/tag/love+at+first+listen"
+        },
+        {
+          "name": "alternative",
+          "url": "http://www.last.fm/tag/alternative"
+        },
+        {
+          "name": "my name is blurryface and i care what you think",
+          "url": "http://www.last.fm/tag/my+name+is+blurryface+and+i+care+what+you+think"
+        }
+      ]
+    }
+  }
+}

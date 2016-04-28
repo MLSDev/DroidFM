@@ -25,6 +25,7 @@
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:id="@+id/iv_artist"
                     android:layout_width="160dp"
                     android:layout_height="160dp"

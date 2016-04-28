@@ -21,10 +21,15 @@ public class LastFMRestClient {
 
     private static LastFMService service;
 
-    private static final String BASE_URL = "http://ws.audioscrobbler.com/2.0/";
+    private static String BASE_URL = "http://ws.audioscrobbler.com/2.0/";
 
 
     private LastFMRestClient() {
+    }
+
+    public static void setBaseUrl(String baseUrl) {
+        BASE_URL = baseUrl;
+        service = null;
     }
 
     public static LastFMService getService() {

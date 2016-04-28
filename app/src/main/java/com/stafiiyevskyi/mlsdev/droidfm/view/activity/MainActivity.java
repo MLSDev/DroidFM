@@ -11,6 +11,7 @@ import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.MenuItem;
 
+import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.AlbumsDetailsFragment;
@@ -46,7 +47,8 @@ public class MainActivity extends BaseActivity implements Navigator {
         mFragmentManager = getSupportFragmentManager();
         setupNavigation();
         getSupportActionBar().setSubtitle(getString(R.string.artists_section_title));
-        navigateToArtistsSearchScreen();
+        if (!JUnitTestHelper.getInstance().isJunitRunning())
+            navigateToArtistsSearchScreen();
     }
 
 
