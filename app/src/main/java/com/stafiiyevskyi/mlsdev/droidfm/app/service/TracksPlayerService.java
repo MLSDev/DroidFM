@@ -151,6 +151,23 @@ public class TracksPlayerService extends Service implements MediaPlayer.OnComple
         return mState;
     }
 
+    public int getPlayerTotalDuration() {
+        if (mState.equals(State.Paused) || mState.equals(State.Playing))
+            return mediaPlayer.getDuration();
+        return 0;
+    }
+
+    public int getPlayerCurrentPosition() {
+        if (mState.equals(State.Paused) || mState.equals(State.Playing))
+            return mediaPlayer.getCurrentPosition();
+        return 0;
+    }
+
+    public void seekPlayerTo(int value) {
+        if (mState.equals(State.Paused) || mState.equals(State.Playing))
+            mediaPlayer.seekTo(value);
+    }
+
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
         releaseMP();

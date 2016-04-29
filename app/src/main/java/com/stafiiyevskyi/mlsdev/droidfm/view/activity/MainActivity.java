@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -10,9 +11,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatImageView;
-import android.util.Log;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
@@ -32,6 +33,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragme
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.signin.LoginVKDialogFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag.TagTopContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
+import com.stafiiyevskyi.mlsdev.droidfm.view.util.SeekBarUtils;
 import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
@@ -40,11 +42,20 @@ import com.vk.sdk.api.VKError;
 
 import butterknife.Bind;
 
-public class MainActivity extends BaseActivity implements Navigator {
+public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnSeekBarChangeListener {
     @Bind(R.id.drawer_layout)
     DrawerLayout drNavigation;
     @Bind(R.id.nav_view)
     NavigationView nvNavigation;
+
+    @Bind(R.id.sb_player_seekbar)
+    SeekBar mSbSeekbar;
+    @Bind(R.id.tv_play_track_name)
+    AppCompatTextView mTvPlayTrackName;
+    @Bind(R.id.tv_current_track_position)
+    AppCompatTextView mTvCurrentTrackPosition;
+    @Bind(R.id.tv_track_duration)
+    AppCompatTextView mTvTrackTotalDuration;
 
     private FragmentManager mFragmentManager;
 
@@ -52,10 +63,13 @@ public class MainActivity extends BaseActivity implements Navigator {
     private ActionBarDrawerToggle mDrawerToggle;
     private MenuArrowDrawable mDrawerArrowDrawable;
     private BaseFragment mFirstFragment;
+    private Handler mHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mHandler = new Handler();
+        setupPlayerWidget();
         mFragmentManager = getSupportFragmentManager();
         setupNavigation();
         getSupportActionBar().setSubtitle(getString(R.string.artists_section_title));
@@ -95,8 +109,6 @@ public class MainActivity extends BaseActivity implements Navigator {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
-                Log.e("AccessToken", res.accessToken);
-                Log.e("UserId", res.userId);
                 PreferencesManager.getInstance().setAccessToken(res.accessToken);
                 PreferencesManager.getInstance().setUserId(res.userId);
                 navigateToArtistsSearchScreen();
@@ -104,7 +116,7 @@ public class MainActivity extends BaseActivity implements Navigator {
 
             @Override
             public void onError(VKError error) {
-//                Toast.makeText(MainActivity.this, R.string.not_access_message, Toast.LENGTH_LONG).show();
+
             }
         })) {
             super.onActivityResult(requestCode, resultCode, data);
@@ -288,5 +300,53 @@ public class MainActivity extends BaseActivity implements Navigator {
         } else {
             mFirstFragment.updateToolbar();
         }
+    }
+
+
+    public void updateProgressBar() {
+        mHandler.postDelayed(mUpdateTimeTask, 100);
+    }
+
+    private Runnable mUpdateTimeTask = new Runnable() {
+        public void run() {
+            TracksPlayerService.State state = TracksPlayerService.getInstance().getCurrentState();
+            if (!(state.equals(TracksPlayerService.State.Paused) || state.equals(TracksPlayerService.State.Retrieving)
+                    || state.equals(TracksPlayerService.State.Stopped) || state.equals(TracksPlayerService.State.Preparing))) {
+                long totalDuration = TracksPlayerService.getInstance().getPlayerTotalDuration();
+                long currentDuration = TracksPlayerService.getInstance().getPlayerCurrentPosition();
+                mTvTrackTotalDuration.setText("" + SeekBarUtils.milliSecondsToTimer(totalDuration));
+                mTvCurrentTrackPosition.setText("" + SeekBarUtils.milliSecondsToTimer(currentDuration));
+                int progress = SeekBarUtils.getProgressPercentage(currentDuration, totalDuration);
+                mSbSeekbar.setProgress(progress);
+            }
+            mHandler.postDelayed(this, 100);
+        }
+    };
+
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+
+    }
+
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        mHandler.removeCallbacks(mUpdateTimeTask);
+    }
+
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        mHandler.removeCallbacks(mUpdateTimeTask);
+        int totalDuration = TracksPlayerService.getInstance().getPlayerTotalDuration();
+        int currentPosition = SeekBarUtils.progressToTimer(seekBar.getProgress(), totalDuration);
+        TracksPlayerService.getInstance().seekPlayerTo(currentPosition);
+        updateProgressBar();
+    }
+
+    private void setupPlayerWidget() {
+        mSbSeekbar.setOnSeekBarChangeListener(this);
+        updateProgressBar();
     }
 }
