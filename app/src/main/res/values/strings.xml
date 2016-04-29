@@ -1,8 +1,16 @@
 <resources>
+    <integer name="com_vk_sdk_AppId">5440298</integer>
+
     <string name="app_name">DroidFM</string>
     <string name="action_settings">Settings</string>
     <string name="last_fm_api_key">c0cca0938e628d1582474f036955fcfa</string>
     <string name="last_fm_shared_secret">fa8286042ffb474f318a755e33b11142</string>
+
+    <string name="sound_cloud_client_id">777369e3ab30d6f25196c5eca1de96e4</string>
+    <string name="sound_cloud_secret_id">c0da5a0be7ef5227b71be2d4ac32730a</string>
+
+
+
     <string name="tracks_section_title">Tracks</string>
     <string name="charts_section_title">Charts</string>
     <string name="artists_section_title">Artists</string>

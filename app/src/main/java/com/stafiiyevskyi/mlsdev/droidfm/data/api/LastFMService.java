@@ -13,9 +13,11 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.ArtistTopTracks;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.TopChartTracks;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail.TrackDetailResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.search.TrackSearchResponse;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VKTrackResponse;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -74,4 +76,8 @@ public interface LastFMService {
     // Album Requests ////////////////////////////////////////////////////
     @GET("?method=album.getinfo")
     Observable<AlbumDetailResponse> getAlbumDetails(@Query("artist") String artist, @Query("album") String album, @Query("mbid") String mbid);
+
+    // VK track request
+    @GET
+    Observable<VKTrackResponse> getTrackStream(@Url String fullUrlToTrack);
 }

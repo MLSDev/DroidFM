@@ -1,5 +1,6 @@
 package com.stafiiyevskyi.mlsdev.droidfm.view.activity;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,10 +10,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.app.util.NetworkUtil;
+import com.stafiiyevskyi.mlsdev.droidfm.app.util.PreferencesManager;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.AlbumsDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
@@ -22,9 +28,14 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TopChartsContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TrackDetailFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.signin.LoginVKDialogFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag.TagTopContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKCallback;
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKError;
 
 import butterknife.Bind;
 
@@ -47,8 +58,55 @@ public class MainActivity extends BaseActivity implements Navigator {
         mFragmentManager = getSupportFragmentManager();
         setupNavigation();
         getSupportActionBar().setSubtitle(getString(R.string.artists_section_title));
+
         if (!JUnitTestHelper.getInstance().isJunitRunning())
-            navigateToArtistsSearchScreen();
+            VKSdk.wakeUpSession(this, new VKCallback<VKSdk.LoginState>() {
+                @Override
+                public void onResult(VKSdk.LoginState res) {
+                    switch (res) {
+                        case LoggedOut:
+                            navigateToArtistsSearchScreen();
+                            navigateToLoginVKDialog();
+                            return;
+                        case LoggedIn:
+                            navigateToArtistsSearchScreen();
+                            return;
+                        case Pending:
+                            if (!NetworkUtil.isNetworkConnected(MainActivity.this)) {
+                                Toast.makeText(MainActivity.this, "No Internet connection", Toast.LENGTH_LONG).show();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                @Override
+                public void onError(VKError error) {
+                    Toast.makeText(MainActivity.this, error.errorMessage, Toast.LENGTH_LONG).show();
+                }
+            });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
+            @Override
+            public void onResult(VKAccessToken res) {
+                Log.e("AccessToken",res.accessToken);
+                Log.e("UserId",res.userId);
+                PreferencesManager.getInstance().setAccessToken(res.accessToken);
+                PreferencesManager.getInstance().setUserId(res.userId);
+                navigateToArtistsSearchScreen();
+            }
+
+            @Override
+            public void onError(VKError error) {
+//                Toast.makeText(MainActivity.this, R.string.not_access_message, Toast.LENGTH_LONG).show();
+            }
+        })) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 
@@ -207,6 +265,11 @@ public class MainActivity extends BaseActivity implements Navigator {
                 .add(R.id.fragment_container, TrackDetailFragment.newInstance(artist, track, mbid))
                 .addToBackStack(TrackDetailFragment.class.getName() + mbid)
                 .commit();
+    }
+
+    @Override
+    public void navigateToLoginVKDialog() {
+        LoginVKDialogFragment.newInstance().show(mFragmentManager, LoginVKDialogFragment.class.getName());
     }
 
     @Override
