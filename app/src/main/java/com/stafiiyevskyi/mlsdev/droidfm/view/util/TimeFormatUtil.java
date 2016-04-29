@@ -12,9 +12,9 @@ public final class TimeFormatUtil {
 
     public static String getFormattedTimeMillisToMinutes(int milliseconds) {
         return String.format("%d min, %d sec",
-                TimeUnit.MILLISECONDS.toMinutes(milliseconds),
-                TimeUnit.MILLISECONDS.toSeconds(milliseconds) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliseconds))
+                TimeUnit.SECONDS.toMinutes(milliseconds),
+                milliseconds -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(milliseconds))
         );
     }
 }

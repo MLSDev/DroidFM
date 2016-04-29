@@ -1,5 +1,6 @@
 package com.stafiiyevskyi.mlsdev.droidfm.data.model.impl;
 
+import com.stafiiyevskyi.mlsdev.droidfm.app.util.PreferencesManager;
 import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VKTrackResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.VKTrackModel;
@@ -13,8 +14,8 @@ import rx.schedulers.Schedulers;
  */
 public class VKTrackModelImpl implements VKTrackModel {
     @Override
-    public Observable<VKTrackResponse> getVKTrack(String trackSearch, String accessToken) {
-        String fullUrl = "https://api.vk.com/method/audio.search?q=+" + trackSearch + "&count=1&access_token=" + accessToken;
+    public Observable<VKTrackResponse> getVKTrack(String trackSearch) {
+        String fullUrl = "https://api.vk.com/method/audio.search?q=+" + trackSearch + "&count=1&access_token=" + PreferencesManager.getInstance().getAccessToken();
         return LastFMRestClient.getService().getTrackStream(fullUrl)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

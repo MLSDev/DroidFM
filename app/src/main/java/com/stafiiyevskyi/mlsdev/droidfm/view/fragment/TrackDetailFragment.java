@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.app.service.TracksPlayerService;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.TrackDetailScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TagWithUrlEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackDetailEntity;
@@ -23,6 +25,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.util.LinkUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.TimeFormatUtil;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by oleksandr on 27.04.16.
@@ -47,12 +50,15 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     AppCompatTextView mTvTrackTags;
     @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
+    @Bind(R.id.iv_play_pause)
+    AppCompatImageView mIvPlayPause;
 
     private TrackDetailScreenPresenter mPresenter;
 
     private String mBid;
     private String mArtist;
     private String mTrack;
+    private String mTrackUrl;
 
     public static TrackDetailFragment newInstance(String artist, String track, String mbid) {
 
@@ -87,6 +93,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         mArtist = args.getString(ARTIST_BUNDLE_KEY);
         mPresenter = new TrackDetailScreenPresenterImpl(this);
         mPresenter.getTrackDetails(mArtist, mTrack, mBid);
+        mPresenter.getTrackStreamUrl(mArtist + " " + mTrack);
     }
 
     @Override
@@ -121,8 +128,33 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         String tagsString = builder.toString();
         mTvTrackTags.setMovementMethod(LinkMovementMethod.getInstance());
         mTvTrackTags.setText(Html.fromHtml(tagsString));
+    }
 
-        mTvTrackDuration.setText(String.format(getString(R.string.duration), TimeFormatUtil.getFormattedTimeMillisToMinutes(Integer.valueOf(track.getDuration()))));
+    @Override
+    public void showTrackStreamUrl(String url, int trackDuration) {
+        mTvTrackDuration.setText(String.format(getString(R.string.duration), TimeFormatUtil.getFormattedTimeMillisToMinutes(trackDuration)));
+        mIvPlayPause.setVisibility(View.VISIBLE);
+        mTrackUrl = url;
+        if (TracksPlayerService.getInstance().isTrackPlaying(mTrackUrl)) {
+            switch (TracksPlayerService.getInstance().getCurrentState()) {
+                case Retrieving:
+                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                    break;
+                case Stopped:
+                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                    break;
+                case Preparing:
+                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                    break;
+                case Playing:
+                    mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
+                    break;
+                case Paused:
+                    break;
+            }
+        } else {
+            mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+        }
     }
 
     @Override
@@ -130,5 +162,27 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         Log.e("TrackDetail", errorMessage);
         mPbProgress.setVisibility(View.GONE);
         Snackbar.make(mTvTrackContent, errorMessage, Snackbar.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.iv_play_pause)
+    public void onPlayPauseClick() {
+        TracksPlayerService.getInstance().playTrack(mTrackUrl);
+        switch (TracksPlayerService.getInstance().getCurrentState()) {
+            case Retrieving:
+                mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                break;
+            case Stopped:
+                mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                break;
+            case Preparing:
+                mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
+                break;
+            case Playing:
+                mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
+                break;
+            case Paused:
+                mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                break;
+        }
     }
 }

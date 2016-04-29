@@ -9,5 +9,5 @@ import rx.Observable;
  */
 public interface VKTrackModel {
 
-    Observable<VKTrackResponse> getVKTrack(String trackSearch, String accessToken);
+    Observable<VKTrackResponse> getVKTrack(String trackSearch);
 }

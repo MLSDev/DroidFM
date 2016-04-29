@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.app.service.TracksPlayerService;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.NetworkUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.PreferencesManager;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
@@ -58,6 +59,7 @@ public class MainActivity extends BaseActivity implements Navigator {
         mFragmentManager = getSupportFragmentManager();
         setupNavigation();
         getSupportActionBar().setSubtitle(getString(R.string.artists_section_title));
+        startService(new Intent(this, TracksPlayerService.class));
 
         if (!JUnitTestHelper.getInstance().isJunitRunning())
             VKSdk.wakeUpSession(this, new VKCallback<VKSdk.LoginState>() {
@@ -93,8 +95,8 @@ public class MainActivity extends BaseActivity implements Navigator {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
-                Log.e("AccessToken",res.accessToken);
-                Log.e("UserId",res.userId);
+                Log.e("AccessToken", res.accessToken);
+                Log.e("UserId", res.userId);
                 PreferencesManager.getInstance().setAccessToken(res.accessToken);
                 PreferencesManager.getInstance().setUserId(res.userId);
                 navigateToArtistsSearchScreen();

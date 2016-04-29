@@ -8,4 +8,6 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackDetailEntity;
 public interface TrackDetailScreenView extends BaseScreenView {
 
     void showTrackDetail(TrackDetailEntity track);
+
+    void showTrackStreamUrl(String url, int trackDuration);
 }

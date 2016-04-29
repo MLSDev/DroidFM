@@ -6,4 +6,6 @@ package com.stafiiyevskyi.mlsdev.droidfm.presenter;
 public interface TrackDetailScreenPresenter extends Presenter {
 
     void getTrackDetails(String artist, String track, String mbid);
+
+    void getTrackStreamUrl(String trackSearch);
 }
