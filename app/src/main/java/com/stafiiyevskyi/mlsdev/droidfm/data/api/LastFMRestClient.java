@@ -91,7 +91,6 @@ public class LastFMRestClient {
             itemResponse.setArtist(object.getAsJsonPrimitive("artist").getAsString());
             itemResponse.setGenre(object.getAsJsonPrimitive("genre").getAsInt());
             itemResponse.setAid(object.getAsJsonPrimitive("aid").getAsInt());
-            itemResponse.setLyricsId(object.getAsJsonPrimitive("lyrics_id").getAsString());
             itemResponse.setTitle(object.getAsJsonPrimitive("title").getAsString());
             itemResponse.setOwnerId(object.getAsJsonPrimitive("owner_id").getAsInt());
 

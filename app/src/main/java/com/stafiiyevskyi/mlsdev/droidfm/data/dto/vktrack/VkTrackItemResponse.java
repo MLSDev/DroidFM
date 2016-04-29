@@ -35,10 +35,6 @@ public class VkTrackItemResponse {
     @Expose
     private String url;
 
-    @SerializedName("lurics_id")
-    @Expose
-    private String lyricsId;
-
     public int getGenre() {
         return genre;
     }
@@ -93,13 +89,5 @@ public class VkTrackItemResponse {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getLyricsId() {
-        return lyricsId;
-    }
-
-    public void setLyricsId(String lyricsId) {
-        this.lyricsId = lyricsId;
     }
 }

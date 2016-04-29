@@ -15,7 +15,7 @@ import rx.schedulers.Schedulers;
 public class VKTrackModelImpl implements VKTrackModel {
     @Override
     public Observable<VKTrackResponse> getVKTrack(String trackSearch) {
-        String fullUrl = "https://api.vk.com/method/audio.search?q=+" + trackSearch + "&count=1&access_token=" + PreferencesManager.getInstance().getAccessToken();
+        String fullUrl = "https://api.vk.com/method/audio.search?q=" + trackSearch + "&count=1&access_token=" + PreferencesManager.getInstance().getAccessToken();
         return LastFMRestClient.getService().getTrackStream(fullUrl)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

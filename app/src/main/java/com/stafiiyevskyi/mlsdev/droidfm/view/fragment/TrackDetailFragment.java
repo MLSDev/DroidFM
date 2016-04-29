@@ -93,7 +93,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         mArtist = args.getString(ARTIST_BUNDLE_KEY);
         mPresenter = new TrackDetailScreenPresenterImpl(this);
         mPresenter.getTrackDetails(mArtist, mTrack, mBid);
-        mPresenter.getTrackStreamUrl(mArtist + " " + mTrack);
+        mPresenter.getTrackStreamUrl(mArtist + " - " + mTrack);
     }
 
     @Override
