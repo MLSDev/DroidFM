@@ -80,6 +80,11 @@ public class LastFMRestClient {
         public VKTrackResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject parentObjec = json.getAsJsonObject();
             JsonArray array = parentObjec.getAsJsonArray("response");
+            if (array != null) {
+                if (array.size() == 1) return new VKTrackResponse();
+            } else {
+                return new VKTrackResponse();
+            }
 
             JsonObject object = array.get(1).getAsJsonObject();
 

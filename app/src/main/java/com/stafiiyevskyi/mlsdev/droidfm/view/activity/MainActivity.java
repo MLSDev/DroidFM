@@ -21,8 +21,10 @@ import com.bumptech.glide.Glide;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventTrackStart;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
+import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.app.service.TracksPlayerService;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.NetworkUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.PreferencesManager;
@@ -361,10 +363,10 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 long currentDuration = MediaPlayerWrapper.getInstance().getPlayerCurrentPosition();
                 mTvTrackTotalDuration.setText("" + SeekBarUtils.milliSecondsToTimer(totalDuration));
                 mTvCurrentTrackPosition.setText("" + SeekBarUtils.milliSecondsToTimer(currentDuration));
-                mTvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getmTrackName());
+                mTvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
                 int progress = SeekBarUtils.getProgressPercentage(currentDuration, totalDuration);
                 mSbSeekbar.setProgress(progress);
-                Glide.with(MainActivity.this).load(MediaPlayerWrapper.getInstance().getmAlbumImageUrl()).into(mIvAlbumsTrackImage);
+                Glide.with(MainActivity.this).load(MediaPlayerWrapper.getInstance().getCurrentTrack().getmAlbumImageUrl()).into(mIvAlbumsTrackImage);
             }
 
             mHandler.postDelayed(this, 100);
@@ -408,13 +410,14 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
                 break;
         }
-        mTrackUrl = MediaPlayerWrapper.getInstance().getTrackUrl();
-        mTrack = MediaPlayerWrapper.getInstance().getmTrackName();
-        mAlbumImage = MediaPlayerWrapper.getInstance().getmAlbumImageUrl();
-        mArtist = MediaPlayerWrapper.getInstance().getmArtistName();
+
+        mTrack = MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName();
+        mAlbumImage = MediaPlayerWrapper.getInstance().getCurrentTrack().getmAlbumImageUrl();
+        mArtist = MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName();
         mSbSeekbar.setOnSeekBarChangeListener(this);
         updateProgressBar();
         mIvPlayPause.setOnClickListener(view -> {
+            mTrackUrl = MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackUrl();
             if (mTrackUrl != null) {
                 MediaPlayerWrapper.getInstance().playTrack(mTrackUrl, mArtist, mTrack, mAlbumImage);
                 switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
@@ -439,15 +442,20 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     }
 
     @Subscribe
-    public void trackStartEvent(EventTrackStart event) {
+    public void trackStartEvent(TrackPlayerEntity event) {
         mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        mTrack = event.getTrackName();
-        mAlbumImage = event.getAlbumImage();
-        mArtist = event.getArtistName();
-        mTrackUrl = event.getTrackUrl();
+        mTrack = event.getmTrackName();
+        mAlbumImage = event.getmAlbumImageUrl();
+        mArtist = event.getmArtistName();
+        mTrackUrl = event.getmTrackUrl();
         mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
-        mTvPlayTrackName.setText(event.getTrackName());
-        Glide.with(this).load(event.getAlbumImage()).into(mIvAlbumsTrackImage);
+        mTvPlayTrackName.setText(mTrack);
+        Glide.with(this).load(mAlbumImage).into(mIvAlbumsTrackImage);
         updateProgressBar();
+    }
+
+    @Subscribe
+    public void trackStartEvent(EventCurrentTrackPause eventCurrentTrackPause){
+        mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
     }
 }

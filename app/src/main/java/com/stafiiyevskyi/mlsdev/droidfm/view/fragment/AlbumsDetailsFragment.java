@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
+import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.AlbumsDetailScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.AlbumsDetailEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
@@ -23,7 +26,10 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.AlbumDetailsScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.AlbumsTracksAdapter;
 
+import java.util.List;
+
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by oleksandr on 26.04.16.
@@ -46,10 +52,13 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     RecyclerView mRvTracks;
     @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
+    @Bind(R.id.iv_play_album)
+    AppCompatImageView mIvPlayAlbum;
 
     private AlbumsDetailScreenPresenter mPresenter;
     private RecyclerView.LayoutManager mLayoutManager;
     private AlbumsTracksAdapter mAdapter;
+    private AlbumsDetailEntity mAlbumsDetailEntity;
 
     private String mMbid;
     private String mArtist;
@@ -110,6 +119,7 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
     @Override
     public void showAlbumsDetails(AlbumsDetailEntity album) {
+        mAlbumsDetailEntity = album;
         mPbProgress.setVisibility(View.GONE);
         mTvAlbumArtistName.setText(album.getArtistName());
         if (album.getContent() != null) {
@@ -123,6 +133,12 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     }
 
     @Override
+    public void showPlaylistUrls(List<TrackPlayerEntity> tracks) {
+        mPbProgress.setVisibility(View.GONE);
+        MediaPlayerWrapper.getInstance().playPlaylist(tracks);
+    }
+
+    @Override
     public void showError(String errorMessage) {
         mPbProgress.setVisibility(View.GONE);
         Log.e("AlbumsDetail", errorMessage);
@@ -132,5 +148,11 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     @Override
     public void onTrackClick(TrackEntity topTrack) {
         ((Navigator) getActivity()).navigateToTrackDetails(topTrack.getArtistName(), topTrack.getName(), "");
+    }
+
+    @OnClick(R.id.iv_play_album)
+    public void onPlayAlbumClick() {
+        mPbProgress.setVisibility(View.VISIBLE);
+        mPresenter.getAlbumPlaylist(mAlbumsDetailEntity.getTracks());
     }
 }

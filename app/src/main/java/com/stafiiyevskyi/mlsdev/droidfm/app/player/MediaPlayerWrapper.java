@@ -8,6 +8,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventTrackStart;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by oleksandr on 04.05.16.
@@ -15,10 +16,7 @@ import java.io.IOException;
 public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnBufferingUpdateListener {
 
     private static MediaPlayerWrapper mInstance;
-    private String mTrackUrl;
-    private String mTrackName;
-    private String mAlbumImageUrl;
-    private String mArtistName;
+    private TrackPlayerEntity mCurrentTrack = new TrackPlayerEntity();
     private State mState = State.Retrieving;
     private MediaPlayer mediaPlayer;
 
@@ -30,6 +28,10 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
         Paused
     }
 
+    private List<TrackPlayerEntity> mPlaylist;
+    private boolean isFromPlaylist = false;
+    private int mTrackPlaylistIndex;
+
     private MediaPlayerWrapper() {
 
     }
@@ -37,6 +39,10 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
     public synchronized static MediaPlayerWrapper getInstance() {
         if (mInstance == null) mInstance = new MediaPlayerWrapper();
         return mInstance;
+    }
+
+    public TrackPlayerEntity getCurrentTrack() {
+        return mCurrentTrack;
     }
 
     public void init() {
@@ -80,31 +86,24 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
             }
             EventBus.getDefault().post(new EventCurrentTrackPause());
         } else {
-            this.mTrackUrl = mCurrentTrackUrl;
-            setmArtistName(artistName);
-            setmTrackName(mTrackName);
-            setmAlbumImageUrl(albumImageUrl);
-            EventTrackStart event = new EventTrackStart();
-            event.setAlbumImage(albumImageUrl);
-            event.setArtistName(artistName);
-            event.setTrackName(mTrackName);
-            event.setTrackUrl(mCurrentTrackUrl);
-            EventBus.getDefault().post(event);
+
+            mCurrentTrack.setmAlbumImageUrl(albumImageUrl);
+            mCurrentTrack.setmArtistName(artistName);
+            mCurrentTrack.setmTrackName(mTrackName);
+            mCurrentTrack.setmTrackUrl(mCurrentTrackUrl);
+
+            EventBus.getDefault().post(mCurrentTrack);
             switch (mState) {
                 case Stopped:
-                    stopPlayer();
                     preparedPlayer();
                     break;
                 case Paused:
-                    stopPlayer();
                     preparedPlayer();
                     break;
                 case Playing:
-                    stopPlayer();
                     preparedPlayer();
                     break;
                 case Preparing:
-                    stopPlayer();
                     preparedPlayer();
                     break;
                 case Retrieving:
@@ -116,8 +115,30 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
         }
     }
 
+    public void playPlaylist(List<TrackPlayerEntity> tracks) {
+        isFromPlaylist = true;
+        mPlaylist = tracks;
+        mTrackPlaylistIndex = 0;
+        mCurrentTrack = mPlaylist.get(mTrackPlaylistIndex);
+        playTrack(mCurrentTrack.getmTrackUrl(), mCurrentTrack.getmArtistName(), mCurrentTrack.getmTrackName(), mCurrentTrack.getmAlbumImageUrl());
+    }
+
+    public void nextTrack() {
+        if (mTrackPlaylistIndex <= (mPlaylist.size() - 1)) {
+            mCurrentTrack = mPlaylist.get(mTrackPlaylistIndex);
+            preparedPlayer();
+        }
+    }
+
+    public void previousTrack() {
+        if (mTrackPlaylistIndex >= 0) {
+            mCurrentTrack = mPlaylist.get(mTrackPlaylistIndex);
+            preparedPlayer();
+        }
+    }
+
     public boolean isTrackPlaying(String trackUrl) {
-        return trackUrl.equalsIgnoreCase(this.mTrackUrl);
+        return trackUrl.equalsIgnoreCase(mCurrentTrack.getmTrackUrl());
     }
 
 
@@ -143,7 +164,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
         stopPlayer();
         mediaPlayer.reset();
         try {
-            mediaPlayer.setDataSource(mTrackUrl);
+            mediaPlayer.setDataSource(mCurrentTrack.getmTrackUrl());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -173,37 +194,19 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
             mediaPlayer.seekTo(value);
     }
 
-    public String getmTrackName() {
-        return mTrackName;
-    }
-
-    public void setmTrackName(String mTrackName) {
-        this.mTrackName = mTrackName;
-    }
-
-    public String getmAlbumImageUrl() {
-        return mAlbumImageUrl;
-    }
-
-    public void setmAlbumImageUrl(String mAlbumImageUrl) {
-        this.mAlbumImageUrl = mAlbumImageUrl;
-    }
-
-    public String getmArtistName() {
-        return mArtistName;
-    }
-
-    public void setmArtistName(String mArtistName) {
-        this.mArtistName = mArtistName;
-    }
-
-    public String getTrackUrl() {
-        return mTrackUrl;
-    }
-
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        releaseMP();
+        if (isFromPlaylist) {
+            mTrackPlaylistIndex = mTrackPlaylistIndex + 1;
+            if (mTrackPlaylistIndex <= (mPlaylist.size() - 1)) {
+                mCurrentTrack = mPlaylist.get(mTrackPlaylistIndex);
+                preparedPlayer();
+            } else {
+                releaseMP();
+            }
+        } else {
+            releaseMP();
+        }
     }
 
     @Override
