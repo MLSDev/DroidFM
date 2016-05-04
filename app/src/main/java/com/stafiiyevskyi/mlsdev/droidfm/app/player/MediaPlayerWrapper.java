@@ -56,9 +56,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
     }
 
     public void playTrack(String mCurrentTrackUrl, String artistName, String mTrackName, String albumImageUrl) {
-        setmArtistName(artistName);
-        setmTrackName(mTrackName);
-        setmAlbumImageUrl(albumImageUrl);
+
         if (isTrackPlaying(mCurrentTrackUrl)) {
             switch (mState) {
                 case Stopped:
@@ -80,15 +78,18 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
                 default:
                     break;
             }
+            EventBus.getDefault().post(new EventCurrentTrackPause());
         } else {
+            this.mTrackUrl = mCurrentTrackUrl;
+            setmArtistName(artistName);
+            setmTrackName(mTrackName);
+            setmAlbumImageUrl(albumImageUrl);
             EventTrackStart event = new EventTrackStart();
             event.setAlbumImage(albumImageUrl);
             event.setArtistName(artistName);
             event.setTrackName(mTrackName);
             event.setTrackUrl(mCurrentTrackUrl);
             EventBus.getDefault().post(event);
-
-            this.mTrackUrl = mCurrentTrackUrl;
             switch (mState) {
                 case Stopped:
                     stopPlayer();
@@ -123,8 +124,8 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
     public void pausePlayer() {
         if (mediaPlayer.isPlaying())
             mediaPlayer.pause();
-        EventBus.getDefault().post(new EventCurrentTrackPause());
         mState = State.Paused;
+        EventBus.getDefault().post(new EventCurrentTrackPause());
     }
 
     public void stopPlayer() {
@@ -139,6 +140,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
     }
 
     public void preparedPlayer() {
+        stopPlayer();
         mediaPlayer.reset();
         try {
             mediaPlayer.setDataSource(mTrackUrl);

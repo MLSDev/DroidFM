@@ -18,6 +18,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventTrackStart;
@@ -68,6 +69,8 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     AppCompatTextView mTvCurrentTrackPosition;
     @Bind(R.id.tv_track_duration)
     AppCompatTextView mTvTrackTotalDuration;
+//    @Bind(R.id.sm_player)
+//    SlidingUpPanelLayout mSmPlayer;
 
     private FragmentManager mFragmentManager;
 
@@ -371,7 +374,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-        if (fromTouch){
+        if (fromTouch) {
             int totalDuration = MediaPlayerWrapper.getInstance().getPlayerTotalDuration();
             int currentPosition = SeekBarUtils.progressToTimer(seekBar.getProgress(), totalDuration);
             MediaPlayerWrapper.getInstance().seekPlayerTo(currentPosition);
@@ -388,14 +391,23 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        mHandler.removeCallbacks(mUpdateTimeTask);
-        int totalDuration = MediaPlayerWrapper.getInstance().getPlayerTotalDuration();
-        int currentPosition = SeekBarUtils.progressToTimer(seekBar.getProgress(), totalDuration);
-        MediaPlayerWrapper.getInstance().seekPlayerTo(currentPosition);
         updateProgressBar();
     }
 
     private void setupPlayerWidget() {
+        switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
+            case Paused:
+                mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                updateProgressBar();
+                break;
+            case Playing:
+                mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                updateProgressBar();
+                break;
+            default:
+                mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+                break;
+        }
         mTrackUrl = MediaPlayerWrapper.getInstance().getTrackUrl();
         mTrack = MediaPlayerWrapper.getInstance().getmTrackName();
         mAlbumImage = MediaPlayerWrapper.getInstance().getmAlbumImageUrl();
@@ -428,6 +440,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Subscribe
     public void trackStartEvent(EventTrackStart event) {
+        mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         mTrack = event.getTrackName();
         mAlbumImage = event.getAlbumImage();
         mArtist = event.getArtistName();

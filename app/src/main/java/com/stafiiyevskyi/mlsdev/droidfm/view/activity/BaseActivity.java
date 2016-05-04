@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 
 import butterknife.Bind;
@@ -18,6 +19,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Nullable
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Nullable
+    @Bind(R.id.sm_player)
+    SlidingUpPanelLayout mSmPlayer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,8 +36,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        navigateBack();
+        if (mSmPlayer != null && mSmPlayer.getPanelState().equals(SlidingUpPanelLayout.PanelState.EXPANDED)) {
+            mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        } else{
+            super.onBackPressed();
+            navigateBack();
+        }
+
     }
 
     public abstract int getContentViewId();

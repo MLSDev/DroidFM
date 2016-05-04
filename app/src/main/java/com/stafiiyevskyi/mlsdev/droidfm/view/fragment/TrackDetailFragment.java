@@ -177,17 +177,21 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         mAlbumImage = event.getAlbumImage();
         mArtist = event.getArtistName();
         mTrackUrl = event.getTrackUrl();
-        mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+        mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
     }
 
     @Subscribe
     public void trackPauseEvent(EventCurrentTrackPause event) {
-        mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+        setPlayIcon();
     }
 
     @OnClick(R.id.iv_play_pause)
     public void onPlayPauseClick() {
         MediaPlayerWrapper.getInstance().playTrack(mTrackUrl, mArtist, mTrack, mAlbumImage);
+        setPlayIcon();
+    }
+
+    private void setPlayIcon() {
         switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
             case Retrieving:
                 mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
