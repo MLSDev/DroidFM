@@ -355,7 +355,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
             }
 
             MediaPlayerWrapper.State state = MediaPlayerWrapper.getInstance().getCurrentState();
-            if (!(state.equals(MediaPlayerWrapper.State.Paused) || state.equals(MediaPlayerWrapper.State.Retrieving)
+            if (!(state.equals(MediaPlayerWrapper.State.Retrieving)
                     || state.equals(MediaPlayerWrapper.State.Stopped) || state.equals(MediaPlayerWrapper.State.Preparing))) {
                 long totalDuration = MediaPlayerWrapper.getInstance().getPlayerTotalDuration();
                 long currentDuration = MediaPlayerWrapper.getInstance().getPlayerCurrentPosition();
