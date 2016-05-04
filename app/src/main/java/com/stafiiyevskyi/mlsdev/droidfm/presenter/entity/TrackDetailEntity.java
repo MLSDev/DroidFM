@@ -13,6 +13,7 @@ public class TrackDetailEntity {
     private String published;
     private String duration;
     private String mbid;
+    private String albumImage;
     private List<TagWithUrlEntity> tags;
 
     public String getName() {
@@ -69,5 +70,13 @@ public class TrackDetailEntity {
 
     public void setTags(List<TagWithUrlEntity> tags) {
         this.tags = tags;
+    }
+
+    public String getAlbumImage() {
+        return albumImage;
+    }
+
+    public void setAlbumImage(String albumImage) {
+        this.albumImage = albumImage;
     }
 }

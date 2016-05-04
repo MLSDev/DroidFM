@@ -1,5 +1,7 @@
 package com.stafiiyevskyi.mlsdev.droidfm.presenter.impl;
 
+import android.util.Log;
+
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail.TrackDetail;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail.TrackDetailResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VKTrackResponse;
@@ -45,6 +47,7 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.e("Error Track Detail", e.getMessage());
                         mView.showError(e.getMessage());
                     }
 

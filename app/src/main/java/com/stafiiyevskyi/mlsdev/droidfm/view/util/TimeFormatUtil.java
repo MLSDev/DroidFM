@@ -10,11 +10,11 @@ public final class TimeFormatUtil {
     private TimeFormatUtil() {
     }
 
-    public static String getFormattedTimeMillisToMinutes(int milliseconds) {
+    public static String getFormattedTimeSecondsToMinutes(int seconds) {
         return String.format("%d min, %d sec",
-                TimeUnit.SECONDS.toMinutes(milliseconds),
-                milliseconds -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(milliseconds))
+                TimeUnit.SECONDS.toMinutes(seconds),
+                seconds -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(seconds))
         );
     }
 }

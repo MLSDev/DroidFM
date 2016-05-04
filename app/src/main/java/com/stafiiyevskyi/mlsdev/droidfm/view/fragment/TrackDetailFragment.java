@@ -7,14 +7,15 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
-import com.stafiiyevskyi.mlsdev.droidfm.app.service.TracksPlayerService;
+import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
+import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventTrackStart;
+import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.TrackDetailScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TagWithUrlEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackDetailEntity;
@@ -23,6 +24,9 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.TrackDetailScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.LinkUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.TimeFormatUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -59,6 +63,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     private String mArtist;
     private String mTrack;
     private String mTrackUrl;
+    private String mAlbumImage;
 
     public static TrackDetailFragment newInstance(String artist, String track, String mbid) {
 
@@ -75,6 +80,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -108,6 +114,8 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
 
     @Override
     public void showTrackDetail(TrackDetailEntity track) {
+        if (mTrackUrl != null) mIvPlayPause.setVisibility(View.VISIBLE);
+        mAlbumImage = track.getAlbumImage();
         mPbProgress.setVisibility(View.GONE);
         mTvArtistName.setText(track.getArtistName());
         mTvTrackName.setText(track.getName());
@@ -132,11 +140,11 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
 
     @Override
     public void showTrackStreamUrl(String url, int trackDuration) {
-        mTvTrackDuration.setText(String.format(getString(R.string.duration), TimeFormatUtil.getFormattedTimeMillisToMinutes(trackDuration)));
-        mIvPlayPause.setVisibility(View.VISIBLE);
+        if (mAlbumImage != null) mIvPlayPause.setVisibility(View.VISIBLE);
+        mTvTrackDuration.setText(String.format(getString(R.string.duration), TimeFormatUtil.getFormattedTimeSecondsToMinutes(trackDuration)));
         mTrackUrl = url;
-        if (TracksPlayerService.getInstance().isTrackPlaying(mTrackUrl)) {
-            switch (TracksPlayerService.getInstance().getCurrentState()) {
+        if (MediaPlayerWrapper.getInstance().isTrackPlaying(mTrackUrl)) {
+            switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
                 case Retrieving:
                     mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
                     break;
@@ -159,15 +167,28 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
 
     @Override
     public void showError(String errorMessage) {
-        Log.e("TrackDetail", errorMessage);
         mPbProgress.setVisibility(View.GONE);
         Snackbar.make(mTvTrackContent, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
+    @Subscribe
+    public void trackStartEvent(EventTrackStart event) {
+        mTrack = event.getTrackName();
+        mAlbumImage = event.getAlbumImage();
+        mArtist = event.getArtistName();
+        mTrackUrl = event.getTrackUrl();
+        mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+    }
+
+    @Subscribe
+    public void trackPauseEvent(EventCurrentTrackPause event) {
+        mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+    }
+
     @OnClick(R.id.iv_play_pause)
     public void onPlayPauseClick() {
-        TracksPlayerService.getInstance().playTrack(mTrackUrl);
-        switch (TracksPlayerService.getInstance().getCurrentState()) {
+        MediaPlayerWrapper.getInstance().playTrack(mTrackUrl, mArtist, mTrack, mAlbumImage);
+        switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
             case Retrieving:
                 mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
                 break;

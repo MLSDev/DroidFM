@@ -33,6 +33,8 @@ public class TrackDetailMapper implements Func1<TrackDetail, TrackDetailEntity> 
             tags.add(tagWithUrlEntity);
         }
         entity.setTags(tags);
+        if (trackDetail.getAlbum() != null)
+            entity.setAlbumImage(trackDetail.getAlbum().getImage().get(3).getText());
 
         return entity;
     }

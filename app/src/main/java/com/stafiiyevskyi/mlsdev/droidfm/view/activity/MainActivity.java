@@ -13,11 +13,15 @@ import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventTrackStart;
+import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.app.service.TracksPlayerService;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.NetworkUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.PreferencesManager;
@@ -40,7 +44,11 @@ import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import butterknife.Bind;
+import rx.Observable;
 
 public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnSeekBarChangeListener {
     @Bind(R.id.drawer_layout)
@@ -52,6 +60,10 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     SeekBar mSbSeekbar;
     @Bind(R.id.tv_play_track_name)
     AppCompatTextView mTvPlayTrackName;
+    @Bind(R.id.iv_album_image)
+    AppCompatImageView mIvAlbumsTrackImage;
+    @Bind(R.id.iv_play_pause)
+    AppCompatImageView mIvPlayPause;
     @Bind(R.id.tv_current_track_position)
     AppCompatTextView mTvCurrentTrackPosition;
     @Bind(R.id.tv_track_duration)
@@ -64,10 +76,15 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     private MenuArrowDrawable mDrawerArrowDrawable;
     private BaseFragment mFirstFragment;
     private Handler mHandler;
+    private String mTrackUrl;
+    private String mArtist;
+    private String mTrack;
+    private String mAlbumImage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         mHandler = new Handler();
         setupPlayerWidget();
         mFragmentManager = getSupportFragmentManager();
@@ -102,6 +119,13 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                     Toast.makeText(MainActivity.this, error.errorMessage, Toast.LENGTH_LONG).show();
                 }
             });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        mHandler.removeCallbacks(mUpdateTimeTask);
     }
 
     @Override
@@ -309,16 +333,37 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     private Runnable mUpdateTimeTask = new Runnable() {
         public void run() {
-            TracksPlayerService.State state = TracksPlayerService.getInstance().getCurrentState();
-            if (!(state.equals(TracksPlayerService.State.Paused) || state.equals(TracksPlayerService.State.Retrieving)
-                    || state.equals(TracksPlayerService.State.Stopped) || state.equals(TracksPlayerService.State.Preparing))) {
-                long totalDuration = TracksPlayerService.getInstance().getPlayerTotalDuration();
-                long currentDuration = TracksPlayerService.getInstance().getPlayerCurrentPosition();
+            switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
+                case Retrieving:
+                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                    break;
+                case Stopped:
+                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                    break;
+                case Preparing:
+                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                    break;
+                case Playing:
+                    mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
+                    break;
+                case Paused:
+                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                    break;
+            }
+
+            MediaPlayerWrapper.State state = MediaPlayerWrapper.getInstance().getCurrentState();
+            if (!(state.equals(MediaPlayerWrapper.State.Paused) || state.equals(MediaPlayerWrapper.State.Retrieving)
+                    || state.equals(MediaPlayerWrapper.State.Stopped) || state.equals(MediaPlayerWrapper.State.Preparing))) {
+                long totalDuration = MediaPlayerWrapper.getInstance().getPlayerTotalDuration();
+                long currentDuration = MediaPlayerWrapper.getInstance().getPlayerCurrentPosition();
                 mTvTrackTotalDuration.setText("" + SeekBarUtils.milliSecondsToTimer(totalDuration));
                 mTvCurrentTrackPosition.setText("" + SeekBarUtils.milliSecondsToTimer(currentDuration));
+                mTvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getmTrackName());
                 int progress = SeekBarUtils.getProgressPercentage(currentDuration, totalDuration);
                 mSbSeekbar.setProgress(progress);
+                Glide.with(MainActivity.this).load(MediaPlayerWrapper.getInstance().getmAlbumImageUrl()).into(mIvAlbumsTrackImage);
             }
+
             mHandler.postDelayed(this, 100);
         }
     };
@@ -326,7 +371,12 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-
+        if (fromTouch){
+            int totalDuration = MediaPlayerWrapper.getInstance().getPlayerTotalDuration();
+            int currentPosition = SeekBarUtils.progressToTimer(seekBar.getProgress(), totalDuration);
+            MediaPlayerWrapper.getInstance().seekPlayerTo(currentPosition);
+            mTvCurrentTrackPosition.setText("" + SeekBarUtils.milliSecondsToTimer(currentPosition));
+        }
     }
 
 
@@ -339,14 +389,52 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         mHandler.removeCallbacks(mUpdateTimeTask);
-        int totalDuration = TracksPlayerService.getInstance().getPlayerTotalDuration();
+        int totalDuration = MediaPlayerWrapper.getInstance().getPlayerTotalDuration();
         int currentPosition = SeekBarUtils.progressToTimer(seekBar.getProgress(), totalDuration);
-        TracksPlayerService.getInstance().seekPlayerTo(currentPosition);
+        MediaPlayerWrapper.getInstance().seekPlayerTo(currentPosition);
         updateProgressBar();
     }
 
     private void setupPlayerWidget() {
+        mTrackUrl = MediaPlayerWrapper.getInstance().getTrackUrl();
+        mTrack = MediaPlayerWrapper.getInstance().getmTrackName();
+        mAlbumImage = MediaPlayerWrapper.getInstance().getmAlbumImageUrl();
+        mArtist = MediaPlayerWrapper.getInstance().getmArtistName();
         mSbSeekbar.setOnSeekBarChangeListener(this);
+        updateProgressBar();
+        mIvPlayPause.setOnClickListener(view -> {
+            if (mTrackUrl != null) {
+                MediaPlayerWrapper.getInstance().playTrack(mTrackUrl, mArtist, mTrack, mAlbumImage);
+                switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
+                    case Retrieving:
+                        mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                        break;
+                    case Stopped:
+                        mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                        break;
+                    case Preparing:
+                        mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
+                        break;
+                    case Playing:
+                        mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
+                        break;
+                    case Paused:
+                        mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+                        break;
+                }
+            }
+        });
+    }
+
+    @Subscribe
+    public void trackStartEvent(EventTrackStart event) {
+        mTrack = event.getTrackName();
+        mAlbumImage = event.getAlbumImage();
+        mArtist = event.getArtistName();
+        mTrackUrl = event.getTrackUrl();
+        mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
+        mTvPlayTrackName.setText(event.getTrackName());
+        Glide.with(this).load(event.getAlbumImage()).into(mIvAlbumsTrackImage);
         updateProgressBar();
     }
 }
