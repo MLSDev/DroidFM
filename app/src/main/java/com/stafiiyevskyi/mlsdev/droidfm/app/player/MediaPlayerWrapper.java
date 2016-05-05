@@ -3,11 +3,18 @@ package com.stafiiyevskyi.mlsdev.droidfm.app.player;
 import android.media.MediaPlayer;
 
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VKTrackResponse;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackItemResponse;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.VKTrackModel;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.VKTrackModelImpl;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.List;
+
+import rx.Observer;
 
 /**
  * Created by oleksandr on 04.05.16.
@@ -18,6 +25,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
     private TrackPlayerEntity mCurrentTrack = new TrackPlayerEntity();
     private State mState = State.Retrieving;
     private MediaPlayer mediaPlayer;
+    private VKTrackModel mVKTrackModel;
 
     public enum State {
         Retrieving,
@@ -27,12 +35,19 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
         Paused
     }
 
-    private List<TrackPlayerEntity> mPlaylist;
-    private boolean isFromPlaylist = false;
-    private int mTrackPlaylistIndex;
 
     private MediaPlayerWrapper() {
+        mVKTrackModel = new VKTrackModelImpl();
+    }
 
+    private boolean isFromAlbum;
+
+    public boolean isFromAlbum() {
+        return isFromAlbum;
+    }
+
+    public void setFromAlbum(boolean fromAlbum) {
+        isFromAlbum = fromAlbum;
     }
 
     public static synchronized MediaPlayerWrapper getInstance() {
@@ -60,88 +75,101 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
         mState = State.Retrieving;
     }
 
+    private void chooseCurrentTrack() {
+        switch (mState) {
+            case Stopped:
+                preparedPlayer();
+                break;
+            case Paused:
+                startPlayer();
+                break;
+            case Playing:
+                pausePlayer();
+                break;
+            case Preparing:
+                stopPlayer();
+                preparedPlayer();
+                break;
+            case Retrieving:
+                preparedPlayer();
+                break;
+            default:
+                break;
+        }
+//        EventBus.getDefault().post(new EventCurrentTrackPause(mCurrentTrack));
+    }
+
+    private void chooseAnotherTrack(TrackPlayerEntity mCurrentTrack) {
+        this.mCurrentTrack = mCurrentTrack;
+
+        EventBus.getDefault().post(mCurrentTrack);
+        switch (mState) {
+            case Stopped:
+                preparedPlayer();
+                break;
+            case Paused:
+                preparedPlayer();
+                break;
+            case Playing:
+                preparedPlayer();
+                break;
+            case Preparing:
+                preparedPlayer();
+                break;
+            case Retrieving:
+                preparedPlayer();
+                break;
+            default:
+                break;
+        }
+    }
+
     public void playTrack(TrackPlayerEntity mCurrentTrack) {
 
-        if (isTrackPlaying(mCurrentTrack.getmTrackUrl())) {
-            switch (mState) {
-                case Stopped:
-                    preparedPlayer();
-                    break;
-                case Paused:
-                    startPlayer();
-                    break;
-                case Playing:
-                    pausePlayer();
-                    break;
-                case Preparing:
-                    stopPlayer();
-                    preparedPlayer();
-                    break;
-                case Retrieving:
-                    preparedPlayer();
-                    break;
-                default:
-                    break;
-            }
-            EventBus.getDefault().post(new EventCurrentTrackPause());
+        if (isTrackPlaying(mCurrentTrack.getmTrackName())) {
+            chooseCurrentTrack();
         } else {
-            this.mCurrentTrack = mCurrentTrack;
+            if (mCurrentTrack.getmTrackUrl() == null) {
+                this.mCurrentTrack = mCurrentTrack;
+                String search = mCurrentTrack.getmArtistName() + " - " + mCurrentTrack.getmTrackName();
+                mVKTrackModel.getVKTrack(search).subscribe(new Observer<VKTrackResponse>() {
+                    @Override
+                    public void onCompleted() {
 
-            EventBus.getDefault().post(mCurrentTrack);
-            switch (mState) {
-                case Stopped:
-                    preparedPlayer();
-                    break;
-                case Paused:
-                    preparedPlayer();
-                    break;
-                case Playing:
-                    preparedPlayer();
-                    break;
-                case Preparing:
-                    preparedPlayer();
-                    break;
-                case Retrieving:
-                    preparedPlayer();
-                    break;
-                default:
-                    break;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(VKTrackResponse vkTrackResponse) {
+                        if (vkTrackResponse.getResponse() != null) {
+                            VkTrackItemResponse itemResponse = vkTrackResponse.getResponse()[0];
+                            MediaPlayerWrapper.this.mCurrentTrack.setmTrackUrl(itemResponse.getUrl());
+                            preparedPlayer();
+                        } else {
+                            stopPlayer();
+                        }
+                    }
+                });
+
+            } else{
+                chooseAnotherTrack(mCurrentTrack);
             }
         }
     }
 
-    public void playPlaylist(List<TrackPlayerEntity> tracks) {
-        isFromPlaylist = true;
-        mPlaylist = tracks;
-        mTrackPlaylistIndex = 0;
-
-        playTrack(mPlaylist.get(mTrackPlaylistIndex));
+    public boolean isTrackPlaying(String trackName) {
+        return trackName.equalsIgnoreCase(mCurrentTrack.getmTrackName());
     }
-
-    public void nextTrack() {
-        if (mTrackPlaylistIndex <= (mPlaylist.size() - 1)) {
-            mCurrentTrack = mPlaylist.get(mTrackPlaylistIndex);
-            preparedPlayer();
-        }
-    }
-
-    public void previousTrack() {
-        if (mTrackPlaylistIndex >= 0) {
-            mCurrentTrack = mPlaylist.get(mTrackPlaylistIndex);
-            preparedPlayer();
-        }
-    }
-
-    public boolean isTrackPlaying(String trackUrl) {
-        return trackUrl.equalsIgnoreCase(mCurrentTrack.getmTrackUrl());
-    }
-
 
     public void pausePlayer() {
         if (mediaPlayer.isPlaying())
             mediaPlayer.pause();
         mState = State.Paused;
-        EventBus.getDefault().post(new EventCurrentTrackPause());
+        EventBus.getDefault().post(new EventCurrentTrackPause(mCurrentTrack));
     }
 
     public void stopPlayer() {
@@ -153,6 +181,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
     public void startPlayer() {
         mediaPlayer.start();
         mState = State.Playing;
+        EventBus.getDefault().post(new EventCurrentTrackPause(mCurrentTrack));
     }
 
     public void preparedPlayer() {
@@ -191,17 +220,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        if (isFromPlaylist) {
-            mTrackPlaylistIndex = mTrackPlaylistIndex + 1;
-            if (mTrackPlaylistIndex <= (mPlaylist.size() - 1)) {
-                mCurrentTrack = mPlaylist.get(mTrackPlaylistIndex);
-                preparedPlayer();
-            } else {
-                releaseMP();
-            }
-        } else {
-            releaseMP();
-        }
+        stopPlayer();
     }
 
     @Override

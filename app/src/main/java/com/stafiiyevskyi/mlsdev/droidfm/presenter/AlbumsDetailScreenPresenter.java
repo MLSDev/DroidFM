@@ -10,6 +10,4 @@ import java.util.List;
 public interface AlbumsDetailScreenPresenter extends Presenter {
 
     void getAlbumsDetails(String artist, String album, String mbid);
-
-    void getAlbumPlaylist(List<TrackEntity> tracks);
 }

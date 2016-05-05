@@ -11,7 +11,4 @@ import java.util.List;
 public interface AlbumDetailsScreenView extends BaseScreenView {
 
     void showAlbumsDetails(AlbumsDetailEntity album);
-
-    void showPlaylistUrls(List<TrackPlayerEntity> tracks);
-
 }

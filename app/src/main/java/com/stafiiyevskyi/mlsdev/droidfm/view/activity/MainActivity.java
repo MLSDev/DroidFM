@@ -12,6 +12,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -21,12 +23,15 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
+import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventPlaylistStart;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.app.service.TracksPlayerService;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.NetworkUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.PreferencesManager;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.PlaylistAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.AlbumsDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
@@ -48,9 +53,13 @@ import com.vk.sdk.api.VKError;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import butterknife.Bind;
+import java.util.List;
 
-public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnSeekBarChangeListener {
+import butterknife.Bind;
+import rx.Observable;
+import rx.functions.Func1;
+
+public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnSeekBarChangeListener, PlaylistAdapter.OnPlaylistTrackClick {
     @Bind(R.id.drawer_layout)
     DrawerLayout drNavigation;
     @Bind(R.id.nav_view)
@@ -68,18 +77,16 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     AppCompatTextView mTvCurrentTrackPosition;
     @Bind(R.id.tv_track_duration)
     AppCompatTextView mTvTrackTotalDuration;
-//    @Bind(R.id.sm_player)
-//    SlidingUpPanelLayout mSmPlayer;
+    @Bind(R.id.rv_playlist)
+    RecyclerView mRvPlaylist;
 
     private FragmentManager mFragmentManager;
-
+    private PlaylistAdapter mPlaylistAdapter;
 
     private ActionBarDrawerToggle mDrawerToggle;
     private MenuArrowDrawable mDrawerArrowDrawable;
     private BaseFragment mFirstFragment;
     private Handler mHandler;
-    private String mTrackUrl;
-    private String mArtist;
     private String mTrack;
     private String mAlbumImage;
 
@@ -335,7 +342,8 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 currentFragment.updateToolbar();
             }
         } else {
-            mFirstFragment.updateToolbar();
+            if (mFirstFragment != null && mFirstFragment.isVisible())
+                mFirstFragment.updateToolbar();
         }
     }
 
@@ -405,6 +413,10 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     }
 
     private void setupPlayerWidget() {
+        mPlaylistAdapter = new PlaylistAdapter(this);
+        mRvPlaylist.setLayoutManager(new LinearLayoutManager(this));
+        mRvPlaylist.setAdapter(mPlaylistAdapter);
+
         switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
             case Paused:
                 mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
@@ -419,20 +431,12 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 break;
         }
 
-        mTrack = MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName();
-        mAlbumImage = MediaPlayerWrapper.getInstance().getCurrentTrack().getmAlbumImageUrl();
-        mArtist = MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName();
         mSbSeekbar.setOnSeekBarChangeListener(this);
         updateProgressBar();
         mIvPlayPause.setOnClickListener(view -> {
-            mTrackUrl = MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackUrl();
-            if (mTrackUrl != null) {
-                TrackPlayerEntity track = new TrackPlayerEntity();
-                track.setmAlbumImageUrl(mAlbumImage);
-                track.setmTrackUrl(mTrackUrl);
-                track.setmTrackName(mTrack);
-                track.setmArtistName(mArtist);
-                MediaPlayerWrapper.getInstance().playTrack(track);
+
+            if (MediaPlayerWrapper.getInstance().getCurrentTrack() != null) {
+                MediaPlayerWrapper.getInstance().playTrack(MediaPlayerWrapper.getInstance().getCurrentTrack());
                 switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
                     case Retrieving:
                         mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
@@ -456,11 +460,13 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Subscribe
     public void trackStartEvent(TrackPlayerEntity event) {
-        mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        if (mSmPlayer.getPanelState().equals(SlidingUpPanelLayout.PanelState.HIDDEN))
+            mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        if (!MediaPlayerWrapper.getInstance().isFromAlbum()) {
+            mPlaylistAdapter.setData(null);
+        }
         mTrack = event.getmTrackName();
         mAlbumImage = event.getmAlbumImageUrl();
-        mArtist = event.getmArtistName();
-        mTrackUrl = event.getmTrackUrl();
         mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
         mTvPlayTrackName.setText(mTrack);
         Glide.with(this).load(mAlbumImage).into(mIvAlbumsTrackImage);
@@ -468,7 +474,30 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     }
 
     @Subscribe
-    public void trackStartEvent(EventCurrentTrackPause eventCurrentTrackPause) {
-        mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+    public void trackStartPauseEvent(EventCurrentTrackPause eventCurrentTrackPause) {
+        if (mSmPlayer.getPanelState().equals(SlidingUpPanelLayout.PanelState.HIDDEN))
+            mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        if (!MediaPlayerWrapper.getInstance().isFromAlbum()) {
+            mPlaylistAdapter.setData(null);
+        }
+    }
+
+    @Subscribe
+    public void playlistStartEvent(EventPlaylistStart event) {
+        MediaPlayerWrapper.getInstance().stopPlayer();
+        List<TrackPlayerEntity> trackPlayerEntities = Observable.from(event.getData()).map(trackEntity -> {
+            TrackPlayerEntity trackPlayerEntity = new TrackPlayerEntity();
+            trackPlayerEntity.setmTrackName(trackEntity.getName());
+            trackPlayerEntity.setmArtistName(trackEntity.getArtistName());
+            return trackPlayerEntity;
+        }).toList().toBlocking().first();
+        MediaPlayerWrapper.getInstance().setFromAlbum(true);
+        mPlaylistAdapter.setData(trackPlayerEntities);
+        mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+    }
+
+    @Override
+    public void onPlaylistTrackClick(TrackPlayerEntity trackPlayerEntity) {
+        MediaPlayerWrapper.getInstance().playTrack(trackPlayerEntity);
     }
 }

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventPlaylistStart;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.AlbumsDetailScreenPresenter;
@@ -25,6 +26,8 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.AlbumsDetailScreenPresent
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.AlbumDetailsScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.AlbumsTracksAdapter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -132,12 +135,6 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
         mAdapter.setData(album.getTracks());
     }
 
-    @Override
-    public void showPlaylistUrls(List<TrackPlayerEntity> tracks) {
-        mPbProgress.setVisibility(View.GONE);
-
-        MediaPlayerWrapper.getInstance().playPlaylist(tracks);
-    }
 
     @Override
     public void showError(String errorMessage) {
@@ -153,7 +150,8 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
     @OnClick(R.id.iv_play_album)
     public void onPlayAlbumClick() {
-        mPbProgress.setVisibility(View.VISIBLE);
-        mPresenter.getAlbumPlaylist(mAlbumsDetailEntity.getTracks());
+        EventPlaylistStart event = new EventPlaylistStart();
+        event.setData(mAlbumsDetailEntity.getTracks());
+        EventBus.getDefault().post(event);
     }
 }

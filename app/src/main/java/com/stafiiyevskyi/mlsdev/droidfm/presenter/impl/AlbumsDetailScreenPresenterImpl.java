@@ -6,6 +6,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.detail.AlbumDetail;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.detail.AlbumDetailResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VKTrackResponse;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackItemResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.AlbumModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.VKTrackModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.AlbumModelImpl;
@@ -66,44 +67,6 @@ public class AlbumsDetailScreenPresenterImpl extends BasePresenter implements Al
         addSubscription(subscription);
     }
 
-    public void getAlbumPlaylist(List<TrackEntity> tracks) {
-        List<Observable<VKTrackResponse>> responses = new ArrayList<>();
-
-        for (TrackEntity trackEntity : tracks) {
-            responses.add(mVKTrackModel.getVKTrack(trackEntity.getArtistName() + " - " + trackEntity.getName()).delay(2, TimeUnit.SECONDS));
-        }
-        Subscription subscription = Observable.merge(responses)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .toList()
-                .single()
-                .subscribe(new Observer<List<VKTrackResponse>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("error Merge", e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(List<VKTrackResponse> vkTrackResponses) {
-                        List<TrackPlayerEntity> playlist = new ArrayList<>();
-                        for (VKTrackResponse response : vkTrackResponses) {
-                            if (response.getResponse() != null) {
-                                TrackPlayerEntity entity = new TrackPlayerEntity();
-                                entity.setmTrackUrl(response.getResponse()[0].getUrl());
-                                playlist.add(entity);
-                            }
-                        }
-                        mView.showPlaylistUrls(playlist);
-                    }
-                });
-        addSubscription(subscription);
-    }
 
     private AlbumDetail unwrapResponse(AlbumDetailResponse response) {
         return response.getAlbum();

@@ -143,7 +143,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         if (mAlbumImage != null) mIvPlayPause.setVisibility(View.VISIBLE);
         mTvTrackDuration.setText(String.format(getString(R.string.duration), TimeFormatUtil.getFormattedTimeSecondsToMinutes(trackDuration)));
         mTrackUrl = url;
-        if (MediaPlayerWrapper.getInstance().isTrackPlaying(mTrackUrl)) {
+        if (MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack)) {
             switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
                 case Retrieving:
                     mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
@@ -182,7 +182,8 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
 
     @Subscribe
     public void trackPauseEvent(EventCurrentTrackPause event) {
-        setPlayIcon();
+        if (MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack))
+            setPlayIcon();
     }
 
     @OnClick(R.id.iv_play_pause)
@@ -192,6 +193,9 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         track.setmTrackUrl(mTrackUrl);
         track.setmTrackName(mTrack);
         track.setmArtistName(mArtist);
+        if (!MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack))
+            MediaPlayerWrapper.getInstance().setFromAlbum(false);
+
         MediaPlayerWrapper.getInstance().playTrack(track);
         setPlayIcon();
     }

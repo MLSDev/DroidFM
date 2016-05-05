@@ -8,6 +8,7 @@ public class TrackPlayerEntity {
     private String mTrackName;
     private String mAlbumImageUrl;
     private String mArtistName;
+    private boolean isPaused = true;
 
     public String getmTrackUrl() {
         return mTrackUrl;
@@ -39,5 +40,13 @@ public class TrackPlayerEntity {
 
     public void setmArtistName(String mArtistName) {
         this.mArtistName = mArtistName;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setPaused(boolean paused) {
+        isPaused = paused;
     }
 }
