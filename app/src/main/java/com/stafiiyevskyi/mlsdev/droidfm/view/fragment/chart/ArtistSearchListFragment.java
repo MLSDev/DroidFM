@@ -82,8 +82,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
 
 
     public static BaseFragment newInstance() {
-        BaseFragment fragment = new ArtistSearchListFragment();
-        return fragment;
+        return new ArtistSearchListFragment();
     }
 
     @Override

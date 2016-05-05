@@ -16,4 +16,3 @@ public class DroidFMApplication extends Application {
         PreferencesManager.initializeInstance(getApplicationContext());
     }
 }
-//com.stafiiyevskyi.mlsdev.droidfm

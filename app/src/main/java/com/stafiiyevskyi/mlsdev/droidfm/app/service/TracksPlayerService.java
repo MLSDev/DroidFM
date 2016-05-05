@@ -2,12 +2,9 @@ package com.stafiiyevskyi.mlsdev.droidfm.app.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.IBinder;
 
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
-
-import java.io.IOException;
 
 /**
  * Created by oleksandr on 29.04.16.

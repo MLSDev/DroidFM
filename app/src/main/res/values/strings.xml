@@ -26,4 +26,5 @@
     <string name="transition_artist_image">artistImage</string>
 
     <string name="duration">duration: %1$2s</string>
+    <string name="not_track_error_message">Oops,can\'t find</string>
 </resources>

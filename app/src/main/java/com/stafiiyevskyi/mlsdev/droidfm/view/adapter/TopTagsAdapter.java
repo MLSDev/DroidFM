@@ -40,8 +40,7 @@ public class TopTagsAdapter extends RecyclerView.Adapter<TopTagsAdapter.TopTagVH
     public TopTagVH onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mContext == null) mContext = parent.getContext();
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_tag, parent, false);
-        TopTagVH vh = new TopTagVH(view);
-        return vh;
+        return new TopTagVH(view);
     }
 
     @Override

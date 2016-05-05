@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.view.util.NestedScrollableViewHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,6 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
+        if (mSmPlayer != null) mSmPlayer.setScrollableViewHelper(new NestedScrollableViewHelper());
 
     }
 
@@ -38,7 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (mSmPlayer != null && mSmPlayer.getPanelState().equals(SlidingUpPanelLayout.PanelState.EXPANDED)) {
             mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        } else{
+        } else {
             super.onBackPressed();
             navigateBack();
         }

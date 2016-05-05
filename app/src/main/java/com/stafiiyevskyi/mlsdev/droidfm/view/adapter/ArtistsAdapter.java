@@ -40,8 +40,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
     public ArtistVH onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mContext == null) mContext = parent.getContext();
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_artist, parent, false);
-        ArtistVH artistVH = new ArtistVH(view);
-        return artistVH;
+        return new ArtistVH(view);
     }
 
     @Override

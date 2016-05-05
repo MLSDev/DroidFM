@@ -14,7 +14,6 @@ import android.widget.ProgressBar;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
-import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventTrackStart;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.TrackDetailScreenPresenter;
@@ -169,7 +168,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     @Override
     public void showError(String errorMessage) {
         mPbProgress.setVisibility(View.GONE);
-        Snackbar.make(mTvTrackContent, errorMessage, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mTvTrackContent, R.string.not_track_error_message, Snackbar.LENGTH_LONG).show();
     }
 
     @Subscribe
@@ -188,7 +187,12 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
 
     @OnClick(R.id.iv_play_pause)
     public void onPlayPauseClick() {
-        MediaPlayerWrapper.getInstance().playTrack(mTrackUrl, mArtist, mTrack, mAlbumImage);
+        TrackPlayerEntity track = new TrackPlayerEntity();
+        track.setmAlbumImageUrl(mAlbumImage);
+        track.setmTrackUrl(mTrackUrl);
+        track.setmTrackName(mTrack);
+        track.setmArtistName(mArtist);
+        MediaPlayerWrapper.getInstance().playTrack(track);
         setPlayIcon();
     }
 

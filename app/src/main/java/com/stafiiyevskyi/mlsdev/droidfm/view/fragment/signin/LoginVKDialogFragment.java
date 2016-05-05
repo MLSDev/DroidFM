@@ -19,8 +19,7 @@ public class LoginVKDialogFragment extends DialogFragment implements DialogInter
     };
 
     public static DialogFragment newInstance() {
-        DialogFragment fragment = new LoginVKDialogFragment();
-        return fragment;
+        return new LoginVKDialogFragment();
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {

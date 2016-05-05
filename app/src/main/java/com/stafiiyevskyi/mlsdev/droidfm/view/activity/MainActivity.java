@@ -13,7 +13,6 @@ import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -22,7 +21,6 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
-import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventTrackStart;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.app.service.TracksPlayerService;
@@ -51,7 +49,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
-import rx.Observable;
 
 public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnSeekBarChangeListener {
     @Bind(R.id.drawer_layout)
@@ -245,6 +242,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     @Override
     public void navigateToArtistsSearchScreen() {
         mFirstFragment = ArtistSearchListFragment.newInstance();
+        AnimationUtil.detailTransition(mFirstFragment);
         mFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, mFirstFragment)
                 .commit();
@@ -253,6 +251,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     @Override
     public void navigateToChartsContentScreen() {
         mFirstFragment = TopChartsContentFragment.newInstance();
+        AnimationUtil.detailTransition(mFirstFragment);
         mFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, mFirstFragment)
                 .commit();
@@ -261,7 +260,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     @Override
     public void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl, AppCompatImageView imageView) {
         BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
-        AnimationUtil.detailTransition(fragment, imageView, getString(R.string.transition_artist_image));
+        AnimationUtil.detailTransitionShared(fragment, imageView, getString(R.string.transition_artist_image));
         mFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment)
                 .addSharedElement(imageView, getString(R.string.transition_artist_image))
@@ -272,6 +271,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     @Override
     public void navigateToTopTracksScreen() {
         mFirstFragment = ChartTopTracksFragment.newInstance();
+        AnimationUtil.detailTransition(mFirstFragment);
         mFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, mFirstFragment)
                 .commit();
@@ -279,8 +279,10 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Override
     public void navigateToArtistFullDetailsScreen(String mbid) {
+        BaseFragment fragment = ArtistDetailFullFragment.newInstance(mbid);
+        AnimationUtil.detailTransition(fragment);
         mFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, ArtistDetailFullFragment.newInstance(mbid))
+                .add(R.id.fragment_container, fragment)
                 .addToBackStack(ArtistDetailFullFragment.class.getName() + mbid)
                 .commit();
     }
@@ -288,24 +290,30 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     @Override
     public void navigateToTagTopContent(String tag) {
         getSupportActionBar().setSubtitle(tag);
+        BaseFragment fragment = TagTopContentFragment.newInstance(tag);
+        AnimationUtil.detailTransition(fragment);
         mFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, TagTopContentFragment.newInstance(tag))
+                .add(R.id.fragment_container, fragment)
                 .addToBackStack(TagTopContentFragment.class.getName() + tag)
                 .commit();
     }
 
     @Override
     public void navigateToAlbumDetails(String artist, String album, String mbid) {
+        BaseFragment fragment = AlbumsDetailsFragment.newInstance(artist, album, mbid);
+        AnimationUtil.detailTransition(fragment);
         mFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, AlbumsDetailsFragment.newInstance(artist, album, mbid))
+                .add(R.id.fragment_container, fragment)
                 .addToBackStack(AlbumsDetailsFragment.class.getName() + mbid)
                 .commit();
     }
 
     @Override
     public void navigateToTrackDetails(String artist, String track, String mbid) {
+        BaseFragment fragment = TrackDetailFragment.newInstance(artist, track, mbid);
+        AnimationUtil.detailTransition(fragment);
         mFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, TrackDetailFragment.newInstance(artist, track, mbid))
+                .add(R.id.fragment_container, fragment)
                 .addToBackStack(TrackDetailFragment.class.getName() + mbid)
                 .commit();
     }
@@ -361,8 +369,8 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                     || state.equals(MediaPlayerWrapper.State.Stopped) || state.equals(MediaPlayerWrapper.State.Preparing))) {
                 long totalDuration = MediaPlayerWrapper.getInstance().getPlayerTotalDuration();
                 long currentDuration = MediaPlayerWrapper.getInstance().getPlayerCurrentPosition();
-                mTvTrackTotalDuration.setText("" + SeekBarUtils.milliSecondsToTimer(totalDuration));
-                mTvCurrentTrackPosition.setText("" + SeekBarUtils.milliSecondsToTimer(currentDuration));
+                mTvTrackTotalDuration.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(totalDuration)));
+                mTvCurrentTrackPosition.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(currentDuration)));
                 mTvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
                 int progress = SeekBarUtils.getProgressPercentage(currentDuration, totalDuration);
                 mSbSeekbar.setProgress(progress);
@@ -380,7 +388,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
             int totalDuration = MediaPlayerWrapper.getInstance().getPlayerTotalDuration();
             int currentPosition = SeekBarUtils.progressToTimer(seekBar.getProgress(), totalDuration);
             MediaPlayerWrapper.getInstance().seekPlayerTo(currentPosition);
-            mTvCurrentTrackPosition.setText("" + SeekBarUtils.milliSecondsToTimer(currentPosition));
+            mTvCurrentTrackPosition.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(currentPosition)));
         }
     }
 
@@ -419,7 +427,12 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         mIvPlayPause.setOnClickListener(view -> {
             mTrackUrl = MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackUrl();
             if (mTrackUrl != null) {
-                MediaPlayerWrapper.getInstance().playTrack(mTrackUrl, mArtist, mTrack, mAlbumImage);
+                TrackPlayerEntity track = new TrackPlayerEntity();
+                track.setmAlbumImageUrl(mAlbumImage);
+                track.setmTrackUrl(mTrackUrl);
+                track.setmTrackName(mTrack);
+                track.setmArtistName(mArtist);
+                MediaPlayerWrapper.getInstance().playTrack(track);
                 switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
                     case Retrieving:
                         mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
@@ -455,7 +468,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     }
 
     @Subscribe
-    public void trackStartEvent(EventCurrentTrackPause eventCurrentTrackPause){
+    public void trackStartEvent(EventCurrentTrackPause eventCurrentTrackPause) {
         mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
     }
 }

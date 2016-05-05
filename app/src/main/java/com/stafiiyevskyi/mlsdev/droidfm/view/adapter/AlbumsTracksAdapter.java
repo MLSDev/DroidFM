@@ -1,17 +1,13 @@
 package com.stafiiyevskyi.mlsdev.droidfm.view.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ImageEntity;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
 
 import java.util.ArrayList;
@@ -45,8 +41,7 @@ public class AlbumsTracksAdapter extends RecyclerView.Adapter<AlbumsTracksAdapte
     public TopTrackVH onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mContext == null) mContext = parent.getContext();
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_top_track_artist, parent, false);
-        TopTrackVH topTrackVH = new TopTrackVH(view);
-        return topTrackVH;
+        return new TopTrackVH(view);
     }
 
     @Override
@@ -68,7 +63,7 @@ public class AlbumsTracksAdapter extends RecyclerView.Adapter<AlbumsTracksAdapte
         private AppCompatTextView mTvTopTrackName;
 
         public TopTrackVH(View itemView) {
-            super(itemView);;
+            super(itemView);
             mTvTopTrackName = (AppCompatTextView) itemView.findViewById(R.id.tv_track_name);
             itemView.setOnClickListener(view -> mListener.onTrackClick(mData.get(getAdapterPosition())));
         }

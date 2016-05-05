@@ -135,6 +135,7 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     @Override
     public void showPlaylistUrls(List<TrackPlayerEntity> tracks) {
         mPbProgress.setVisibility(View.GONE);
+
         MediaPlayerWrapper.getInstance().playPlaylist(tracks);
     }
 

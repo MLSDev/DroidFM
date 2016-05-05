@@ -1,7 +1,5 @@
 package com.stafiiyevskyi.mlsdev.droidfm.presenter.entity;
 
-import java.util.List;
-
 /**
  * Created by oleksandr on 26.04.16.
  */

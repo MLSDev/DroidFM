@@ -40,7 +40,7 @@ public class PreferencesManager {
     public void remove(String key) {
         mPref.edit()
                 .remove(key)
-                .commit();
+                .apply();
     }
 
     public boolean clear() {

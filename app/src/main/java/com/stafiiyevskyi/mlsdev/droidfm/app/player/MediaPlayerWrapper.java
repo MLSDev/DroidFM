@@ -3,7 +3,6 @@ package com.stafiiyevskyi.mlsdev.droidfm.app.player;
 import android.media.MediaPlayer;
 
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
-import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventTrackStart;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,7 +35,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
 
     }
 
-    public synchronized static MediaPlayerWrapper getInstance() {
+    public static synchronized MediaPlayerWrapper getInstance() {
         if (mInstance == null) mInstance = new MediaPlayerWrapper();
         return mInstance;
     }
@@ -61,9 +60,9 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
         mState = State.Retrieving;
     }
 
-    public void playTrack(String mCurrentTrackUrl, String artistName, String mTrackName, String albumImageUrl) {
+    public void playTrack(TrackPlayerEntity mCurrentTrack) {
 
-        if (isTrackPlaying(mCurrentTrackUrl)) {
+        if (isTrackPlaying(mCurrentTrack.getmTrackUrl())) {
             switch (mState) {
                 case Stopped:
                     preparedPlayer();
@@ -86,11 +85,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
             }
             EventBus.getDefault().post(new EventCurrentTrackPause());
         } else {
-
-            mCurrentTrack.setmAlbumImageUrl(albumImageUrl);
-            mCurrentTrack.setmArtistName(artistName);
-            mCurrentTrack.setmTrackName(mTrackName);
-            mCurrentTrack.setmTrackUrl(mCurrentTrackUrl);
+            this.mCurrentTrack = mCurrentTrack;
 
             EventBus.getDefault().post(mCurrentTrack);
             switch (mState) {
@@ -119,8 +114,8 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
         isFromPlaylist = true;
         mPlaylist = tracks;
         mTrackPlaylistIndex = 0;
-        mCurrentTrack = mPlaylist.get(mTrackPlaylistIndex);
-        playTrack(mCurrentTrack.getmTrackUrl(), mCurrentTrack.getmArtistName(), mCurrentTrack.getmTrackName(), mCurrentTrack.getmAlbumImageUrl());
+
+        playTrack(mPlaylist.get(mTrackPlaylistIndex));
     }
 
     public void nextTrack() {

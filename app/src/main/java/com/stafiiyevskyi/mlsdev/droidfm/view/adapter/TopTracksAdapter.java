@@ -44,8 +44,7 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.TopT
     public TopTrackVH onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mContext == null) mContext = parent.getContext();
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_track, parent, false);
-        TopTrackVH topTrackVH = new TopTrackVH(view);
-        return topTrackVH;
+        return new TopTrackVH(view);
     }
 
     @Override

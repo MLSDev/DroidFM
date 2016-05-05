@@ -79,8 +79,7 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
     ;
 
     public static BaseFragment newInstance() {
-        BaseFragment fragment = new ChartTopTracksFragment();
-        return fragment;
+        return new ChartTopTracksFragment();
     }
 
     @Override

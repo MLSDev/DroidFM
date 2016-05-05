@@ -12,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.bumptech.glide.Glide;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistDetailScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistDetailEntity;

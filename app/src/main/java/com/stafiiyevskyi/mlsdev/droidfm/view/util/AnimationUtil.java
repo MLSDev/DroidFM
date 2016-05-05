@@ -13,7 +13,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.transition.DetailsTransition;
  */
 public final class AnimationUtil {
 
-    public static void detailTransition(BaseFragment fragment, View sharedView, String transitionName) {
+    public static void detailTransitionShared(BaseFragment fragment, View sharedView, String transitionName) {
         ViewCompat.setTransitionName(sharedView, transitionName);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -21,6 +21,14 @@ public final class AnimationUtil {
             fragment.setEnterTransition(new Fade());
             fragment.setExitTransition(new Fade());
             fragment.setSharedElementReturnTransition(new DetailsTransition());
+        }
+    }
+
+    public static void detailTransition(BaseFragment fragment) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            fragment.setEnterTransition(new Fade());
+            fragment.setExitTransition(new Fade());
         }
     }
 }

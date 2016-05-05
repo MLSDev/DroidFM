@@ -2,7 +2,6 @@ package com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.detail;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.Artist;
 
 /**
  * Created by oleksandr on 25.04.16.
