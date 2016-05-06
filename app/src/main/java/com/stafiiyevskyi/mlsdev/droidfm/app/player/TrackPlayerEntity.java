@@ -9,6 +9,7 @@ public class TrackPlayerEntity {
     private String mAlbumImageUrl;
     private String mArtistName;
     private boolean isPaused = true;
+    private boolean isFromNotification = false;
 
     public String getmTrackUrl() {
         return mTrackUrl;
@@ -48,5 +49,13 @@ public class TrackPlayerEntity {
 
     public void setPaused(boolean paused) {
         isPaused = paused;
+    }
+
+    public boolean isFromNotification() {
+        return isFromNotification;
+    }
+
+    public void setFromNotification(boolean fromNotification) {
+        isFromNotification = fromNotification;
     }
 }

@@ -436,7 +436,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         mIvPlayPause.setOnClickListener(view -> {
 
             if (MediaPlayerWrapper.getInstance().getCurrentTrack() != null) {
-                MediaPlayerWrapper.getInstance().playTrack(MediaPlayerWrapper.getInstance().getCurrentTrack());
+                MediaPlayerWrapper.getInstance().playTrack(MediaPlayerWrapper.getInstance().getCurrentTrack(), false);
                 switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
                     case Retrieving:
                         mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
@@ -458,10 +458,21 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         });
     }
 
+    private void notifyServiceTrackStateChanged() {
+        Intent intent = new Intent(getApplicationContext(), TracksPlayerService.class);
+        intent.setAction(TracksPlayerService.ACTION_NOTIFICATION_PLAY_PAUSE);
+        intent.putExtra(TracksPlayerService.INTENT_PLAYER_KEY, TracksPlayerService.FLAG_FROM_WIDGET);
+        startService(intent);
+    }
+
     @Subscribe
     public void trackStartEvent(TrackPlayerEntity event) {
+        if (!event.isFromNotification())
+            notifyServiceTrackStateChanged();
+
         if (mSmPlayer.getPanelState().equals(SlidingUpPanelLayout.PanelState.HIDDEN))
             mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+
         if (!MediaPlayerWrapper.getInstance().isFromAlbum()) {
             mPlaylistAdapter.setData(null);
         }
@@ -475,6 +486,8 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Subscribe
     public void trackStartPauseEvent(EventCurrentTrackPause eventCurrentTrackPause) {
+        if (!eventCurrentTrackPause.getTrack().isFromNotification())
+            notifyServiceTrackStateChanged();
         if (mSmPlayer.getPanelState().equals(SlidingUpPanelLayout.PanelState.HIDDEN))
             mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         if (!MediaPlayerWrapper.getInstance().isFromAlbum()) {
@@ -498,6 +511,6 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Override
     public void onPlaylistTrackClick(TrackPlayerEntity trackPlayerEntity) {
-        MediaPlayerWrapper.getInstance().playTrack(trackPlayerEntity);
+        MediaPlayerWrapper.getInstance().playTrack(trackPlayerEntity, false);
     }
 }

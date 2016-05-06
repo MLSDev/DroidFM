@@ -96,12 +96,11 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
             default:
                 break;
         }
-//        EventBus.getDefault().post(new EventCurrentTrackPause(mCurrentTrack));
+        EventBus.getDefault().post(new EventCurrentTrackPause(mCurrentTrack));
     }
 
     private void chooseAnotherTrack(TrackPlayerEntity mCurrentTrack) {
         this.mCurrentTrack = mCurrentTrack;
-
         EventBus.getDefault().post(mCurrentTrack);
         switch (mState) {
             case Stopped:
@@ -124,9 +123,14 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
         }
     }
 
-    public void playTrack(TrackPlayerEntity mCurrentTrack) {
+    public void playTrack(boolean isFromNotification) {
+        playTrack(mCurrentTrack, isFromNotification);
+    }
 
+    public void playTrack(TrackPlayerEntity mCurrentTrack, boolean isFromNotification) {
+        mCurrentTrack.setFromNotification(isFromNotification);
         if (isTrackPlaying(mCurrentTrack.getmTrackName())) {
+            this.mCurrentTrack.setFromNotification(isFromNotification);
             chooseCurrentTrack();
         } else {
             if (mCurrentTrack.getmTrackUrl() == null) {
@@ -155,7 +159,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
                     }
                 });
 
-            } else{
+            } else {
                 chooseAnotherTrack(mCurrentTrack);
             }
         }
@@ -169,7 +173,6 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
         if (mediaPlayer.isPlaying())
             mediaPlayer.pause();
         mState = State.Paused;
-        EventBus.getDefault().post(new EventCurrentTrackPause(mCurrentTrack));
     }
 
     public void stopPlayer() {
@@ -181,7 +184,6 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
     public void startPlayer() {
         mediaPlayer.start();
         mState = State.Playing;
-        EventBus.getDefault().post(new EventCurrentTrackPause(mCurrentTrack));
     }
 
     public void preparedPlayer() {

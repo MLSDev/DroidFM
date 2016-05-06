@@ -80,18 +80,20 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
     @Subscribe
     public void pauseTrackEvent(EventCurrentTrackPause event) {
-        for (TrackPlayerEntity trackPlayerEntity : mData) {
-            if (trackPlayerEntity.getmTrackName().equalsIgnoreCase(event.getTrack().getmTrackName())) {
-                if (trackPlayerEntity.isPaused()){
-                    trackPlayerEntity.setPaused(false);
+        if (mData != null) {
+            for (TrackPlayerEntity trackPlayerEntity : mData) {
+                if (trackPlayerEntity.getmTrackName().equalsIgnoreCase(event.getTrack().getmTrackName())) {
+                    if (trackPlayerEntity.isPaused()) {
+                        trackPlayerEntity.setPaused(false);
+                    } else {
+                        trackPlayerEntity.setPaused(true);
+                    }
                 } else {
                     trackPlayerEntity.setPaused(true);
                 }
-            } else {
-                trackPlayerEntity.setPaused(true);
             }
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
     @Subscribe

@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
@@ -29,6 +30,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
+import butterknife.BindDimen;
 import butterknife.OnClick;
 
 /**
@@ -56,6 +58,8 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     ProgressBar mPbProgress;
     @Bind(R.id.iv_play_pause)
     AppCompatImageView mIvPlayPause;
+    @Bind(R.id.nested_scroll)
+    NestedScrollView mNsScrollContainer;
 
     private TrackDetailScreenPresenter mPresenter;
 
@@ -168,7 +172,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     @Override
     public void showError(String errorMessage) {
         mPbProgress.setVisibility(View.GONE);
-        Snackbar.make(mTvTrackContent, R.string.not_track_error_message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mNsScrollContainer, R.string.not_track_error_message, Snackbar.LENGTH_LONG).show();
     }
 
     @Subscribe
@@ -196,7 +200,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         if (!MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack))
             MediaPlayerWrapper.getInstance().setFromAlbum(false);
 
-        MediaPlayerWrapper.getInstance().playTrack(track);
+        MediaPlayerWrapper.getInstance().playTrack(track, false);
         setPlayIcon();
     }
 
