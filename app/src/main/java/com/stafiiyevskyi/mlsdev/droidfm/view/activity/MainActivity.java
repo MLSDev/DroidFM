@@ -24,12 +24,12 @@ import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventPlaylistStart;
+import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventSynchronizingAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.app.service.TracksPlayerService;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.NetworkUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.PreferencesManager;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.PlaylistAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.AlbumsDetailsFragment;
@@ -57,7 +57,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import rx.Observable;
-import rx.functions.Func1;
 
 public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnSeekBarChangeListener, PlaylistAdapter.OnPlaylistTrackClick {
     @Bind(R.id.drawer_layout)
@@ -89,6 +88,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     private Handler mHandler;
     private String mTrack;
     private String mAlbumImage;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -306,8 +306,8 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     }
 
     @Override
-    public void navigateToAlbumDetails(String artist, String album, String mbid) {
-        BaseFragment fragment = AlbumsDetailsFragment.newInstance(artist, album, mbid);
+    public void navigateToAlbumDetails(String artist, String album, String mbid, String albumImage) {
+        BaseFragment fragment = AlbumsDetailsFragment.newInstance(artist, album, mbid, albumImage);
         AnimationUtil.detailTransition(fragment);
         mFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment)
@@ -382,7 +382,6 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 mTvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
                 int progress = SeekBarUtils.getProgressPercentage(currentDuration, totalDuration);
                 mSbSeekbar.setProgress(progress);
-                Glide.with(MainActivity.this).load(MediaPlayerWrapper.getInstance().getCurrentTrack().getmAlbumImageUrl()).into(mIvAlbumsTrackImage);
             }
 
             mHandler.postDelayed(this, 100);
@@ -477,10 +476,15 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
             mPlaylistAdapter.setData(null);
         }
         mTrack = event.getmTrackName();
-        mAlbumImage = event.getmAlbumImageUrl();
+
         mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
         mTvPlayTrackName.setText(mTrack);
-        Glide.with(this).load(mAlbumImage).into(mIvAlbumsTrackImage);
+        if (!MediaPlayerWrapper.getInstance().isFromAlbum() || event.getmAlbumImageUrl() != null) {
+            mAlbumImage = event.getmAlbumImageUrl();
+            Glide.with(this).load(mAlbumImage).into(mIvAlbumsTrackImage);
+        }
+
+
         updateProgressBar();
     }
 
@@ -497,7 +501,9 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Subscribe
     public void playlistStartEvent(EventPlaylistStart event) {
-        MediaPlayerWrapper.getInstance().stopPlayer();
+        EventBus.getDefault().post(new EventSynchronizingAdapter());
+        mAlbumImage = event.getAlbumImageUrl();
+        Glide.with(this).load(mAlbumImage).into(mIvAlbumsTrackImage);
         List<TrackPlayerEntity> trackPlayerEntities = Observable.from(event.getData()).map(trackEntity -> {
             TrackPlayerEntity trackPlayerEntity = new TrackPlayerEntity();
             trackPlayerEntity.setmTrackName(trackEntity.getName());

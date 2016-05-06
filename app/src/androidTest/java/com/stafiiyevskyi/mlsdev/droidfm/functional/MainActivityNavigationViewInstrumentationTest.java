@@ -7,11 +7,10 @@ import android.support.test.runner.AndroidJUnit4;
 import android.view.Gravity;
 
 import com.squareup.spoon.Spoon;
-import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
+import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

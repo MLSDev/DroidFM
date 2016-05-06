@@ -1,6 +1,5 @@
 package com.stafiiyevskyi.mlsdev.droidfm.app.event;
 
-import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
 
 import java.util.List;
@@ -10,6 +9,7 @@ import java.util.List;
  */
 public class EventPlaylistStart {
     private List<TrackEntity> mData;
+    private String mAlbumImageUrl;
 
     public List<TrackEntity> getData() {
         return mData;
@@ -17,5 +17,13 @@ public class EventPlaylistStart {
 
     public void setData(List<TrackEntity> mData) {
         this.mData = mData;
+    }
+
+    public String getAlbumImageUrl() {
+        return mAlbumImageUrl;
+    }
+
+    public void setAlbumImageUrl(String albumImageUrl) {
+        this.mAlbumImageUrl = albumImageUrl;
     }
 }

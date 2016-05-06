@@ -2,10 +2,10 @@ package com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.toptracks;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Image;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Streamable;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.ArtistNotFull;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.AttrItem;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Image;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Streamable;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,12 +7,10 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VKTrackResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackItemResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.VKTrackModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.VKTrackModelImpl;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
-import java.util.List;
 
 import rx.Observer;
 

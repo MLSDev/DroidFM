@@ -17,8 +17,6 @@ import android.widget.ProgressBar;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventPlaylistStart;
-import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
-import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.AlbumsDetailScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.AlbumsDetailEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
@@ -28,8 +26,6 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.AlbumsTracksAdapter;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -42,6 +38,7 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     private static final String MBID_BUNDLE_KEY = "mbid_bundle_key_albums_detail_fragment";
     private static final String ARTIST_BUNDLE_KEY = "artist_bundle_key_albums_detail_fragment";
     private static final String ALBUM_BUNDLE_KEY = "album_bundle_key_albums_detail_fragment";
+    private static final String ALBUM_IMAGE_BUNDLE_KEY = "album_image_bundle_key_albums_detail_fragment";
 
     @Bind(R.id.tv_album_name)
     AppCompatTextView mTvAlbumName;
@@ -66,13 +63,15 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     private String mMbid;
     private String mArtist;
     private String mAlbum;
+    private String mAlbumImage;
 
-    public static AlbumsDetailsFragment newInstance(String artist, String album, String mbid) {
+    public static AlbumsDetailsFragment newInstance(String artist, String album, String mbid, String albumImage) {
 
         Bundle args = new Bundle();
         args.putString(MBID_BUNDLE_KEY, mbid);
         args.putString(ARTIST_BUNDLE_KEY, artist);
         args.putString(ALBUM_BUNDLE_KEY, album);
+        args.putString(ALBUM_IMAGE_BUNDLE_KEY, albumImage);
         AlbumsDetailsFragment fragment = new AlbumsDetailsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -92,6 +91,7 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
         mArtist = arg.getString(ARTIST_BUNDLE_KEY);
         mAlbum = arg.getString(ALBUM_BUNDLE_KEY);
         mMbid = arg.getString(MBID_BUNDLE_KEY);
+        mAlbumImage = arg.getString(ALBUM_IMAGE_BUNDLE_KEY);
         setupRvTracks();
         mPresenter = new AlbumsDetailScreenPresenterImpl(this);
         mPresenter.getAlbumsDetails(mArtist, mAlbum, mMbid);
@@ -152,6 +152,7 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     public void onPlayAlbumClick() {
         EventPlaylistStart event = new EventPlaylistStart();
         event.setData(mAlbumsDetailEntity.getTracks());
+        event.setAlbumImageUrl(mAlbumImage);
         EventBus.getDefault().post(event);
     }
 }

@@ -2,8 +2,8 @@ package com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.detail;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.ItemWiki;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.Image;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.ItemWiki;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,12 +1,7 @@
 package com.stafiiyevskyi.mlsdev.droidfm.presenter.impl;
 
-import android.util.Log;
-
-import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.detail.AlbumDetail;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.detail.AlbumDetailResponse;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VKTrackResponse;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackItemResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.AlbumModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.VKTrackModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.AlbumModelImpl;
@@ -14,19 +9,11 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.VKTrackModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.AlbumsDetailScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.AlbumsDetailEntity;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.album.AlbumsDetailMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.AlbumDetailsScreenView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by oleksandr on 26.04.16.

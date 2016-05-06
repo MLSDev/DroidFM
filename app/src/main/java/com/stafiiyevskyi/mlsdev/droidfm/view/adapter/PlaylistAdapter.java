@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
-import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventTrackStart;
+import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventSynchronizingAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 
@@ -98,15 +98,35 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     }
 
     @Subscribe
-    public void startTrackEvent(TrackPlayerEntity event) {
-        for (TrackPlayerEntity trackPlayerEntity : mData) {
-            if (trackPlayerEntity.getmTrackName().equalsIgnoreCase(event.getmTrackName())) {
-                trackPlayerEntity.setPaused(false);
-            } else {
-                trackPlayerEntity.setPaused(true);
+    public void synchronizedEvent(EventSynchronizingAdapter event) {
+        if (mData != null) {
+            for (TrackPlayerEntity trackPlayerEntity : mData) {
+                if (trackPlayerEntity.getmTrackName().equalsIgnoreCase(MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName())) {
+                    if (MediaPlayerWrapper.getInstance().getCurrentTrack().isPaused()) {
+                        trackPlayerEntity.setPaused(true);
+                    } else {
+                        trackPlayerEntity.setPaused(false);
+                    }
+                } else {
+                    trackPlayerEntity.setPaused(true);
+                }
             }
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
+    }
+
+    @Subscribe
+    public void startTrackEvent(TrackPlayerEntity event) {
+        if (mData != null) {
+            for (TrackPlayerEntity trackPlayerEntity : mData) {
+                if (trackPlayerEntity.getmTrackName().equalsIgnoreCase(event.getmTrackName())) {
+                    trackPlayerEntity.setPaused(false);
+                } else {
+                    trackPlayerEntity.setPaused(true);
+                }
+            }
+            notifyDataSetChanged();
+        }
     }
 
     public interface OnPlaylistTrackClick {
@@ -120,18 +140,6 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
             super(itemView);
             mTvTrackName = (AppCompatTextView) itemView.findViewById(R.id.tv_track_name);
             itemView.setOnClickListener(view -> {
-
-//                for (TrackPlayerEntity trackPlayerEntity : mData) {
-//                    if (!trackPlayerEntity.getmTrackName().equalsIgnoreCase(mData.get(getAdapterPosition()).getmTrackName()))
-//                        trackPlayerEntity.setPaused(true);
-//                }
-//
-//                if (mData.get(getAdapterPosition()).isPaused()) {
-//                    mData.get(getAdapterPosition()).setPaused(false);
-//                } else {
-//                    mData.get(getAdapterPosition()).setPaused(true);
-//                }
-
                 mListener.onPlaylistTrackClick(mData.get(getAdapterPosition()));
             });
         }

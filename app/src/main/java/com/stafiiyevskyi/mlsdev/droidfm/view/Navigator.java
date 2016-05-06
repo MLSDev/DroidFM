@@ -19,7 +19,7 @@ public interface Navigator {
 
     void navigateToTagTopContent(String tag);
 
-    void navigateToAlbumDetails(String artist, String album, String mbidl);
+    void navigateToAlbumDetails(String artist, String album, String mbidl, String albumImage);
 
     void navigateToTrackDetails(String artist, String track, String mbid);
 

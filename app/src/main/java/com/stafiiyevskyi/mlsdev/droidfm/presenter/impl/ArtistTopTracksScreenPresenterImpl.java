@@ -7,8 +7,8 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.TrackModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistTopTracksScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.track.SearchTracksListMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.artist.ArtistTopTracksMapper;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.track.SearchTracksListMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistTopTracksScreenView;
 
 import java.util.List;

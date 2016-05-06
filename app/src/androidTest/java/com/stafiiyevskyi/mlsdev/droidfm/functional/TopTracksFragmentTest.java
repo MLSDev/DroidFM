@@ -1,15 +1,14 @@
 package com.stafiiyevskyi.mlsdev.droidfm.functional;
 
-import android.content.Intent;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.squareup.spoon.Spoon;
+import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
 import com.stafiiyevskyi.mlsdev.droidfm.utils.CheckValues;
-import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.utils.TestDispatcher;
 import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 

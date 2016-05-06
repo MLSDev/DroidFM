@@ -2,7 +2,6 @@ package com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.artist;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.SearchArtist;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistEntity;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.artist.ArtistMapper;
 
 import java.util.List;
 
