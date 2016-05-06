@@ -111,6 +111,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         super.onDestroyView();
         mPresenter.stop();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
