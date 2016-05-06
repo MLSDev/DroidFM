@@ -30,6 +30,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -103,6 +104,13 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         mPresenter = new TrackDetailScreenPresenterImpl(this);
         mPresenter.getTrackDetails(mArtist, mTrack, mBid);
         mPresenter.getTrackStreamUrl(mArtist + " - " + mTrack);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.stop();
+        ButterKnife.unbind(this);
     }
 
     @Override

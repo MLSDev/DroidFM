@@ -86,7 +86,6 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     private MenuArrowDrawable mDrawerArrowDrawable;
     private BaseFragment mFirstFragment;
     private Handler mHandler;
-    private String mTrack;
     private String mAlbumImage;
 
 
@@ -470,21 +469,16 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
             notifyServiceTrackStateChanged();
 
         if (mSmPlayer.getPanelState().equals(SlidingUpPanelLayout.PanelState.HIDDEN))
-            mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
 
-        if (!MediaPlayerWrapper.getInstance().isFromAlbum()) {
-            mPlaylistAdapter.setData(null);
-        }
-        mTrack = event.getmTrackName();
+        if (!MediaPlayerWrapper.getInstance().isFromAlbum()) mPlaylistAdapter.setData(null);
 
         mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
-        mTvPlayTrackName.setText(mTrack);
+        mTvPlayTrackName.setText(event.getmTrackName());
         if (!MediaPlayerWrapper.getInstance().isFromAlbum() || event.getmAlbumImageUrl() != null) {
             mAlbumImage = event.getmAlbumImageUrl();
             Glide.with(this).load(mAlbumImage).into(mIvAlbumsTrackImage);
         }
-
-
         updateProgressBar();
     }
 

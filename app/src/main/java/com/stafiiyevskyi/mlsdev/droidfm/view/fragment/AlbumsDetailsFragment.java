@@ -28,6 +28,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.AlbumsTracksAdapter;
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -95,6 +96,13 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
         setupRvTracks();
         mPresenter = new AlbumsDetailScreenPresenterImpl(this);
         mPresenter.getAlbumsDetails(mArtist, mAlbum, mMbid);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.stop();
+        ButterKnife.unbind(this);
     }
 
     @Override

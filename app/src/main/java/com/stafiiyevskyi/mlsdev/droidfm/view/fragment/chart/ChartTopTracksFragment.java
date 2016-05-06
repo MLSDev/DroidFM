@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
+import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.ChartTopTracksScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ChartTopTrackPresenterImpl;
@@ -140,6 +142,7 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
     public void onTopTrackClick(TopTrackEntity topTrack) {
         ((Navigator) getActivity()).navigateToTrackDetails(topTrack.getArtistName(), topTrack.getName(), topTrack.getTrackMbid());
     }
+
 
     @Override
     public void showChartTopTracks(List<TopTrackEntity> trackEntities) {
