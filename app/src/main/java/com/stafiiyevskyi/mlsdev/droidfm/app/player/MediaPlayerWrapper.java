@@ -153,6 +153,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
                             VkTrackItemResponse itemResponse = vkTrackResponse.getResponse()[0];
                             MediaPlayerWrapper.this.mCurrentTrack.setmTrackUrl(itemResponse.getUrl());
                             preparedPlayer();
+                            EventBus.getDefault().post(MediaPlayerWrapper.this.mCurrentTrack);
                         } else {
                             stopPlayer();
                         }
@@ -173,29 +174,39 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
         if (mediaPlayer.isPlaying())
             mediaPlayer.pause();
         mState = State.Paused;
+        mCurrentTrack.setPaused(true);
     }
 
     public void stopPlayer() {
         if (mediaPlayer.isPlaying())
             mediaPlayer.stop();
         mState = State.Stopped;
+        mCurrentTrack.setPaused(true);
     }
 
     public void startPlayer() {
         mediaPlayer.start();
+        mCurrentTrack.setPaused(false);
         mState = State.Playing;
     }
 
     public void preparedPlayer() {
         stopPlayer();
-        mediaPlayer.reset();
-        try {
-            mediaPlayer.setDataSource(mCurrentTrack.getmTrackUrl());
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (mCurrentTrack.getmTrackUrl() != null) {
+            mediaPlayer.reset();
+            try {
+
+                mediaPlayer.setDataSource(mCurrentTrack.getmTrackUrl());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mediaPlayer.prepareAsync();
+            mCurrentTrack.setPaused(true);
+            mState = State.Preparing;
+        } else {
+            mState = State.Stopped;
         }
-        mediaPlayer.prepareAsync();
-        mState = State.Preparing;
+
     }
 
 

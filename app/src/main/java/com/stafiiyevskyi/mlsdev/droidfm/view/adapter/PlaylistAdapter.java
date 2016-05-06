@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventTrackStart;
+import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -83,10 +84,10 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         if (mData != null) {
             for (TrackPlayerEntity trackPlayerEntity : mData) {
                 if (trackPlayerEntity.getmTrackName().equalsIgnoreCase(event.getTrack().getmTrackName())) {
-                    if (trackPlayerEntity.isPaused()) {
-                        trackPlayerEntity.setPaused(false);
-                    } else {
+                    if (MediaPlayerWrapper.getInstance().getCurrentTrack().isPaused()) {
                         trackPlayerEntity.setPaused(true);
+                    } else {
+                        trackPlayerEntity.setPaused(false);
                     }
                 } else {
                     trackPlayerEntity.setPaused(true);
@@ -97,9 +98,9 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     }
 
     @Subscribe
-    public void startTrackEvent(EventTrackStart event) {
+    public void startTrackEvent(TrackPlayerEntity event) {
         for (TrackPlayerEntity trackPlayerEntity : mData) {
-            if (trackPlayerEntity.getmTrackName().equalsIgnoreCase(event.getTrackName())) {
+            if (trackPlayerEntity.getmTrackName().equalsIgnoreCase(event.getmTrackName())) {
                 trackPlayerEntity.setPaused(false);
             } else {
                 trackPlayerEntity.setPaused(true);
