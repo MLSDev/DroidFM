@@ -16,7 +16,7 @@
             android:id="@+id/iv_top_track"
             android:layout_width="@dimen/width_top_track_image"
             android:layout_height="@dimen/height_top_track_image"
-            app:srcCompat="@mipmap/ic_launcher" />
+            app:srcCompat="@drawable/ic_music_circle_grey600_48dp" />
 
 
         <LinearLayout

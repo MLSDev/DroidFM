@@ -97,7 +97,7 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.TopT
         public void bindTrackIcon(String url) {
             Glide.with(mContext)
                     .load(url)
-                    .placeholder(R.mipmap.ic_launcher)
+                    .placeholder(R.drawable.ic_music_circle_grey600_48dp)
                     .centerCrop()
                     .into(mIvTopTrackIcon);
         }
