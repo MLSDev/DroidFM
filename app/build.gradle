@@ -14,7 +14,9 @@ def VERSION_NAME = "${versionMajor}.${versionMinor}.${versionPatch}.${versionBui
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -84,4 +86,7 @@ dependencies {
 
 //    Event Bus
     compile 'org.greenrobot:eventbus:3.0.0'
+
+//    DB
+    compile 'io.realm:realm-android:0.87.1'
 }

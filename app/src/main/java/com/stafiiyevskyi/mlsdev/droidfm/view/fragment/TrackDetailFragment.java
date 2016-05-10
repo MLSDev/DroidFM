@@ -24,6 +24,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.TrackDetailScreenPresente
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.TrackDetailScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.LinkUtil;
+import com.stafiiyevskyi.mlsdev.droidfm.view.util.PlayerUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.TimeFormatUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -156,22 +157,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         mTvTrackDuration.setText(String.format(getString(R.string.duration), TimeFormatUtil.getFormattedTimeSecondsToMinutes(trackDuration)));
         mTrackUrl = url;
         if (MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack)) {
-            switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
-                case Retrieving:
-                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                    break;
-                case Stopped:
-                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                    break;
-                case Preparing:
-                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                    break;
-                case Playing:
-                    mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
-                    break;
-                case Paused:
-                    break;
-            }
+            PlayerUtil.setupPlayIconState(mIvPlayPause);
         } else {
             mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
         }
@@ -195,7 +181,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     @Subscribe
     public void trackPauseEvent(EventCurrentTrackPause event) {
         if (MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack))
-            setPlayIcon();
+            PlayerUtil.setupPlayIconState(mIvPlayPause);
     }
 
     @OnClick(R.id.iv_play_pause)
@@ -209,26 +195,6 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
             MediaPlayerWrapper.getInstance().setFromAlbum(false);
 
         MediaPlayerWrapper.getInstance().playTrack(track, false);
-        setPlayIcon();
-    }
-
-    private void setPlayIcon() {
-        switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
-            case Retrieving:
-                mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                break;
-            case Stopped:
-                mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                break;
-            case Preparing:
-                mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
-                break;
-            case Playing:
-                mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
-                break;
-            case Paused:
-                mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                break;
-        }
+        PlayerUtil.setupPlayIconState(mIvPlayPause);
     }
 }

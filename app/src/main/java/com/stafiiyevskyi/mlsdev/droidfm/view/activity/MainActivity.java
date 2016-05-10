@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +16,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -43,6 +46,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragme
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.signin.LoginVKDialogFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag.TagTopContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
+import com.stafiiyevskyi.mlsdev.droidfm.view.util.PlayerUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.SeekBarUtils;
 import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
 import com.vk.sdk.VKAccessToken;
@@ -128,6 +132,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 }
             });
     }
+
 
     @Override
     protected void onDestroy() {
@@ -353,23 +358,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     private Runnable mUpdateTimeTask = new Runnable() {
         public void run() {
-            switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
-                case Retrieving:
-                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                    break;
-                case Stopped:
-                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                    break;
-                case Preparing:
-                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                    break;
-                case Playing:
-                    mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
-                    break;
-                case Paused:
-                    mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                    break;
-            }
+            PlayerUtil.setupPlayIconState(mIvPlayPause);
 
             MediaPlayerWrapper.State state = MediaPlayerWrapper.getInstance().getCurrentState();
             if (!(state.equals(MediaPlayerWrapper.State.Retrieving)
@@ -435,23 +424,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
             if (MediaPlayerWrapper.getInstance().getCurrentTrack() != null) {
                 MediaPlayerWrapper.getInstance().playTrack(MediaPlayerWrapper.getInstance().getCurrentTrack(), false);
-                switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
-                    case Retrieving:
-                        mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                        break;
-                    case Stopped:
-                        mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                        break;
-                    case Preparing:
-                        mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
-                        break;
-                    case Playing:
-                        mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
-                        break;
-                    case Paused:
-                        mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
-                        break;
-                }
+                PlayerUtil.setupPlayIconState(mIvPlayPause);
             }
         });
     }
@@ -473,7 +446,6 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
         if (!MediaPlayerWrapper.getInstance().isFromAlbum()) mPlaylistAdapter.setData(null);
 
-        mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
         mTvPlayTrackName.setText(event.getmTrackName());
         if (!MediaPlayerWrapper.getInstance().isFromAlbum() || event.getmAlbumImageUrl() != null) {
             mAlbumImage = event.getmAlbumImageUrl();
