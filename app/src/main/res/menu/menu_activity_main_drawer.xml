@@ -15,5 +15,10 @@
             android:id="@+id/action_charts_item"
             android:checked="false"
             android:title="@string/charts_section_title" />
+
+        <item
+            android:id="@+id/action_favorite_item"
+            android:checked="false"
+            android:title="@string/favorite_section_title" />
     </group>
 </menu>

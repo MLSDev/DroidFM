@@ -10,4 +10,8 @@ public interface TrackDetailScreenView extends BaseScreenView {
     void showTrackDetail(TrackDetailEntity track);
 
     void showTrackStreamUrl(String url, int trackDuration);
+
+    void showTrackIsFavorite(boolean isFavorite);
+
+    void onSuccess();
 }

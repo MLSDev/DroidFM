@@ -36,6 +36,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.AlbumsDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.FavoriteTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TopChartsContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TrackDetailFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
@@ -213,6 +214,13 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                     }
                     drNavigation.closeDrawers();
                     return true;
+                case R.id.action_favorite_item:
+                    if (!(mFirstFragment instanceof FavoriteTracksFragment)) {
+                        navigateToFavoriteTracksScreen();
+                        getSupportActionBar().setSubtitle(getString(R.string.favorite_section_title));
+                    }
+                    drNavigation.closeDrawers();
+                    return true;
                 default:
                     return true;
             }
@@ -329,6 +337,15 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     @Override
     public void navigateToLoginVKDialog() {
         LoginVKDialogFragment.newInstance().show(mFragmentManager, LoginVKDialogFragment.class.getName());
+    }
+
+    @Override
+    public void navigateToFavoriteTracksScreen() {
+        mFirstFragment = FavoriteTracksFragment.newInstance();
+        AnimationUtil.detailTransition(mFirstFragment);
+        mFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, mFirstFragment)
+                .commit();
     }
 
     @Override

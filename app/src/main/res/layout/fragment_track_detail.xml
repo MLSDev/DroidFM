@@ -30,16 +30,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_play_grey600_36dp"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_play_grey600_36dp" />
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tv_track_name"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="26sp" />
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_track_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="26sp" />
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/iv_add_to_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/ic_star_outline_grey600_36dp" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -81,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"/>
+            android:layout_marginTop="@dimen/activity_horizontal_margin" />
 
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

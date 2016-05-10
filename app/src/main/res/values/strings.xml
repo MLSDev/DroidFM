@@ -10,10 +10,10 @@
     <string name="sound_cloud_secret_id">c0da5a0be7ef5227b71be2d4ac32730a</string>
 
 
-
     <string name="tracks_section_title">Tracks</string>
     <string name="charts_section_title">Charts</string>
     <string name="artists_section_title">Artists</string>
+    <string name="favorite_section_title">Favorites</string>
 
     <!--Artist content details-->
     <string name="tab_title_top_tracks">Top Tracks</string>

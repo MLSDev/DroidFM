@@ -13,5 +13,9 @@ public interface DBModel {
 
     Observable<List<FavoriteTrackDAO>> getFavoriteTracks();
 
+    Observable<List<FavoriteTrackDAO>> findTracks(String artistName, String trackName);
+
     void addFavoriteTrack(FavoriteTrackDAO track);
+
+    void deleteFromFavorites(FavoriteTrackDAO track);
 }

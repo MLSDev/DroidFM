@@ -18,6 +18,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.TrackDetailScreenPresenter;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.FavoriteTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TagWithUrlEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackDetailEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.TrackDetailScreenPresenterImpl;
@@ -61,6 +62,8 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     AppCompatImageView mIvPlayPause;
     @Bind(R.id.nested_scroll)
     NestedScrollView mNsScrollContainer;
+    @Bind(R.id.iv_add_to_favorite)
+    AppCompatImageView mIvAddToFavorite;
 
     private TrackDetailScreenPresenter mPresenter;
 
@@ -69,6 +72,9 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     private String mTrack;
     private String mTrackUrl;
     private String mAlbumImage;
+    private boolean mIsFavorite = false;
+
+    private TrackDetailEntity mDetailEntity;
 
     public static TrackDetailFragment newInstance(String artist, String track, String mbid) {
 
@@ -127,6 +133,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
 
     @Override
     public void showTrackDetail(TrackDetailEntity track) {
+        mDetailEntity = track;
         if (mTrackUrl != null) mIvPlayPause.setVisibility(View.VISIBLE);
         mAlbumImage = track.getAlbumImage();
         mPbProgress.setVisibility(View.GONE);
@@ -149,6 +156,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         String tagsString = builder.toString();
         mTvTrackTags.setMovementMethod(LinkMovementMethod.getInstance());
         mTvTrackTags.setText(Html.fromHtml(tagsString));
+        mPresenter.isTrackFavorite(track);
     }
 
     @Override
@@ -161,6 +169,19 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         } else {
             mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
         }
+    }
+
+    @Override
+    public void showTrackIsFavorite(boolean isFavorite) {
+        this.mIsFavorite = isFavorite;
+        if (isFavorite) {
+            mIvAddToFavorite.setImageResource(R.drawable.ic_star_grey600_36dp);
+        } else mIvAddToFavorite.setImageResource(R.drawable.ic_star_outline_grey600_36dp);
+    }
+
+    @Override
+    public void onSuccess() {
+        mPresenter.isTrackFavorite(mDetailEntity);
     }
 
     @Override
@@ -196,5 +217,19 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
 
         MediaPlayerWrapper.getInstance().playTrack(track, false);
         PlayerUtil.setupPlayIconState(mIvPlayPause);
+    }
+
+    @OnClick(R.id.iv_add_to_favorite)
+    public void onAddToFavoriteClick() {
+        FavoriteTrackEntity track = new FavoriteTrackEntity();
+        track.setTrackName(mTrack);
+        track.setArtistName(mArtist);
+        if (mIsFavorite) {
+            mPresenter.deleteFromFavorite(track);
+        } else {
+            mPresenter.addTrackToFavorite(track);
+        }
+
+
     }
 }
