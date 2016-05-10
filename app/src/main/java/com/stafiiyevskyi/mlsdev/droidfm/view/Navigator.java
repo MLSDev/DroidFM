@@ -25,7 +25,7 @@ public interface Navigator {
 
     void navigateToLoginVKDialog();
 
-    void navigateToFavoriteTracksScreen();
+    void navigateToFavoritesScreen();
 
     void setDrawerToggleEnabled();
 

@@ -3,27 +3,24 @@ package com.stafiiyevskyi.mlsdev.droidfm.data.model.impl;
 import com.stafiiyevskyi.mlsdev.droidfm.app.DroidFMApplication;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dao.entity.FavoriteTrackDAO;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dao.table.Tables;
-import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBModel;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBTrackModel;
 
 import java.util.List;
 import java.util.UUID;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 import io.realm.Sort;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by oleksandr on 06.05.16.
  */
-public class DBModelImpl implements DBModel {
+public class DBTrackModelImpl implements DBTrackModel {
 
     private AddTrackToDBCallback listener;
 
-    public DBModelImpl(AddTrackToDBCallback listener) {
+    public DBTrackModelImpl(AddTrackToDBCallback listener) {
         this.listener = listener;
     }
 

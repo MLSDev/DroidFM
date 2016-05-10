@@ -55,6 +55,8 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     ProgressBar mPbProgress;
     @Bind(R.id.iv_play_album)
     AppCompatImageView mIvPlayAlbum;
+    @Bind(R.id.iv_add_to_favorite)
+    AppCompatImageView mIvAddToFavorite;
 
     private AlbumsDetailScreenPresenter mPresenter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -65,6 +67,9 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     private String mArtist;
     private String mAlbum;
     private String mAlbumImage;
+
+    private boolean mIsFavorite = false;
+
 
     public static AlbumsDetailsFragment newInstance(String artist, String album, String mbid, String albumImage) {
 
@@ -96,6 +101,7 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
         setupRvTracks();
         mPresenter = new AlbumsDetailScreenPresenterImpl(this);
         mPresenter.getAlbumsDetails(mArtist, mAlbum, mMbid);
+        ((Navigator) getActivity()).setDrawerToggleNotEnabled();
     }
 
     @Override
@@ -141,6 +147,20 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
         mTvAlbumName.setText(album.getName());
         mAdapter.setData(album.getTracks());
+        mPresenter.isTrackFavorite(mAlbumsDetailEntity);
+    }
+
+    @Override
+    public void showAlbumIsFavorite(boolean isFavorite) {
+        this.mIsFavorite = isFavorite;
+        if (isFavorite) {
+            mIvAddToFavorite.setImageResource(R.drawable.ic_star_grey600_36dp);
+        } else mIvAddToFavorite.setImageResource(R.drawable.ic_star_outline_grey600_36dp);
+    }
+
+    @Override
+    public void onSuccess() {
+
     }
 
 
@@ -162,5 +182,14 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
         event.setData(mAlbumsDetailEntity.getTracks());
         event.setAlbumImageUrl(mAlbumImage);
         EventBus.getDefault().post(event);
+    }
+
+    @OnClick(R.id.iv_add_to_favorite)
+    public void onAddToFavoriteClick() {
+        if (mIsFavorite) {
+            mPresenter.deleteFromFavorite(mAlbumsDetailEntity);
+        } else {
+            mPresenter.addAlbumToFavorite(mAlbumsDetailEntity);
+        }
     }
 }

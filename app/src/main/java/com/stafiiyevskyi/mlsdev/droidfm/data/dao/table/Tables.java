@@ -10,4 +10,11 @@ public interface Tables {
         String TRACK_NAME = "track_name";
         String ARTIST_NAME = "artist_name";
     }
+
+    interface FavoriteAlbum {
+        String ID = "id";
+        String ALBUM_NAME = "album_name";
+        String ARTIST_NAME = "artist_name";
+        String MBID = "mbid";
+    }
 }

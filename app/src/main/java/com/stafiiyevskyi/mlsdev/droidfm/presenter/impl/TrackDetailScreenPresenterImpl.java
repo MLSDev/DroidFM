@@ -2,15 +2,14 @@ package com.stafiiyevskyi.mlsdev.droidfm.presenter.impl;
 
 import android.util.Log;
 
-import com.stafiiyevskyi.mlsdev.droidfm.data.dao.entity.FavoriteTrackDAO;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail.TrackDetail;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail.TrackDetailResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VKTrackResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackItemResponse;
-import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBModel;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBTrackModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.TrackModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.VKTrackModel;
-import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.DBModelImpl;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.DBTrackModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.TrackModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.VKTrackModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
@@ -30,18 +29,18 @@ import rx.Subscription;
 /**
  * Created by oleksandr on 27.04.16.
  */
-public class TrackDetailScreenPresenterImpl extends BasePresenter implements TrackDetailScreenPresenter, DBModelImpl.AddTrackToDBCallback {
+public class TrackDetailScreenPresenterImpl extends BasePresenter implements TrackDetailScreenPresenter, DBTrackModelImpl.AddTrackToDBCallback {
 
     private TrackModel mTrackModel;
     private VKTrackModel mVKTrackModel;
-    private DBModel mDBModel;
+    private DBTrackModel mDBTrackModel;
     private TrackDetailScreenView mView;
 
     public TrackDetailScreenPresenterImpl(TrackDetailScreenView mView) {
         this.mView = mView;
         this.mTrackModel = new TrackModelImpl();
         this.mVKTrackModel = new VKTrackModelImpl();
-        this.mDBModel = new DBModelImpl(this);
+        this.mDBTrackModel = new DBTrackModelImpl(this);
     }
 
     @Override
@@ -71,7 +70,7 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
 
     @Override
     public void isTrackFavorite(TrackDetailEntity trackDetailEntity) {
-        Subscription subscription = mDBModel.findTracks(trackDetailEntity.getArtistName(), trackDetailEntity.getName())
+        Subscription subscription = mDBTrackModel.findTracks(trackDetailEntity.getArtistName(), trackDetailEntity.getName())
                 .map(new FavoriteListTracksFromDAOMapper())
                 .subscribe(new Observer<List<FavoriteTrackEntity>>() {
                     @Override
@@ -124,12 +123,12 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
 
     @Override
     public void addTrackToFavorite(FavoriteTrackEntity track) {
-        mDBModel.addFavoriteTrack(new FavoriteTrackToDAOMapper().call(track));
+        mDBTrackModel.addFavoriteTrack(new FavoriteTrackToDAOMapper().call(track));
     }
 
     @Override
     public void deleteFromFavorite(FavoriteTrackEntity track) {
-        mDBModel.deleteFromFavorites(new FavoriteTrackToDAOMapper().call(track));
+        mDBTrackModel.deleteFromFavorites(new FavoriteTrackToDAOMapper().call(track));
     }
 
     private TrackDetail unwrapResponse(TrackDetailResponse response) {

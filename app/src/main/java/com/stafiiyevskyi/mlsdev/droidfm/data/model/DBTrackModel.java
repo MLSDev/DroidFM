@@ -9,7 +9,7 @@ import rx.Observable;
 /**
  * Created by oleksandr on 06.05.16.
  */
-public interface DBModel {
+public interface DBTrackModel {
 
     Observable<List<FavoriteTrackDAO>> getFavoriteTracks();
 

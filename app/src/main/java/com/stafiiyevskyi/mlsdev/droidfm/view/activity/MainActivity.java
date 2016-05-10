@@ -36,11 +36,12 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.AlbumsDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
-import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.FavoriteTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TopChartsContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TrackDetailFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.favorite.FavoriteContentFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.favorite.FavoriteTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.signin.LoginVKDialogFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag.TagTopContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
@@ -216,7 +217,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                     return true;
                 case R.id.action_favorite_item:
                     if (!(mFirstFragment instanceof FavoriteTracksFragment)) {
-                        navigateToFavoriteTracksScreen();
+                        navigateToFavoritesScreen();
                         getSupportActionBar().setSubtitle(getString(R.string.favorite_section_title));
                     }
                     drNavigation.closeDrawers();
@@ -340,8 +341,8 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     }
 
     @Override
-    public void navigateToFavoriteTracksScreen() {
-        mFirstFragment = FavoriteTracksFragment.newInstance();
+    public void navigateToFavoritesScreen() {
+        mFirstFragment = FavoriteContentFragment.newInstance();
         AnimationUtil.detailTransition(mFirstFragment);
         mFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, mFirstFragment)

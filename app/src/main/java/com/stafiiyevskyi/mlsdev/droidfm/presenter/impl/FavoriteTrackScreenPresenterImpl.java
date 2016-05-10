@@ -2,8 +2,8 @@ package com.stafiiyevskyi.mlsdev.droidfm.presenter.impl;
 
 import android.util.Log;
 
-import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBModel;
-import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.DBModelImpl;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBTrackModel;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.DBTrackModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.FavoriteTracksScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.FavoriteTrackEntity;
@@ -19,19 +19,19 @@ import rx.Subscription;
 /**
  * Created by oleksandr on 10.05.16.
  */
-public class FavoriteTrackScreenPresenterImpl extends BasePresenter implements FavoriteTracksScreenPresenter, DBModelImpl.AddTrackToDBCallback {
+public class FavoriteTrackScreenPresenterImpl extends BasePresenter implements FavoriteTracksScreenPresenter, DBTrackModelImpl.AddTrackToDBCallback {
 
-    private DBModel mDBModel;
+    private DBTrackModel mDBTrackModel;
     private FavoriteTrackScreenView mView;
 
     public FavoriteTrackScreenPresenterImpl(FavoriteTrackScreenView mView) {
         this.mView = mView;
-        mDBModel = new DBModelImpl(this);
+        mDBTrackModel = new DBTrackModelImpl(this);
     }
 
     @Override
     public void getFavoritesTrack() {
-        Subscription subscription = mDBModel.getFavoriteTracks().map(new FavoriteListTracksFromDAOMapper())
+        Subscription subscription = mDBTrackModel.getFavoriteTracks().map(new FavoriteListTracksFromDAOMapper())
                 .subscribe(new Observer<List<FavoriteTrackEntity>>() {
                     @Override
                     public void onCompleted() {
@@ -53,11 +53,18 @@ public class FavoriteTrackScreenPresenterImpl extends BasePresenter implements F
 
     @Override
     public void deleteFromFavorites(FavoriteTrackEntity track) {
-        mDBModel.deleteFromFavorites(new FavoriteTrackToDAOMapper().call(track));
+        mDBTrackModel.deleteFromFavorites(new FavoriteTrackToDAOMapper().call(track));
     }
 
     @Override
     public void onSuccess() {
-        mView.showSuccess();
+        if (mView != null)
+            mView.showSuccess();
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        mView = null;
     }
 }

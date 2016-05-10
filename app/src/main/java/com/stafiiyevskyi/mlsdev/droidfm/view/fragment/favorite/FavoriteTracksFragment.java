@@ -1,9 +1,11 @@
-package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
+package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.favorite;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -13,8 +15,8 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.FavoriteTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.FavoriteTrackScreenPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.FavoriteTrackScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
-import com.stafiiyevskyi.mlsdev.droidfm.view.activity.BaseActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.FavoriteTracksAdapter;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.List;
 
@@ -56,15 +58,20 @@ public class FavoriteTracksFragment extends BaseFragment implements FavoriteTrac
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (isVisible()) menu.clear();
+    }
+
+    @Override
     protected int getResourceId() {
         return R.layout.fragment_favorite_tracks;
     }
 
     @Override
     public void updateToolbar() {
-        ((BaseActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.favorite_section_title);
-        getActivity().supportInvalidateOptionsMenu();
-        ((Navigator) getActivity()).setDrawerToggleEnabled();
+        getActivity().invalidateOptionsMenu();
+
     }
 
     private void setupRvTracks() {

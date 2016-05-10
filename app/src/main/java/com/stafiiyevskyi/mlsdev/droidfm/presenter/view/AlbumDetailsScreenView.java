@@ -8,4 +8,8 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.AlbumsDetailEntity;
 public interface AlbumDetailsScreenView extends BaseScreenView {
 
     void showAlbumsDetails(AlbumsDetailEntity album);
+
+    void showAlbumIsFavorite(boolean isFavorite);
+
+    void onSuccess();
 }
