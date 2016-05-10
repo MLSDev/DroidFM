@@ -6,8 +6,10 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
@@ -29,6 +31,8 @@ public class TracksPlayerService extends Service {
 
 
     private static TracksPlayerService mInstance;
+    private AudioManager mAudioManager;
+    private AFListener mAFListener;
 
     public static TracksPlayerService getInstance() {
         return mInstance;
@@ -41,6 +45,11 @@ public class TracksPlayerService extends Service {
 
     @Override
     public void onCreate() {
+        mAFListener = new AFListener();
+        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int requestResult = mAudioManager.requestAudioFocus(mAFListener,
+                AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        Log.e(TracksPlayerService.class.getSimpleName(), "Music request focus, result: " + requestResult);
         MediaPlayerWrapper.getInstance().init();
         mInstance = this;
     }
@@ -52,6 +61,8 @@ public class TracksPlayerService extends Service {
     }
 
     public void onDestroy() {
+        if (mAFListener != null)
+            mAudioManager.abandonAudioFocus(mAFListener);
         MediaPlayerWrapper.getInstance().releaseMP();
     }
 
@@ -127,5 +138,34 @@ public class TracksPlayerService extends Service {
         return customView;
     }
 
+    class AFListener implements AudioManager.OnAudioFocusChangeListener {
+
+
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            String event = "";
+            switch (focusChange) {
+                case AudioManager.AUDIOFOCUS_LOSS:
+                    event = "AUDIOFOCUS_LOSS";
+                    MediaPlayerWrapper.getInstance().pausePlayer();
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                    event = "AUDIOFOCUS_LOSS_TRANSIENT";
+                    MediaPlayerWrapper.getInstance().pausePlayer();
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                    event = "AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK";
+                    MediaPlayerWrapper.getInstance().changeVolume(0.5f, 0.5f);
+                    break;
+                case AudioManager.AUDIOFOCUS_GAIN:
+                    event = "AUDIOFOCUS_GAIN";
+                    if (!MediaPlayerWrapper.getInstance().isMusicPlay())
+                        MediaPlayerWrapper.getInstance().startPlayer();
+                    MediaPlayerWrapper.getInstance().changeVolume(1.0f, 1.0f);
+                    break;
+            }
+            Log.e(MediaPlayerWrapper.class.getSimpleName(), " onAudioFocusChange: " + event);
+        }
+    }
 
 }

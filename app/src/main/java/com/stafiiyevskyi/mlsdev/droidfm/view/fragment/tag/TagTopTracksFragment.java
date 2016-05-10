@@ -12,8 +12,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
-import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
-import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.TagTopTracksPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.TagTopTracksPresenterImpl;

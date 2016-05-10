@@ -25,6 +25,11 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
     private MediaPlayer mediaPlayer;
     private VKTrackModel mVKTrackModel;
 
+    public boolean isMusicPlay() {
+
+        return mediaPlayer.isPlaying();
+    }
+
     public enum State {
         Retrieving,
         Stopped,
@@ -36,6 +41,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
 
     private MediaPlayerWrapper() {
         mVKTrackModel = new VKTrackModelImpl();
+
     }
 
     private boolean isFromAlbum;
@@ -207,6 +213,10 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
 
     }
 
+    public void changeVolume(float left, float right) {
+        mediaPlayer.setVolume(left, left);
+    }
+
 
     public State getCurrentState() {
         return mState;
@@ -248,4 +258,6 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
     public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
 
     }
+
+
 }
