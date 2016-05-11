@@ -16,7 +16,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -26,9 +26,9 @@ public class TagTopContentFragment extends BaseFragment implements ViewPager.OnP
 
     private static final String TAG_BUNDLE_KEY = "tag_bundle_key_tag_top_content_fragment";
 
-    @Bind(R.id.vp_content)
+    @BindView(R.id.vp_content)
     ViewPager mVpTabContent;
-    @Bind(R.id.tabs)
+    @BindView(R.id.tabs)
     TabLayout mTlTabs;
 
     private String mTag;
@@ -55,7 +55,6 @@ public class TagTopContentFragment extends BaseFragment implements ViewPager.OnP
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
 

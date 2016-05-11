@@ -34,7 +34,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.util.TimeFormatUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -47,27 +47,27 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     private static final String ARTIST_BUNDLE_KEY = "artist_bundle_key_track_detail_fragment";
     private static final String TRACK_BUNDLE_KEY = "track_bundle_key_track_detail_fragment";
 
-    @Bind(R.id.tv_track_name)
+    @BindView(R.id.tv_track_name)
     AppCompatTextView mTvTrackName;
-    @Bind(R.id.tv_track_duration)
+    @BindView(R.id.tv_track_duration)
     AppCompatTextView mTvTrackDuration;
-    @Bind(R.id.tv_artist_name)
+    @BindView(R.id.tv_artist_name)
     AppCompatTextView mTvArtistName;
-    @Bind(R.id.tv_track_content)
+    @BindView(R.id.tv_track_content)
     AppCompatTextView mTvTrackContent;
-    @Bind(R.id.tv_track_published)
+    @BindView(R.id.tv_track_published)
     AppCompatTextView mTvTrackPublished;
-    @Bind(R.id.tv_track_tags)
+    @BindView(R.id.tv_track_tags)
     AppCompatTextView mTvTrackTags;
-    @Bind(R.id.pb_progress)
+    @BindView(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @Bind(R.id.iv_play_pause)
+    @BindView(R.id.iv_play_pause)
     AppCompatImageView mIvPlayPause;
-    @Bind(R.id.nested_scroll)
+    @BindView(R.id.nested_scroll)
     ScrollView mNsScrollContainer;
-    @Bind(R.id.iv_add_to_favorite)
+    @BindView(R.id.iv_add_to_favorite)
     AppCompatImageView mIvAddToFavorite;
-    @Bind(R.id.srl_refresh)
+    @BindView(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private TrackDetailScreenPresenter mPresenter;
@@ -123,7 +123,6 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.stop();
-        ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }
 

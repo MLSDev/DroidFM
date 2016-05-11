@@ -22,7 +22,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -30,11 +30,11 @@ import butterknife.ButterKnife;
  */
 public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter.OnTagClickListener, ChartTopTagScreenView, SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.rv_toptags)
+    @BindView(R.id.rv_toptags)
     RecyclerView mRvTags;
-    @Bind(R.id.pb_progress)
+    @BindView(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @Bind(R.id.srl_refresh)
+    @BindView(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
 
@@ -76,7 +76,6 @@ public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
         mPresenter.stop();
     }
 

@@ -23,18 +23,18 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * Created by oleksandr on 22.04.16.
  */
 public class ChartTopTracksFragment extends BaseFragment implements TopTracksAdapter.OnTopTrackClickListener, ChartTopTracksScreenView, SearchView.OnQueryTextListener, SearchView.OnCloseListener, SwipeRefreshLayout.OnRefreshListener {
-    @Bind(R.id.rv_toptracks)
+    @BindView(R.id.rv_toptracks)
     RecyclerView mRvTracks;
-    @Bind(R.id.pb_progress)
+    @BindView(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @Bind(R.id.srl_refresh)
+    @BindView(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
     private SearchView mSearchView;
 
@@ -116,7 +116,6 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
         mPresenter.stop();
     }
 

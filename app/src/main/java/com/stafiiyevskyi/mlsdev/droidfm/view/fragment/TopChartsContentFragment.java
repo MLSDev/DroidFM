@@ -14,13 +14,13 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFrag
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTagsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by oleksandr on 22.04.16.
  */
 public class TopChartsContentFragment extends BaseFragment {
-    @Bind(R.id.nb_navigation)
+    @BindView(R.id.nb_navigation)
     AHBottomNavigation mBnNavigation;
 
     private FragmentManager mFragmentManager;

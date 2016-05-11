@@ -22,7 +22,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -32,11 +32,11 @@ public class TagTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapt
 
     private static final String TAG_BUNDLE_KEY = "tag_bundle_key_tag_top_albums_fragment";
 
-    @Bind(R.id.rv_topalbums)
+    @BindView(R.id.rv_topalbums)
     RecyclerView mRvAlbums;
-    @Bind(R.id.pb_progress)
+    @BindView(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @Bind(R.id.srl_refresh)
+    @BindView(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private RecyclerView.LayoutManager mLayoutManager;
@@ -105,7 +105,6 @@ public class TagTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapt
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
         mPresenter.stop();
     }
 

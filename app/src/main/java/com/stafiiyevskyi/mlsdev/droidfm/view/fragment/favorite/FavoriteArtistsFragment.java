@@ -21,15 +21,15 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by oleksandr on 11.05.16.
  */
 public class FavoriteArtistsFragment extends BaseFragment implements FavoriteArtistScreenView, FavoriteArtistsAdapter.OnArtistClickListener {
-    @Bind(R.id.rv_artists)
+    @BindView(R.id.rv_artists)
     RecyclerView mRvArtists;
-    @Bind(R.id.pb_progress)
+    @BindView(R.id.pb_progress)
     ProgressBar mPbProgress;
 
     private FavoriteArtistsAdapter mAdapter;

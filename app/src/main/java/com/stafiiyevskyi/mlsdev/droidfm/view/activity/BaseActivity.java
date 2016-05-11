@@ -9,7 +9,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.NestedScrollableViewHelper;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -18,10 +18,10 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
 
     @Nullable
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     @Nullable
-    @Bind(R.id.sm_player)
+    @BindView(R.id.sm_player)
     SlidingUpPanelLayout mSmPlayer;
 
     @Override

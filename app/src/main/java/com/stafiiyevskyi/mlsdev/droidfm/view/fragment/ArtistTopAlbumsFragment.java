@@ -21,7 +21,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.TopAlbumsAdapter;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -32,11 +32,11 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     public static final String ARTIST_MBID_BUNDLE_KEY = "artist_top_albums_fragment_mbid";
     public static final String ARTIST_NAME_BUNDLE_KEY = "artist_top_albums_fragment_name";
 
-    @Bind(R.id.rv_topalbums)
+    @BindView(R.id.rv_topalbums)
     RecyclerView mRvAlbums;
-    @Bind(R.id.pb_progress)
+    @BindView(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @Bind(R.id.srl_refresh)
+    @BindView(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private String mMbid;
@@ -109,7 +109,6 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
         mPresenter.stop();
     }
 

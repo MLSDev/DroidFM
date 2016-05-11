@@ -20,7 +20,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -28,9 +28,9 @@ import butterknife.ButterKnife;
  */
 public class FavoriteTracksFragment extends BaseFragment implements FavoriteTrackScreenView, FavoriteTracksAdapter.OnFavoriteTrackClickListener {
 
-    @Bind(R.id.rv_tracks)
+    @BindView(R.id.rv_tracks)
     RecyclerView mRvTracks;
-    @Bind(R.id.pb_progress)
+    @BindView(R.id.pb_progress)
     ProgressBar mPbProgress;
 
     private FavoriteTracksAdapter mAdapter;
@@ -54,7 +54,6 @@ public class FavoriteTracksFragment extends BaseFragment implements FavoriteTrac
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.stop();
-        ButterKnife.unbind(this);
     }
 
     @Override

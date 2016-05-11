@@ -24,7 +24,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -35,11 +35,11 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
 
     private static final String TAG_BUNDLE_KEY = "tag_bundle_key_tag_top_artists_fragment";
 
-    @Bind(R.id.rv_artists)
+    @BindView(R.id.rv_artists)
     RecyclerView mRvArtists;
-    @Bind(R.id.pb_progress)
+    @BindView(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @Bind(R.id.srl_refresh)
+    @BindView(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private SearchView mSearchView;
@@ -136,7 +136,6 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
         mPresenter.stop();
     }
 

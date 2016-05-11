@@ -19,7 +19,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistDetailEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistDetailScreenPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistDetailScreenView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -29,13 +29,13 @@ public class ArtistDetailFullFragment extends BaseFragment implements ArtistDeta
     private static final String MBID_BUNDLE_KEY = "mbid_bundle_key_artist_details_full_fragment";
 
 
-    @Bind(R.id.tv_artist_published)
+    @BindView(R.id.tv_artist_published)
     AppCompatTextView mTvArtistPublishedInfo;
-    @Bind(R.id.tv_artist_summary)
+    @BindView(R.id.tv_artist_summary)
     AppCompatTextView mTvArtistSummary;
-    @Bind(R.id.pb_progress)
+    @BindView(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @Bind(R.id.srl_refresh)
+    @BindView(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private ArtistDetailScreenPresenter mPresenter;
@@ -75,7 +75,6 @@ public class ArtistDetailFullFragment extends BaseFragment implements ArtistDeta
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
         mPresenter.stop();
     }
 
