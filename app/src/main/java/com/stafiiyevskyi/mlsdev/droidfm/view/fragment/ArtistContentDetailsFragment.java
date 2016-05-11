@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistContentDetailsScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.FavoriteArtistEntity;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.FavoriteTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistContentDetailsScreenPresenterImp;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistContentScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
