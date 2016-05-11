@@ -1,6 +1,7 @@
 package com.stafiiyevskyi.mlsdev.droidfm.presenter.impl;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBAlbumModel;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.TransactionCallback;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.DBAlbumModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.FavoriteAlbumsScreenPresenter;
@@ -17,7 +18,7 @@ import rx.Subscription;
 /**
  * Created by oleksandr on 10.05.16.
  */
-public class FavoriteAlbumsScreenPresenterImpl extends BasePresenter implements FavoriteAlbumsScreenPresenter, DBAlbumModelImpl.AddAlbumToDBCallback {
+public class FavoriteAlbumsScreenPresenterImpl extends BasePresenter implements FavoriteAlbumsScreenPresenter, TransactionCallback {
 
     private DBAlbumModel mAlbumModel;
     private FavoriteAlbumScreenView mView;

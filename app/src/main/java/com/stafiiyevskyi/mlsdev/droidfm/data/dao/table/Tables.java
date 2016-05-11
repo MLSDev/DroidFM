@@ -17,4 +17,11 @@ public interface Tables {
         String ARTIST_NAME = "artist_name";
         String MBID = "mbid";
     }
+
+    interface FavoriteArtist {
+        String ID = "id";
+        String NAME = "name";
+        String MBID = "mbid";
+        String IMAGE = "image";
+    }
 }

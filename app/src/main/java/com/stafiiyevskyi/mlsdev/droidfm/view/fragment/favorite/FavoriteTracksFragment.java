@@ -70,7 +70,7 @@ public class FavoriteTracksFragment extends BaseFragment implements FavoriteTrac
 
     @Override
     public void updateToolbar() {
-        getActivity().invalidateOptionsMenu();
+        getActivity().supportInvalidateOptionsMenu();
 
     }
 

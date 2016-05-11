@@ -6,6 +6,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.detail.AlbumDetail;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.album.detail.AlbumDetailResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.AlbumModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBAlbumModel;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.TransactionCallback;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.AlbumModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.DBAlbumModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.AlbumsDetailScreenPresenter;
@@ -25,7 +26,7 @@ import rx.Subscription;
 /**
  * Created by oleksandr on 26.04.16.
  */
-public class AlbumsDetailScreenPresenterImpl extends BasePresenter implements AlbumsDetailScreenPresenter, DBAlbumModelImpl.AddAlbumToDBCallback {
+public class AlbumsDetailScreenPresenterImpl extends BasePresenter implements AlbumsDetailScreenPresenter, TransactionCallback {
 
     private AlbumModel mAlbumModel;
     private DBAlbumModel mDBAlbumModel;

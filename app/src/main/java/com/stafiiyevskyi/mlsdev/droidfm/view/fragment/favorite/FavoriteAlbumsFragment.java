@@ -79,7 +79,7 @@ public class FavoriteAlbumsFragment extends BaseFragment implements FavoriteAlbu
 
     @Override
     public void updateToolbar() {
-        getActivity().invalidateOptionsMenu();
+        getActivity().supportInvalidateOptionsMenu();
     }
 
     @Override

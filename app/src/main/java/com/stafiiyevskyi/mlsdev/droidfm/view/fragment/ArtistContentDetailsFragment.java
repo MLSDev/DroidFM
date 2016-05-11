@@ -7,11 +7,17 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistContentDetailsScreenPresenter;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.FavoriteArtistEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.FavoriteTrackEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistContentDetailsScreenPresenterImp;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistContentScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 
 import java.util.ArrayList;
@@ -25,7 +31,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by oleksandr on 21.04.16.
  */
-public class ArtistContentDetailsFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
+public class ArtistContentDetailsFragment extends BaseFragment implements ViewPager.OnPageChangeListener, ArtistContentScreenView {
 
     private static final String ARTIST_MBID_BUNDLE_KEY = "artist_conten_details_fragment_mbid";
     private static final String ARTIST_NAME_BUNDLE_KEY = "artist_conten_details_fragment_name";
@@ -38,13 +44,18 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
     TabLayout mTlTabs;
     @Bind(R.id.tv_artist_name)
     AppCompatTextView mTvArtistName;
+    @Bind(R.id.iv_add_to_favorite)
+    AppCompatImageView mIvAddToFavorite;
 
+    private ArtistContentDetailsScreenPresenter mPresenter;
 
     private String mMbid;
     private String mArtistName;
     private String mImageUrl;
+    FavoriteArtistEntity artistEntity;
 
     private FragmentViewPagerAdapter mAdapter;
+    private boolean mIsFavorite = false;
 
     public static BaseFragment newInstance(@NonNull String artistMbid, @NonNull String artistName, @NonNull String imageUrl) {
 
@@ -60,6 +71,7 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mPresenter = new ArtistContentDetailsScreenPresenterImp(this);
         Bundle args = getArguments();
         mMbid = args.getString(ARTIST_MBID_BUNDLE_KEY);
         mArtistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
@@ -68,6 +80,11 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
         setupViewPager(mVpTabContent);
         mTlTabs.setupWithViewPager(mVpTabContent);
         ((Navigator) getActivity()).setDrawerToggleNotEnabled();
+        artistEntity = new FavoriteArtistEntity();
+        artistEntity.setImage(mImageUrl);
+        artistEntity.setName(mArtistName);
+        artistEntity.setMbid(mMbid);
+        mPresenter.isArtistFavorite(artistEntity);
     }
 
     @Override
@@ -118,6 +135,33 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void showArtistIsFavorite(boolean isFavorite) {
+        this.mIsFavorite = isFavorite;
+        if (isFavorite) {
+            mIvAddToFavorite.setImageResource(R.drawable.ic_star_white_48dp);
+        } else mIvAddToFavorite.setImageResource(R.drawable.ic_star_outline_white_48dp);
+    }
+
+    @Override
+    public void showSuccess() {
+
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+
+    }
+
+    @OnClick(R.id.iv_add_to_favorite)
+    public void onAddToFavoriteClick() {
+        if (mIsFavorite) {
+            mPresenter.deleteFromFavorite(artistEntity);
+        } else {
+            mPresenter.addArtistToFavorite(artistEntity);
+        }
     }
 
     class FragmentViewPagerAdapter extends FragmentStatePagerAdapter {

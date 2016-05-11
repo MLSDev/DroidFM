@@ -10,11 +10,11 @@ public interface TrackDetailScreenPresenter extends Presenter {
 
     void getTrackDetails(String artist, String track, String mbid);
 
-    void isTrackFavorite(TrackDetailEntity trackDetailEntity);
-
     void getTrackStreamUrl(String trackSearch);
 
     void addTrackToFavorite(FavoriteTrackEntity track);
 
     void deleteFromFavorite(FavoriteTrackEntity track);
+
+    void isTrackFavorite(TrackDetailEntity trackDetailEntity);
 }

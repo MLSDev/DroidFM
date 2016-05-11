@@ -6,9 +6,9 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhiteBackground"
     android:fitsSystemWindows="true"
-    tools:context=".view.activity.MainActivity"
-    android:background="@color/colorWhiteBackground">
+    tools:context=".view.activity.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                 layout="@layout/widget_player"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"></include>
+                android:layout_alignParentBottom="true" />
 
         </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
@@ -58,9 +58,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/colorWhiteBackground"
         app:headerLayout="@layout/header_menu"
-        app:menu="@menu/menu_activity_main_drawer"
-        android:background="@color/colorWhiteBackground"/>
+        app:menu="@menu/menu_activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
 

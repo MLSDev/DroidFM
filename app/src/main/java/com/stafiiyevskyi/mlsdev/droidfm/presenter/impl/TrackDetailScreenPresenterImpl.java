@@ -8,6 +8,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VKTrackResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackItemResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBTrackModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.TrackModel;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.TransactionCallback;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.VKTrackModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.DBTrackModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.TrackModelImpl;
@@ -29,7 +30,7 @@ import rx.Subscription;
 /**
  * Created by oleksandr on 27.04.16.
  */
-public class TrackDetailScreenPresenterImpl extends BasePresenter implements TrackDetailScreenPresenter, DBTrackModelImpl.AddTrackToDBCallback {
+public class TrackDetailScreenPresenterImpl extends BasePresenter implements TrackDetailScreenPresenter, TransactionCallback {
 
     private TrackModel mTrackModel;
     private VKTrackModel mVKTrackModel;

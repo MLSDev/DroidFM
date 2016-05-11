@@ -229,7 +229,5 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         } else {
             mPresenter.addTrackToFavorite(track);
         }
-
-
     }
 }

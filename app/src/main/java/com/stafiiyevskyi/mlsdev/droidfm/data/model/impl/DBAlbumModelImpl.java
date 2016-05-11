@@ -4,6 +4,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.app.DroidFMApplication;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dao.entity.FavoriteAlbumDAO;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dao.table.Tables;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBAlbumModel;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.TransactionCallback;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,9 +18,9 @@ import rx.android.schedulers.AndroidSchedulers;
  * Created by oleksandr on 10.05.16.
  */
 public class DBAlbumModelImpl implements DBAlbumModel {
-    private AddAlbumToDBCallback listener;
+    private TransactionCallback listener;
 
-    public DBAlbumModelImpl(AddAlbumToDBCallback listener) {
+    public DBAlbumModelImpl(TransactionCallback listener) {
         this.listener = listener;
     }
 
@@ -71,9 +72,5 @@ public class DBAlbumModelImpl implements DBAlbumModel {
                 .findAll().removeLast();
         realm.commitTransaction();
         listener.onSuccess();
-    }
-
-    public interface AddAlbumToDBCallback {
-        void onSuccess();
     }
 }

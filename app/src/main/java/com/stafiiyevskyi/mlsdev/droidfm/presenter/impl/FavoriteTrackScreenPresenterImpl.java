@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.presenter.impl;
 import android.util.Log;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBTrackModel;
+import com.stafiiyevskyi.mlsdev.droidfm.data.model.TransactionCallback;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.DBTrackModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.FavoriteTracksScreenPresenter;
@@ -19,7 +20,7 @@ import rx.Subscription;
 /**
  * Created by oleksandr on 10.05.16.
  */
-public class FavoriteTrackScreenPresenterImpl extends BasePresenter implements FavoriteTracksScreenPresenter, DBTrackModelImpl.AddTrackToDBCallback {
+public class FavoriteTrackScreenPresenterImpl extends BasePresenter implements FavoriteTracksScreenPresenter, TransactionCallback {
 
     private DBTrackModel mDBTrackModel;
     private FavoriteTrackScreenView mView;

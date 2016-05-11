@@ -25,13 +25,13 @@
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:id="@+id/iv_artist"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_centerHorizontal="true"
-                    app:civ_border_width="0dp"
-                    android:transitionName="@string/transition_artist_image"/>
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:transitionName="@string/transition_artist_image"
+                    app:civ_border_width="0dp" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_artist_name"
@@ -41,11 +41,20 @@
                     android:layout_below="@+id/iv_artist"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:drawableRight="@drawable/ic_details_white_48dp"
+                    android:layout_toLeftOf="@+id/iv_add_to_favorite"
+                    android:drawableLeft="@drawable/ic_details_white_48dp"
                     android:gravity="center_vertical"
                     android:text="Rihanna"
                     android:textColor="@color/colorWhiteBackground"
                     android:textSize="26sp" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/iv_add_to_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    app:srcCompat="@drawable/ic_star_outline_white_48dp" />
 
             </RelativeLayout>
 

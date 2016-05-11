@@ -52,8 +52,9 @@ public class FavoriteContentFragment extends BaseFragment implements ViewPager.O
 
     private void setupViewPager() {
         mAdapter = new FragmentViewPagerAdapter(getChildFragmentManager());
-        mAdapter.addFragment(FavoriteAlbumsFragment.newInstance(), getActivity().getString(R.string.tab_title_top_albums));
-        mAdapter.addFragment(FavoriteTracksFragment.newInstance(), getActivity().getString(R.string.tab_title_top_tracks));
+        mAdapter.addFragment(FavoriteAlbumsFragment.newInstance(), getString(R.string.tab_title_top_albums));
+        mAdapter.addFragment(FavoriteTracksFragment.newInstance(), getString(R.string.tab_title_top_tracks));
+        mAdapter.addFragment(FavoriteArtistsFragment.newInstance(), getString(R.string.tab_title_top_artists));
         mVpTabContent.setAdapter(mAdapter);
         mVpTabContent.addOnPageChangeListener(this);
         mTlTabs.setupWithViewPager(mVpTabContent);
