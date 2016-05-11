@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  * Created by oleksandr on 22.04.16.
  */
 public class ArtistTopTracksFragment extends BaseFragment implements SearchView.OnQueryTextListener,
-        SearchView.OnCloseListener, ArtistTopTracksAdapter.OnTopTrackClickListener, ArtistTopTracksScreenView {
+        SearchView.OnCloseListener, ArtistTopTracksAdapter.OnTopTrackClickListener, ArtistTopTracksScreenView, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String ARTIST_MBID_BUNDLE_KEY = "artist_top_tracks_fragment_mbid";
     public static final String ARTIST_NAME_BUNDLE_KEY = "artist_top_tracks_fragment_name";
@@ -37,6 +38,9 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
     RecyclerView mRvToptracks;
     @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
+    @Bind(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
+
     private SearchView mSearchView;
 
     private String mMbid;
@@ -106,6 +110,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle args = getArguments();
+        mSrlRefresh.setOnRefreshListener(this);
         mMbid = args.getString(ARTIST_MBID_BUNDLE_KEY);
         mArtistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
         mPresenter = new ArtistTopTracksScreenPresenterImpl(this);
@@ -157,6 +162,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
 
     @Override
     public void showTracks(List<TopTrackEntity> tracks) {
+        mSrlRefresh.setRefreshing(false);
         mPbProgress.setVisibility(View.GONE);
         if (mIsSearchFirstCall) {
             mAdapter.setData(tracks);
@@ -169,6 +175,7 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
 
     @Override
     public void showError(String errorMessage) {
+        mSrlRefresh.setRefreshing(false);
         Snackbar.make(mRvToptracks, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
@@ -196,5 +203,13 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+    @Override
+    public void onRefresh() {
+        mIsSearchActivate = false;
+        mIsSearchFirstCall = true;
+        mCurrentPageNumber = 1;
+        mPresenter.getArtistTopTracks(mArtistName, mMbid, mCurrentPageNumber);
     }
 }

@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
 /**
  * Created by oleksandr on 22.04.16.
  */
-public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapter.OnAlbumClickListener, ArtistTopAlbumsScreenView {
+public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapter.OnAlbumClickListener, ArtistTopAlbumsScreenView, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String ARTIST_MBID_BUNDLE_KEY = "artist_top_albums_fragment_mbid";
     public static final String ARTIST_NAME_BUNDLE_KEY = "artist_top_albums_fragment_name";
@@ -35,6 +36,8 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     RecyclerView mRvAlbums;
     @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
+    @Bind(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
 
     private String mMbid;
     private String mArtistName;
@@ -88,6 +91,7 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+        mSrlRefresh.setOnRefreshListener(this);
         Bundle args = getArguments();
         mMbid = args.getString(ARTIST_MBID_BUNDLE_KEY);
         mArtistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
@@ -129,11 +133,12 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
 
     @Override
     public void onAlbumClick(AlbumEntity album) {
-        ((Navigator) getActivity()).navigateToAlbumDetails(album.getArtistName(),album.getName(),album.getMbid(),album.getImage().get(3).getText());
+        ((Navigator) getActivity()).navigateToAlbumDetails(album.getArtistName(), album.getName(), album.getMbid(), album.getImage().get(3).getText());
     }
 
     @Override
     public void showArtistTopAlbums(List<AlbumEntity> albumEntities) {
+        mSrlRefresh.setRefreshing(false);
         mPbProgress.setVisibility(View.GONE);
         mAdapter.addData(albumEntities);
         mIsLoading = false;
@@ -141,6 +146,13 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
 
     @Override
     public void showError(String errorMessage) {
+        mSrlRefresh.setRefreshing(false);
         Snackbar.make(mRvAlbums, errorMessage, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRefresh() {
+        mCurrentPageNumber = 1;
+        mPresenter.getArtistTopAlbums(mArtistName, mMbid, mCurrentPageNumber);
     }
 }

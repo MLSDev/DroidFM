@@ -1,88 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/srl_refresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorWhiteBackground"
-    android:fillViewport="true"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@color/colorWhiteBackground"
+        android:fillViewport="true"
+        android:padding="@dimen/activity_horizontal_margin">
 
-        <LinearLayout
-            android:id="@+id/ll_content"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <LinearLayout
+                android:id="@+id/ll_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:layout_alignParentTop="true"
+                android:orientation="vertical">
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tv_album_name"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="2"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="26sp" />
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_album_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="26sp" />
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/iv_add_to_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/ic_star_outline_grey600_36dp" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_artist_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_album_published"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_album_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/iv_add_to_favorite"
+                    android:id="@+id/iv_play_album"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_star_outline_grey600_36dp" />
+                    app:srcCompat="@drawable/ic_play_grey600_36dp" />
+
 
             </LinearLayout>
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_artist_name"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_tracks"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp" />
+                android:layout_height="match_parent"
+                android:layout_below="@+id/ll_content" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_album_published"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent" />
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_album_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/iv_play_album"
+            <ProgressBar
+                android:id="@+id/pb_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_play_grey600_36dp" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
+        </RelativeLayout>
 
 
-        </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_tracks"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/ll_content" />
-
-        <ProgressBar
-            android:id="@+id/pb_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/activity_horizontal_margin" />
-
-    </RelativeLayout>
-</ScrollView>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

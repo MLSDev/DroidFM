@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,7 +35,7 @@ import butterknife.OnClick;
 /**
  * Created by oleksandr on 26.04.16.
  */
-public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsScreenView, AlbumsTracksAdapter.OnTopTrackClickListener {
+public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsScreenView, AlbumsTracksAdapter.OnTopTrackClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String MBID_BUNDLE_KEY = "mbid_bundle_key_albums_detail_fragment";
     private static final String ARTIST_BUNDLE_KEY = "artist_bundle_key_albums_detail_fragment";
@@ -57,6 +58,8 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     AppCompatImageView mIvPlayAlbum;
     @Bind(R.id.iv_add_to_favorite)
     AppCompatImageView mIvAddToFavorite;
+    @Bind(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
 
     private AlbumsDetailScreenPresenter mPresenter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -99,6 +102,7 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
         mMbid = arg.getString(MBID_BUNDLE_KEY);
         mAlbumImage = arg.getString(ALBUM_IMAGE_BUNDLE_KEY);
         setupRvTracks();
+        setupSwipeRefresh();
         mPresenter = new AlbumsDetailScreenPresenterImpl(this);
         mPresenter.getAlbumsDetails(mArtist, mAlbum, mMbid);
         ((Navigator) getActivity()).setDrawerToggleNotEnabled();
@@ -124,6 +128,10 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
         mRvTracks.setLayoutManager(mLayoutManager);
     }
 
+    private void setupSwipeRefresh() {
+        mSrlRefresh.setOnRefreshListener(this);
+    }
+
     @Override
     protected int getResourceId() {
         return R.layout.fragment_album_details;
@@ -136,6 +144,7 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
     @Override
     public void showAlbumsDetails(AlbumsDetailEntity album) {
+        mSrlRefresh.setRefreshing(false);
         mAlbumsDetailEntity = album;
         mPbProgress.setVisibility(View.GONE);
         mTvAlbumArtistName.setText(album.getArtistName());
@@ -166,6 +175,7 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
     @Override
     public void showError(String errorMessage) {
+        mSrlRefresh.setRefreshing(false);
         mPbProgress.setVisibility(View.GONE);
         Log.e("AlbumsDetail", errorMessage);
         Snackbar.make(mRvTracks, errorMessage, Snackbar.LENGTH_LONG).show();
@@ -197,5 +207,10 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
             }
         }
 
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.getAlbumsDetails(mArtist, mAlbum, mMbid);
     }
 }

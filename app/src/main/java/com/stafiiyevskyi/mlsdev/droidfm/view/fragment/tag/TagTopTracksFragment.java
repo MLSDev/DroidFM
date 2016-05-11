@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -29,7 +30,7 @@ import butterknife.ButterKnife;
  * Created by oleksandr on 26.04.16.
  */
 public class TagTopTracksFragment extends BaseFragment implements SearchView.OnQueryTextListener,
-        SearchView.OnCloseListener, TagTopTracksScreenView, TopTracksAdapter.OnTopTrackClickListener {
+        SearchView.OnCloseListener, TagTopTracksScreenView, TopTracksAdapter.OnTopTrackClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG_BUNDLE_KEY = "tag_bundle_key_tag_top_tracks_fragment";
 
@@ -37,6 +38,8 @@ public class TagTopTracksFragment extends BaseFragment implements SearchView.OnQ
     RecyclerView mRvTracks;
     @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
+    @Bind(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
 
     private RecyclerView.LayoutManager mLayoutManager;
     private TopTracksAdapter mAdapter;
@@ -96,6 +99,7 @@ public class TagTopTracksFragment extends BaseFragment implements SearchView.OnQ
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+        mSrlRefresh.setOnRefreshListener(this);
         mTag = getArguments().getString(TAG_BUNDLE_KEY);
         mPresenter = new TagTopTracksPresenterImpl(this);
         mPresenter.getTopTracks(mTag, mCurrentPageNumber);
@@ -142,6 +146,7 @@ public class TagTopTracksFragment extends BaseFragment implements SearchView.OnQ
 
     @Override
     public void showError(String errorMessage) {
+        mSrlRefresh.setRefreshing(false);
         Snackbar.make(mRvTracks, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
@@ -149,6 +154,7 @@ public class TagTopTracksFragment extends BaseFragment implements SearchView.OnQ
     @Override
     public void showTopArtists(List<TopTrackEntity> topTrackEntities) {
         mPbProgress.setVisibility(View.GONE);
+        mSrlRefresh.setRefreshing(false);
         if (mIsFirstCall) {
             mAdapter.setData(topTrackEntities);
             mIsFirstCall = false;
@@ -187,5 +193,13 @@ public class TagTopTracksFragment extends BaseFragment implements SearchView.OnQ
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+    @Override
+    public void onRefresh() {
+        mIsFirstCall = true;
+        mIsSearchActivate = false;
+        mCurrentPageNumber = 1;
+        mPresenter.getTopTracks(mTag, mCurrentPageNumber);
     }
 }

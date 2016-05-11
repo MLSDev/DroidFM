@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
  * Created by oleksandr on 26.04.16.
  */
 public class TagTopArtistsFragment extends BaseFragment implements SearchView.OnQueryTextListener,
-        SearchView.OnCloseListener, ArtistsAdapter.OnArtistClickListener, TagTopArtistScreenView {
+        SearchView.OnCloseListener, ArtistsAdapter.OnArtistClickListener, TagTopArtistScreenView, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG_BUNDLE_KEY = "tag_bundle_key_tag_top_artists_fragment";
 
@@ -38,6 +39,8 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
     RecyclerView mRvArtists;
     @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
+    @Bind(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
 
     private SearchView mSearchView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -102,6 +105,7 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupRecycler();
+        mSrlRefresh.setOnRefreshListener(this);
         mTag = getArguments().getString(TAG_BUNDLE_KEY);
         mPresenter = new TagTopArtistsPresenterImpl(this);
         mPresenter.getTopArtists(mTag, mCurrentPageNumber);
@@ -156,6 +160,7 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
 
     @Override
     public void showError(String errorMessage) {
+        mSrlRefresh.setRefreshing(false);
         Snackbar.make(mRvArtists, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
@@ -187,6 +192,7 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
 
     @Override
     public void showTopArtist(List<ArtistEntity> artistEntities) {
+        mSrlRefresh.setRefreshing(false);
         mPbProgress.setVisibility(View.GONE);
         if (mIsFirstCall) {
             mAdapter.setData(artistEntities);
@@ -195,5 +201,13 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
             mAdapter.addData(artistEntities);
             mIsLoading = false;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        mIsFirstCall = true;
+        mIsSearchActivate = false;
+        mCurrentPageNumber = 1;
+        mPresenter.getTopArtists(mTag, mCurrentPageNumber);
     }
 }

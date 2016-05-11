@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,12 +31,14 @@ import butterknife.ButterKnife;
  * Created by oleksandr on 20.04.16.
  */
 public class ArtistSearchListFragment extends BaseFragment implements SearchView.OnQueryTextListener,
-        SearchView.OnCloseListener, ArtistsAdapter.OnArtistClickListener, ArtistsScreenView {
+        SearchView.OnCloseListener, ArtistsAdapter.OnArtistClickListener, ArtistsScreenView, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.rv_artists)
     RecyclerView mRvArtists;
     @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
+    @Bind(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
 
     private SearchView mSearchView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -95,6 +98,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupRecycler();
+        mSrlRefresh.setOnRefreshListener(this);
         mPresenter = new ArtistsScreenPresenterImpl(this);
         mPresenter.getTopArtists(mCurrentPageNumber);
         ((Navigator) getActivity()).setDrawerToggleEnabled();
@@ -147,6 +151,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
 
     @Override
     public void showArtists(List<ArtistEntity> artistEntities) {
+        mSrlRefresh.setRefreshing(false);
         mPbProgress.setVisibility(View.GONE);
         if (mIsSearchFirstCall) {
             mAdapter.setData(artistEntities);
@@ -160,6 +165,8 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
 
     @Override
     public void showError(String errorMessage) {
+        mSrlRefresh.setRefreshing(false);
+        mPbProgress.setVisibility(View.GONE);
         Snackbar.make(mRvArtists, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
@@ -187,5 +194,13 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+    @Override
+    public void onRefresh() {
+        mIsSearchFirstCall = true;
+        mIsSearchActivate = false;
+        mCurrentPageNumber = 1;
+        mPresenter.getTopArtists(mCurrentPageNumber);
     }
 }

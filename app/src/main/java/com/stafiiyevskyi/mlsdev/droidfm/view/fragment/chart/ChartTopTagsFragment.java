@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -27,12 +28,14 @@ import butterknife.ButterKnife;
 /**
  * Created by oleksandr on 25.04.16.
  */
-public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter.OnTagClickListener, ChartTopTagScreenView {
+public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter.OnTagClickListener, ChartTopTagScreenView, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.rv_toptags)
     RecyclerView mRvTags;
     @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
+    @Bind(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
 
 
     private RecyclerView.LayoutManager mLayoutManager;
@@ -58,6 +61,7 @@ public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter
         super.onViewCreated(view, savedInstanceState);
         mPresenter = new ChartTopTagScreenPresenterImpl(this);
         setupRvTags();
+        mSrlRefresh.setOnRefreshListener(this);
         mPresenter.getTopTags(mCurrentPageNumber);
     }
 
@@ -100,12 +104,20 @@ public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter
 
     @Override
     public void showTopTags(List<TopTagEntity> tags) {
+        mSrlRefresh.setRefreshing(false);
         mPbProgress.setVisibility(View.GONE);
         mAdapter.addData(tags);
     }
 
     @Override
     public void showError(String errorMessage) {
+        mSrlRefresh.setRefreshing(false);
         Snackbar.make(mRvTags, errorMessage, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRefresh() {
+        mCurrentPageNumber = 1;
+        mPresenter.getTopTags(mCurrentPageNumber);
     }
 }

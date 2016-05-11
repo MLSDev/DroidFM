@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -28,11 +29,13 @@ import butterknife.ButterKnife;
 /**
  * Created by oleksandr on 22.04.16.
  */
-public class ChartTopTracksFragment extends BaseFragment implements TopTracksAdapter.OnTopTrackClickListener, ChartTopTracksScreenView, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public class ChartTopTracksFragment extends BaseFragment implements TopTracksAdapter.OnTopTrackClickListener, ChartTopTracksScreenView, SearchView.OnQueryTextListener, SearchView.OnCloseListener, SwipeRefreshLayout.OnRefreshListener {
     @Bind(R.id.rv_toptracks)
     RecyclerView mRvTracks;
     @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
+    @Bind(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
     private SearchView mSearchView;
 
     private ChartTopTracksScreenPresenter mPresenter;
@@ -92,6 +95,7 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupRvTracks();
+        mSrlRefresh.setOnRefreshListener(this);
         mPresenter = new ChartTopTrackPresenterImpl(this);
         mPresenter.getChartTopTracks(mCurrentPageNumber);
     }
@@ -145,6 +149,7 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
     @Override
     public void showChartTopTracks(List<TopTrackEntity> trackEntities) {
         mPbProgress.setVisibility(View.GONE);
+        mSrlRefresh.setRefreshing(false);
         if (mIsSearchFirstCall) {
             mAdapter.setData(trackEntities);
             mIsSearchFirstCall = false;
@@ -156,6 +161,8 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
 
     @Override
     public void showError(String errorMessage) {
+        mPbProgress.setVisibility(View.GONE);
+        mSrlRefresh.setRefreshing(false);
         Snackbar.make(mRvTracks, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
@@ -185,4 +192,11 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
         return false;
     }
 
+    @Override
+    public void onRefresh() {
+        mIsSearchFirstCall = true;
+        mIsSearchActivate = false;
+        mCurrentPageNumber = 1;
+        mPresenter.getChartTopTracks(mCurrentPageNumber);
+    }
 }

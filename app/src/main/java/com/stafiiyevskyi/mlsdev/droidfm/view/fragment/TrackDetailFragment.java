@@ -3,7 +3,9 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ScrollingView;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
@@ -12,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
@@ -38,7 +41,7 @@ import butterknife.OnClick;
 /**
  * Created by oleksandr on 27.04.16.
  */
-public class TrackDetailFragment extends BaseFragment implements TrackDetailScreenView {
+public class TrackDetailFragment extends BaseFragment implements TrackDetailScreenView, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String MBID_BUNDLE_KEY = "mbid_bundle_key_track_detail_fragment";
     private static final String ARTIST_BUNDLE_KEY = "artist_bundle_key_track_detail_fragment";
@@ -61,9 +64,11 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     @Bind(R.id.iv_play_pause)
     AppCompatImageView mIvPlayPause;
     @Bind(R.id.nested_scroll)
-    NestedScrollView mNsScrollContainer;
+    ScrollView mNsScrollContainer;
     @Bind(R.id.iv_add_to_favorite)
     AppCompatImageView mIvAddToFavorite;
+    @Bind(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
 
     private TrackDetailScreenPresenter mPresenter;
 
@@ -104,6 +109,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((Navigator) getActivity()).setDrawerToggleNotEnabled();
+        mSrlRefresh.setOnRefreshListener(this);
         Bundle args = getArguments();
         mBid = args.getString(MBID_BUNDLE_KEY);
         mTrack = args.getString(TRACK_BUNDLE_KEY);
@@ -133,6 +139,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
 
     @Override
     public void showTrackDetail(TrackDetailEntity track) {
+        mSrlRefresh.setRefreshing(false);
         mDetailEntity = track;
         if (mTrackUrl != null) mIvPlayPause.setVisibility(View.VISIBLE);
         mAlbumImage = track.getAlbumImage();
@@ -186,6 +193,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
 
     @Override
     public void showError(String errorMessage) {
+        mSrlRefresh.setRefreshing(false);
         mPbProgress.setVisibility(View.GONE);
         Snackbar.make(mNsScrollContainer, R.string.not_track_error_message, Snackbar.LENGTH_LONG).show();
     }
@@ -229,5 +237,11 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         } else {
             mPresenter.addTrackToFavorite(track);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.getTrackDetails(mArtist, mTrack, mBid);
+        mPresenter.getTrackStreamUrl(mArtist + " - " + mTrack);
     }
 }
