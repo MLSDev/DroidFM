@@ -34,7 +34,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.util.TimeFormatUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -47,27 +47,27 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     private static final String ARTIST_BUNDLE_KEY = "artist_bundle_key_track_detail_fragment";
     private static final String TRACK_BUNDLE_KEY = "track_bundle_key_track_detail_fragment";
 
-    @BindView(R.id.tv_track_name)
+    @Bind(R.id.tv_track_name)
     AppCompatTextView mTvTrackName;
-    @BindView(R.id.tv_track_duration)
+    @Bind(R.id.tv_track_duration)
     AppCompatTextView mTvTrackDuration;
-    @BindView(R.id.tv_artist_name)
+    @Bind(R.id.tv_artist_name)
     AppCompatTextView mTvArtistName;
-    @BindView(R.id.tv_track_content)
+    @Bind(R.id.tv_track_content)
     AppCompatTextView mTvTrackContent;
-    @BindView(R.id.tv_track_published)
+    @Bind(R.id.tv_track_published)
     AppCompatTextView mTvTrackPublished;
-    @BindView(R.id.tv_track_tags)
+    @Bind(R.id.tv_track_tags)
     AppCompatTextView mTvTrackTags;
-    @BindView(R.id.pb_progress)
+    @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @BindView(R.id.iv_play_pause)
+    @Bind(R.id.iv_play_pause)
     AppCompatImageView mIvPlayPause;
-    @BindView(R.id.nested_scroll)
+    @Bind(R.id.nested_scroll)
     ScrollView mNsScrollContainer;
-    @BindView(R.id.iv_add_to_favorite)
+    @Bind(R.id.iv_add_to_favorite)
     AppCompatImageView mIvAddToFavorite;
-    @BindView(R.id.srl_refresh)
+    @Bind(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private TrackDetailScreenPresenter mPresenter;

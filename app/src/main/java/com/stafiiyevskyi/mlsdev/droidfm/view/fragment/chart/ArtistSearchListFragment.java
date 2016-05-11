@@ -24,7 +24,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.List;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -33,11 +33,11 @@ import butterknife.ButterKnife;
 public class ArtistSearchListFragment extends BaseFragment implements SearchView.OnQueryTextListener,
         SearchView.OnCloseListener, ArtistsAdapter.OnArtistClickListener, ArtistsScreenView, SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.rv_artists)
+    @Bind(R.id.rv_artists)
     RecyclerView mRvArtists;
-    @BindView(R.id.pb_progress)
+    @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @BindView(R.id.srl_refresh)
+    @Bind(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private SearchView mSearchView;

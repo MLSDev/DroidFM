@@ -22,7 +22,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.ArtistTopTracksAdapter;
 
 import java.util.List;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -34,11 +34,11 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
     public static final String ARTIST_MBID_BUNDLE_KEY = "artist_top_tracks_fragment_mbid";
     public static final String ARTIST_NAME_BUNDLE_KEY = "artist_top_tracks_fragment_name";
 
-    @BindView(R.id.rv_toptracks)
+    @Bind(R.id.rv_toptracks)
     RecyclerView mRvToptracks;
-    @BindView(R.id.pb_progress)
+    @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @BindView(R.id.srl_refresh)
+    @Bind(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private SearchView mSearchView;

@@ -28,7 +28,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.AlbumsTracksAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -42,23 +42,23 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     private static final String ALBUM_BUNDLE_KEY = "album_bundle_key_albums_detail_fragment";
     private static final String ALBUM_IMAGE_BUNDLE_KEY = "album_image_bundle_key_albums_detail_fragment";
 
-    @BindView(R.id.tv_album_name)
+    @Bind(R.id.tv_album_name)
     AppCompatTextView mTvAlbumName;
-    @BindView(R.id.tv_artist_name)
+    @Bind(R.id.tv_artist_name)
     AppCompatTextView mTvAlbumArtistName;
-    @BindView(R.id.tv_album_content)
+    @Bind(R.id.tv_album_content)
     AppCompatTextView mTvAlbumContent;
-    @BindView(R.id.tv_album_published)
+    @Bind(R.id.tv_album_published)
     AppCompatTextView mTvAlbumPublished;
-    @BindView(R.id.rv_tracks)
+    @Bind(R.id.rv_tracks)
     RecyclerView mRvTracks;
-    @BindView(R.id.pb_progress)
+    @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @BindView(R.id.iv_play_album)
+    @Bind(R.id.iv_play_album)
     AppCompatImageView mIvPlayAlbum;
-    @BindView(R.id.iv_add_to_favorite)
+    @Bind(R.id.iv_add_to_favorite)
     AppCompatImageView mIvAddToFavorite;
-    @BindView(R.id.srl_refresh)
+    @Bind(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private AlbumsDetailScreenPresenter mPresenter;

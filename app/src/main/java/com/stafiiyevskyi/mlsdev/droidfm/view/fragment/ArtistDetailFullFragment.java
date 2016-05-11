@@ -19,7 +19,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistDetailEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistDetailScreenPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistDetailScreenView;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -29,13 +29,13 @@ public class ArtistDetailFullFragment extends BaseFragment implements ArtistDeta
     private static final String MBID_BUNDLE_KEY = "mbid_bundle_key_artist_details_full_fragment";
 
 
-    @BindView(R.id.tv_artist_published)
+    @Bind(R.id.tv_artist_published)
     AppCompatTextView mTvArtistPublishedInfo;
-    @BindView(R.id.tv_artist_summary)
+    @Bind(R.id.tv_artist_summary)
     AppCompatTextView mTvArtistSummary;
-    @BindView(R.id.pb_progress)
+    @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @BindView(R.id.srl_refresh)
+    @Bind(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private ArtistDetailScreenPresenter mPresenter;

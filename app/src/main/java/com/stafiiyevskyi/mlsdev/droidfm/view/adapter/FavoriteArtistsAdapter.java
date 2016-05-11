@@ -19,7 +19,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.FavoriteArtistEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -71,11 +71,11 @@ public class FavoriteArtistsAdapter extends RecyclerView.Adapter<FavoriteArtists
 
     public class ArtistVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.fl_progress)
+        @Bind(R.id.fl_progress)
         FrameLayout mFlProgress;
-        @BindView(R.id.iv_artist)
+        @Bind(R.id.iv_artist)
         AppCompatImageView mIvArtistPhoto;
-        @BindView(R.id.tv_artist_name)
+        @Bind(R.id.tv_artist_name)
         AppCompatTextView mTvArtistName;
 
         public ArtistVH(View itemView) {

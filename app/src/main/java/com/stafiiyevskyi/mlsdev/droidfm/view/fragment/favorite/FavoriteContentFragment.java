@@ -16,7 +16,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -24,9 +24,9 @@ import butterknife.ButterKnife;
  */
 public class FavoriteContentFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
-    @BindView(R.id.vp_content)
+    @Bind(R.id.vp_content)
     ViewPager mVpTabContent;
-    @BindView(R.id.tabs)
+    @Bind(R.id.tabs)
     TabLayout mTlTabs;
 
     private FragmentViewPagerAdapter mAdapter;

@@ -24,7 +24,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.List;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -35,11 +35,11 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
 
     private static final String TAG_BUNDLE_KEY = "tag_bundle_key_tag_top_artists_fragment";
 
-    @BindView(R.id.rv_artists)
+    @Bind(R.id.rv_artists)
     RecyclerView mRvArtists;
-    @BindView(R.id.pb_progress)
+    @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @BindView(R.id.srl_refresh)
+    @Bind(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private SearchView mSearchView;

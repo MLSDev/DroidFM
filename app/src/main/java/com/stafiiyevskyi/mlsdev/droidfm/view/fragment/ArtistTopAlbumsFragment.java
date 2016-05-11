@@ -21,8 +21,8 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.TopAlbumsAdapter;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import butterknife.Bind;
+
 
 /**
  * Created by oleksandr on 22.04.16.
@@ -32,11 +32,11 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     public static final String ARTIST_MBID_BUNDLE_KEY = "artist_top_albums_fragment_mbid";
     public static final String ARTIST_NAME_BUNDLE_KEY = "artist_top_albums_fragment_name";
 
-    @BindView(R.id.rv_topalbums)
+    @Bind(R.id.rv_topalbums)
     RecyclerView mRvAlbums;
-    @BindView(R.id.pb_progress)
+    @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
-    @BindView(R.id.srl_refresh)
+    @Bind(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private String mMbid;

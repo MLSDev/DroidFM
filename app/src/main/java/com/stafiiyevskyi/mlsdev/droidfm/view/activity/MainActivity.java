@@ -58,28 +58,28 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import rx.Observable;
 
 public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnSeekBarChangeListener, PlaylistAdapter.OnPlaylistTrackClick {
-    @BindView(R.id.drawer_layout)
+    @Bind(R.id.drawer_layout)
     DrawerLayout drNavigation;
-    @BindView(R.id.nav_view)
+    @Bind(R.id.nav_view)
     NavigationView nvNavigation;
 
-    @BindView(R.id.sb_player_seekbar)
+    @Bind(R.id.sb_player_seekbar)
     SeekBar mSbSeekbar;
-    @BindView(R.id.tv_play_track_name)
+    @Bind(R.id.tv_play_track_name)
     AppCompatTextView mTvPlayTrackName;
-    @BindView(R.id.iv_album_image)
+    @Bind(R.id.iv_album_image)
     AppCompatImageView mIvAlbumsTrackImage;
-    @BindView(R.id.iv_play_pause)
+    @Bind(R.id.iv_play_pause)
     AppCompatImageView mIvPlayPause;
-    @BindView(R.id.tv_current_track_position)
+    @Bind(R.id.tv_current_track_position)
     AppCompatTextView mTvCurrentTrackPosition;
-    @BindView(R.id.tv_track_duration)
+    @Bind(R.id.tv_track_duration)
     AppCompatTextView mTvTrackTotalDuration;
-    @BindView(R.id.rv_playlist)
+    @Bind(R.id.rv_playlist)
     RecyclerView mRvPlaylist;
 
     private FragmentManager mFragmentManager;
@@ -416,6 +416,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     private void setupPlayerWidget() {
         mPlaylistAdapter = new PlaylistAdapter(this);
+        mRvPlaylist = (RecyclerView) findViewById(R.id.rv_playlist);
         mRvPlaylist.setLayoutManager(new LinearLayoutManager(this));
         mRvPlaylist.setAdapter(mPlaylistAdapter);
 

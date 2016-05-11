@@ -4,17 +4,20 @@
         <item
             android:id="@+id/action_artists_item"
             android:checked="true"
-            android:title="@string/artists_section_title" />
+            android:title="@string/artists_section_title"
+            android:icon="@drawable/ic_person_black_48dp"/>
 
         <item
             android:id="@+id/action_tracks_item"
             android:checked="false"
-            android:title="@string/tracks_section_title" />
+            android:title="@string/tracks_section_title"
+            android:icon="@drawable/ic_music_circle_black_48dp"/>
 
         <item
             android:id="@+id/action_charts_item"
             android:checked="false"
-            android:title="@string/charts_section_title" />
+            android:title="@string/charts_section_title"
+            android:icon="@drawable/ic_bubble_chart_black_48dp"/>
 
         <item
             android:id="@+id/action_favorite_item"

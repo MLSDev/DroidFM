@@ -22,7 +22,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -35,15 +35,15 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
     private static final String ARTIST_MBID_BUNDLE_KEY = "artist_conten_details_fragment_mbid";
     private static final String ARTIST_NAME_BUNDLE_KEY = "artist_conten_details_fragment_name";
     private static final String ARTIST_IMAGE_URL_BUNDLE_KEY = "artist_conten_details_fragment_image_url";
-    @BindView(R.id.iv_artist)
+    @Bind(R.id.iv_artist)
     CircleImageView mIvArtistPhoto;
-    @BindView(R.id.vp_content)
+    @Bind(R.id.vp_content)
     ViewPager mVpTabContent;
-    @BindView(R.id.tabs)
+    @Bind(R.id.tabs)
     TabLayout mTlTabs;
-    @BindView(R.id.tv_artist_name)
+    @Bind(R.id.tv_artist_name)
     AppCompatTextView mTvArtistName;
-    @BindView(R.id.iv_add_to_favorite)
+    @Bind(R.id.iv_add_to_favorite)
     AppCompatImageView mIvAddToFavorite;
 
     private ArtistContentDetailsScreenPresenter mPresenter;
