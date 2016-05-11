@@ -22,7 +22,7 @@ public class TracksPlayerService extends Service {
 
     private static final int FLAG_FROM_NOTIFICATION = 2;
     public static final int FLAG_FROM_WIDGET = 1;
-
+    private static final int NOTIFICATION_ID = 1;
     public static final String INTENT_PLAYER_KEY = "FLAG";
 
     public static final String ACTION_NOTIFICATION_PLAY_PAUSE = "action_notification_play_pause";
@@ -33,6 +33,7 @@ public class TracksPlayerService extends Service {
     private static TracksPlayerService mInstance;
     private AudioManager mAudioManager;
     private AFListener mAFListener;
+    private NotificationManager notificationManager;
 
     public static TracksPlayerService getInstance() {
         return mInstance;
@@ -46,6 +47,7 @@ public class TracksPlayerService extends Service {
     @Override
     public void onCreate() {
         mAFListener = new AFListener();
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int requestResult = mAudioManager.requestAudioFocus(mAFListener,
                 AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
@@ -60,10 +62,14 @@ public class TracksPlayerService extends Service {
         return START_STICKY;
     }
 
+    @Override
     public void onDestroy() {
         if (mAFListener != null)
             mAudioManager.abandonAudioFocus(mAFListener);
         MediaPlayerWrapper.getInstance().releaseMP();
+        notificationManager.cancel(NOTIFICATION_ID);
+        Log.e("Service","onDestroy");
+        super.onDestroy();
     }
 
     private void handleIntent(Intent intent) {
@@ -105,8 +111,7 @@ public class TracksPlayerService extends Service {
 
 
         notification.bigContentView = getExpandedView(isPlaying);
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(1, notification);
+        notificationManager.notify(NOTIFICATION_ID, notification);
     }
 
     private RemoteViews getExpandedView(boolean isPlaying) {

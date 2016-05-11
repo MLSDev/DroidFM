@@ -178,18 +178,24 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
     @OnClick(R.id.iv_play_album)
     public void onPlayAlbumClick() {
-        EventPlaylistStart event = new EventPlaylistStart();
-        event.setData(mAlbumsDetailEntity.getTracks());
-        event.setAlbumImageUrl(mAlbumImage);
-        EventBus.getDefault().post(event);
+        if (mAlbumsDetailEntity != null) {
+            EventPlaylistStart event = new EventPlaylistStart();
+            event.setData(mAlbumsDetailEntity.getTracks());
+            event.setAlbumImageUrl(mAlbumImage);
+            EventBus.getDefault().post(event);
+        }
+
     }
 
     @OnClick(R.id.iv_add_to_favorite)
     public void onAddToFavoriteClick() {
-        if (mIsFavorite) {
-            mPresenter.deleteFromFavorite(mAlbumsDetailEntity);
-        } else {
-            mPresenter.addAlbumToFavorite(mAlbumsDetailEntity);
+        if (mAlbumsDetailEntity != null) {
+            if (mIsFavorite) {
+                mPresenter.deleteFromFavorite(mAlbumsDetailEntity);
+            } else {
+                mPresenter.addAlbumToFavorite(mAlbumsDetailEntity);
+            }
         }
+
     }
 }
