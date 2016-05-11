@@ -24,6 +24,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
     private State mState = State.Retrieving;
     private MediaPlayer mediaPlayer;
     private VKTrackModel mVKTrackModel;
+    private boolean mIsPauseFromApp = true;
 
     public boolean isMusicPlay() {
 
@@ -42,6 +43,14 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
     private MediaPlayerWrapper() {
         mVKTrackModel = new VKTrackModelImpl();
 
+    }
+
+    public boolean isIsPauseFromApp() {
+        return mIsPauseFromApp;
+    }
+
+    public void setIsPauseFromApp(boolean mIsPauseFromApp) {
+        this.mIsPauseFromApp = mIsPauseFromApp;
     }
 
     private boolean isFromAlbum;
@@ -132,6 +141,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
     }
 
     public void playTrack(TrackPlayerEntity mCurrentTrack, boolean isFromNotification) {
+        setIsPauseFromApp(true);
         mCurrentTrack.setFromNotification(isFromNotification);
         if (isTrackPlaying(mCurrentTrack.getmTrackName())) {
             this.mCurrentTrack.setFromNotification(isFromNotification);

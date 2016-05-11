@@ -147,10 +147,14 @@ public class TracksPlayerService extends Service {
             switch (focusChange) {
                 case AudioManager.AUDIOFOCUS_LOSS:
                     event = "AUDIOFOCUS_LOSS";
+                    if (MediaPlayerWrapper.getInstance().isMusicPlay())
+                        MediaPlayerWrapper.getInstance().setIsPauseFromApp(false);
                     MediaPlayerWrapper.getInstance().pausePlayer();
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                     event = "AUDIOFOCUS_LOSS_TRANSIENT";
+                    if (MediaPlayerWrapper.getInstance().isMusicPlay())
+                        MediaPlayerWrapper.getInstance().setIsPauseFromApp(false);
                     MediaPlayerWrapper.getInstance().pausePlayer();
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
@@ -159,7 +163,7 @@ public class TracksPlayerService extends Service {
                     break;
                 case AudioManager.AUDIOFOCUS_GAIN:
                     event = "AUDIOFOCUS_GAIN";
-                    if (!MediaPlayerWrapper.getInstance().isMusicPlay())
+                    if (!MediaPlayerWrapper.getInstance().isMusicPlay() && !MediaPlayerWrapper.getInstance().isIsPauseFromApp())
                         MediaPlayerWrapper.getInstance().startPlayer();
                     MediaPlayerWrapper.getInstance().changeVolume(1.0f, 1.0f);
                     break;
