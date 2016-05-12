@@ -147,40 +147,42 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
             this.mCurrentTrack.setFromNotification(isFromNotification);
             chooseCurrentTrack();
         } else {
-            if (mCurrentTrack.getmTrackUrl() == null) {
-                this.mCurrentTrack = mCurrentTrack;
-                String search = mCurrentTrack.getmArtistName() + " - " + mCurrentTrack.getmTrackName();
-                mVKTrackModel.getVKTrack(search).subscribe(new Observer<VKTrackResponse>() {
-                    @Override
-                    public void onCompleted() {
+            if (mCurrentTrack.getmTrackName() != null)
+                if (mCurrentTrack.getmTrackUrl() == null) {
+                    this.mCurrentTrack = mCurrentTrack;
+                    String search = mCurrentTrack.getmArtistName() + " - " + mCurrentTrack.getmTrackName();
+                    mVKTrackModel.getVKTrack(search).subscribe(new Observer<VKTrackResponse>() {
+                        @Override
+                        public void onCompleted() {
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(VKTrackResponse vkTrackResponse) {
-                        if (vkTrackResponse.getResponse() != null) {
-                            VkTrackItemResponse itemResponse = vkTrackResponse.getResponse()[0];
-                            MediaPlayerWrapper.this.mCurrentTrack.setmTrackUrl(itemResponse.getUrl());
-                            preparedPlayer();
-                            EventBus.getDefault().post(MediaPlayerWrapper.this.mCurrentTrack);
-                        } else {
-                            stopPlayer();
                         }
-                    }
-                });
 
-            } else {
-                chooseAnotherTrack(mCurrentTrack);
-            }
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(VKTrackResponse vkTrackResponse) {
+                            if (vkTrackResponse.getResponse() != null) {
+                                VkTrackItemResponse itemResponse = vkTrackResponse.getResponse()[0];
+                                MediaPlayerWrapper.this.mCurrentTrack.setmTrackUrl(itemResponse.getUrl());
+                                preparedPlayer();
+                                EventBus.getDefault().post(MediaPlayerWrapper.this.mCurrentTrack);
+                            } else {
+                                stopPlayer();
+                            }
+                        }
+                    });
+
+                } else {
+                    chooseAnotherTrack(mCurrentTrack);
+                }
         }
     }
 
     public boolean isTrackPlaying(String trackName) {
+        if (trackName == null) return false;
         return trackName.equalsIgnoreCase(mCurrentTrack.getmTrackName());
     }
 

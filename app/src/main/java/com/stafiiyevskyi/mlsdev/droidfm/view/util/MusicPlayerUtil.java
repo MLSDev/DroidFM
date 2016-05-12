@@ -8,7 +8,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 /**
  * Created by oleksandr on 10.05.16.
  */
-public final class PlayerUtil {
+public final class MusicPlayerUtil {
 
     public static void setupPlayIconState(AppCompatImageView iconView) {
         switch (MediaPlayerWrapper.getInstance().getCurrentState()) {

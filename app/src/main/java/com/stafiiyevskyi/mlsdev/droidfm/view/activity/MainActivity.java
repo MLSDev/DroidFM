@@ -45,7 +45,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.favorite.FavoriteTracksFra
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.signin.LoginVKDialogFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag.TagTopContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
-import com.stafiiyevskyi.mlsdev.droidfm.view.util.PlayerUtil;
+import com.stafiiyevskyi.mlsdev.droidfm.view.util.MusicPlayerUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.SeekBarUtils;
 import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
 import com.vk.sdk.VKAccessToken;
@@ -373,7 +373,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     private Runnable mUpdateTimeTask = new Runnable() {
         public void run() {
-            PlayerUtil.setupPlayIconState(mIvPlayPause);
+            MusicPlayerUtil.setupPlayIconState(mIvPlayPause);
 
             MediaPlayerWrapper.State state = MediaPlayerWrapper.getInstance().getCurrentState();
             if (!(state.equals(MediaPlayerWrapper.State.Retrieving)
@@ -382,11 +382,10 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 long currentDuration = MediaPlayerWrapper.getInstance().getPlayerCurrentPosition();
                 mTvTrackTotalDuration.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(totalDuration)));
                 mTvCurrentTrackPosition.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(currentDuration)));
-                mTvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
+                mTvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() + " - " + MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
                 int progress = SeekBarUtils.getProgressPercentage(currentDuration, totalDuration);
                 mSbSeekbar.setProgress(progress);
             }
-
             mHandler.postDelayed(this, 100);
         }
     };
@@ -440,7 +439,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
             if (MediaPlayerWrapper.getInstance().getCurrentTrack() != null) {
                 MediaPlayerWrapper.getInstance().playTrack(MediaPlayerWrapper.getInstance().getCurrentTrack(), false);
-                PlayerUtil.setupPlayIconState(mIvPlayPause);
+                MusicPlayerUtil.setupPlayIconState(mIvPlayPause);
             }
         });
     }
@@ -462,7 +461,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
         if (!MediaPlayerWrapper.getInstance().isFromAlbum()) mPlaylistAdapter.setData(null);
 
-        mTvPlayTrackName.setText(event.getmTrackName());
+        mTvPlayTrackName.setText(event.getmArtistName() + " - " + event.getmTrackName());
         if (!MediaPlayerWrapper.getInstance().isFromAlbum() || event.getmAlbumImageUrl() != null) {
             mAlbumImage = event.getmAlbumImageUrl();
             Glide.with(this).load(mAlbumImage).into(mIvAlbumsTrackImage);
