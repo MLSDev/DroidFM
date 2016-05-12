@@ -1,6 +1,11 @@
 package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
 
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
@@ -32,6 +38,8 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.util.TimeFormatUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -39,6 +47,8 @@ import butterknife.OnClick;
  * Created by oleksandr on 27.04.16.
  */
 public class TrackDetailFragment extends BaseFragment implements TrackDetailScreenView, SwipeRefreshLayout.OnRefreshListener {
+
+    private final String TAG = TrackDetailFragment.class.getSimpleName();
 
     private static final String MBID_BUNDLE_KEY = "mbid_bundle_key_track_detail_fragment";
     private static final String ARTIST_BUNDLE_KEY = "artist_bundle_key_track_detail_fragment";
@@ -170,7 +180,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         if (MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack)) {
             MusicPlayerUtil.setupPlayIconState(mIvPlayPause);
         } else {
-            mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+            mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_48dp);
         }
     }
 
@@ -178,8 +188,8 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     public void showTrackIsFavorite(boolean isFavorite) {
         this.mIsFavorite = isFavorite;
         if (isFavorite) {
-            mIvAddToFavorite.setImageResource(R.drawable.ic_star_grey600_36dp);
-        } else mIvAddToFavorite.setImageResource(R.drawable.ic_star_outline_grey600_36dp);
+            mIvAddToFavorite.setImageResource(R.drawable.ic_star_grey600_48dp);
+        } else mIvAddToFavorite.setImageResource(R.drawable.ic_star_outline_grey600_48dp);
     }
 
     @Override
@@ -200,7 +210,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         mAlbumImage = event.getmAlbumImageUrl();
         mArtist = event.getmArtistName();
         mTrackUrl = event.getmTrackUrl();
-        mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
+        mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_48dp);
     }
 
     @Subscribe
@@ -232,6 +242,28 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
             mPresenter.deleteFromFavorite(track);
         } else {
             mPresenter.addTrackToFavorite(track);
+        }
+    }
+
+    @OnClick(R.id.iv_save_track)
+    public void onSaveTrackClick() {
+        File mediaStorageDir = new File(
+                getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC), mDetailEntity.getArtistName() + " - " + mDetailEntity.getName() + ".mp3");
+        if (!mediaStorageDir.exists()) {
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(mTrackUrl));
+            request.setDescription(mDetailEntity.getArtistName() + " - " + mDetailEntity.getName());
+            request.setTitle("DroidFM save track");
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                request.allowScanningByMediaScanner();
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            }
+            request.setDestinationInExternalFilesDir(getActivity(), Environment.DIRECTORY_MUSIC, mDetailEntity.getArtistName() + " - " + mDetailEntity.getName() + ".mp3");
+            DownloadManager manager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+            manager.enqueue(request);
+            Toast.makeText(getContext(), "Downloading started", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), "The track was downloaded earlier", Toast.LENGTH_LONG).show();
         }
     }
 
