@@ -57,6 +57,7 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.TopA
         }
         holder.bindAlbumIcon(imageUrl);
         holder.bindAlbumName(albumEntity.getName());
+        holder.bindArtistName(albumEntity.getArtistName());
     }
 
     @Override
@@ -71,6 +72,7 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.TopA
     public class TopAlbumsVH extends RecyclerView.ViewHolder {
 
         private AppCompatTextView mTvAlbumName;
+        private AppCompatTextView mTvArtistName;
         private AppCompatImageView mIvAlbumIcon;
         private FrameLayout mFlProgress;
 
@@ -78,12 +80,17 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.TopA
             super(itemView);
             mIvAlbumIcon = (AppCompatImageView) itemView.findViewById(R.id.iv_album);
             mTvAlbumName = (AppCompatTextView) itemView.findViewById(R.id.tv_album_name);
+            mTvArtistName = (AppCompatTextView) itemView.findViewById(R.id.tv_artist_name);
             mFlProgress = (FrameLayout) itemView.findViewById(R.id.fl_progress);
             itemView.setOnClickListener(view -> mListener.onAlbumClick(mData.get(getAdapterPosition())));
         }
 
         public void bindAlbumName(String albumName) {
             mTvAlbumName.setText(albumName);
+        }
+
+        public void bindArtistName(String artistName) {
+            mTvArtistName.setText(artistName);
         }
 
         public void bindAlbumIcon(String url) {

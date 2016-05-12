@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    app:cardCornerRadius="@dimen/cardview_default_radius"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/cardview_default_radius">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,6 +32,15 @@
                 android:layout_marginLeft="15dp"
                 android:textColor="@android:color/white"
                 android:textSize="16dp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_artist_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:textColor="@android:color/white"
+                android:textSize="18dp"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 

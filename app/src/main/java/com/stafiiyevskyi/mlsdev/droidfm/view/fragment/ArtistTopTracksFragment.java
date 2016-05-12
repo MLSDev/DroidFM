@@ -143,7 +143,8 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
 
     @Override
     public void updateToolbar() {
-        getActivity().supportInvalidateOptionsMenu();
+        if (isVisible())
+            getActivity().supportInvalidateOptionsMenu();
     }
 
     private void setupRvTracks() {
