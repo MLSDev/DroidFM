@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -80,7 +81,7 @@ public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter
     }
 
     private void setupRvTags() {
-        mLayoutManager = new GridLayoutManager(getContext(), 2);
+        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mAdapter = new TopTagsAdapter(this);
         mRvTags.setAdapter(mAdapter);
         mRvTags.setLayoutManager(mLayoutManager);

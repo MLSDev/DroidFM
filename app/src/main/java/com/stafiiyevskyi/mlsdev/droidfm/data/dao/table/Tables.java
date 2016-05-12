@@ -24,4 +24,10 @@ public interface Tables {
         String MBID = "mbid";
         String IMAGE = "image";
     }
+
+    interface Playlist {
+        String ID = "id";
+        String NAME = "name";
+        String TRACKS = "tracks";
+    }
 }
