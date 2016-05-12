@@ -2,6 +2,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -19,6 +20,10 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
@@ -31,7 +36,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.app.service.TracksPlayerService;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.NetworkUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.PreferencesManager;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
-import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.PlaylistAdapter;
+import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.AlbumPlaylistAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.AlbumsDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
@@ -45,6 +50,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.favorite.FavoriteTracksFra
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.signin.LoginVKDialogFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag.TagTopContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
+import com.stafiiyevskyi.mlsdev.droidfm.view.util.BlurEffect;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.MusicPlayerUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.SeekBarUtils;
 import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
@@ -61,7 +67,7 @@ import java.util.List;
 import butterknife.Bind;
 import rx.Observable;
 
-public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnSeekBarChangeListener, PlaylistAdapter.OnPlaylistTrackClick {
+public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnSeekBarChangeListener, AlbumPlaylistAdapter.OnPlaylistTrackClick {
     @Bind(R.id.drawer_layout)
     DrawerLayout drNavigation;
     @Bind(R.id.nav_view)
@@ -83,7 +89,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     RecyclerView mRvPlaylist;
 
     private FragmentManager mFragmentManager;
-    private PlaylistAdapter mPlaylistAdapter;
+    private AlbumPlaylistAdapter mPlaylistAdapter;
 
     private ActionBarDrawerToggle mDrawerToggle;
     private MenuArrowDrawable mDrawerArrowDrawable;
@@ -414,7 +420,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     }
 
     private void setupPlayerWidget() {
-        mPlaylistAdapter = new PlaylistAdapter(this);
+        mPlaylistAdapter = new AlbumPlaylistAdapter(this);
         mRvPlaylist = (RecyclerView) findViewById(R.id.rv_playlist);
         mRvPlaylist.setLayoutManager(new LinearLayoutManager(this));
         mRvPlaylist.setAdapter(mPlaylistAdapter);
@@ -484,7 +490,13 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     public void playlistStartEvent(EventPlaylistStart event) {
         EventBus.getDefault().post(new EventSynchronizingAdapter());
         mAlbumImage = event.getAlbumImageUrl();
-        Glide.with(this).load(mAlbumImage).into(mIvAlbumsTrackImage);
+        Glide.with(this).load(mAlbumImage).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                Bitmap bitmap = BlurEffect.fastblur(MainActivity.this, resource, 12);
+                mIvAlbumsTrackImage.setImageBitmap(bitmap);
+            }
+        });
         List<TrackPlayerEntity> trackPlayerEntities = Observable.from(event.getData()).map(trackEntity -> {
             TrackPlayerEntity trackPlayerEntity = new TrackPlayerEntity();
             trackPlayerEntity.setmTrackName(trackEntity.getName());

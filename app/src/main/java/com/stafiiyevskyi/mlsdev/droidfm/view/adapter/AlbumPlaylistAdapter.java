@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by oleksandr on 05.05.16.
  */
-public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.PlaylistVH> {
+public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdapter.PlaylistVH> {
 
     private static final int PAUSED = 101;
     private static final int PLAYING = 102;
@@ -28,7 +28,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     private List<TrackPlayerEntity> mData;
     private OnPlaylistTrackClick mListener;
 
-    public PlaylistAdapter(OnPlaylistTrackClick mListener) {
+    public AlbumPlaylistAdapter(OnPlaylistTrackClick mListener) {
         this.mListener = mListener;
         EventBus.getDefault().register(this);
     }
