@@ -251,8 +251,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
                 getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC), mDetailEntity.getArtistName() + " - " + mDetailEntity.getName() + ".mp3");
         if (!mediaStorageDir.exists()) {
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(mTrackUrl));
-            request.setDescription(mDetailEntity.getArtistName() + " - " + mDetailEntity.getName());
-            request.setTitle("DroidFM save track");
+            request.setTitle("DroidFM save track "+mDetailEntity.getArtistName() + " - " + mDetailEntity.getName());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 request.allowScanningByMediaScanner();
