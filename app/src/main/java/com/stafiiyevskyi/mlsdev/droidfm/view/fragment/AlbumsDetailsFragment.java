@@ -29,7 +29,6 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.AlbumsTracksAdapter;
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

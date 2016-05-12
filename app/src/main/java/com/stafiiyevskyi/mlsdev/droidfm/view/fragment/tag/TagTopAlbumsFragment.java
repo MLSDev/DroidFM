@@ -23,7 +23,6 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by oleksandr on 26.04.16.

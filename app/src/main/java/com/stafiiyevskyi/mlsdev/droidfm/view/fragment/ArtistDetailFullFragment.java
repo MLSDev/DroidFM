@@ -20,7 +20,6 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistDetailScreenPresent
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistDetailScreenView;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by oleksandr on 25.04.16.

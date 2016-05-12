@@ -20,10 +20,8 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
@@ -41,10 +39,10 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.AlbumsDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
-import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.TopChartsContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TrackDetailFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.TopChartsContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.favorite.FavoriteContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.favorite.FavoriteTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.signin.LoginVKDialogFragment;
@@ -490,11 +488,11 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     public void playlistStartEvent(EventPlaylistStart event) {
         EventBus.getDefault().post(new EventSynchronizingAdapter());
         mAlbumImage = event.getAlbumImageUrl();
-        Glide.with(this).load(mAlbumImage).asBitmap().into(new SimpleTarget<Bitmap>() {
+        Glide.with(this).load(mAlbumImage).asBitmap().into(new BitmapImageViewTarget(mIvAlbumsTrackImage) {
             @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                Bitmap bitmap = BlurEffect.fastblur(MainActivity.this, resource, 12);
-                mIvAlbumsTrackImage.setImageBitmap(bitmap);
+            public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                Bitmap bitmapBlur = BlurEffect.fastblur(MainActivity.this, bitmap, 12);
+                super.onResourceReady(bitmapBlur, anim);
             }
         });
         List<TrackPlayerEntity> trackPlayerEntities = Observable.from(event.getData()).map(trackEntity -> {
