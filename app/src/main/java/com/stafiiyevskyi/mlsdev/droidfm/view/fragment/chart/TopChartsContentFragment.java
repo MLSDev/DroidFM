@@ -1,4 +1,4 @@
-package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
+package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,9 +10,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.activity.BaseActivity;
-import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
-import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTagsFragment;
-import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import butterknife.Bind;
 
@@ -43,9 +41,9 @@ public class TopChartsContentFragment extends BaseFragment {
     }
 
     private void prepareBottomNavigationItems() {
-        AHBottomNavigationItem itemTopArtist = new AHBottomNavigationItem("Artists", R.mipmap.ic_launcher);
-        AHBottomNavigationItem itemTopTags = new AHBottomNavigationItem("Tags", R.mipmap.ic_launcher);
-        AHBottomNavigationItem itemTopTracks = new AHBottomNavigationItem("Tracks", R.mipmap.ic_launcher);
+        AHBottomNavigationItem itemTopArtist = new AHBottomNavigationItem("Artists", R.drawable.ic_person_black_48dp);
+        AHBottomNavigationItem itemTopTags = new AHBottomNavigationItem("Tags", R.drawable.ic_bubble_chart_black_48dp);
+        AHBottomNavigationItem itemTopTracks = new AHBottomNavigationItem("Tracks", R.drawable.ic_music_circle_black_48dp);
         mBnNavigation.addItem(itemTopArtist);
         mBnNavigation.addItem(itemTopTracks);
         mBnNavigation.addItem(itemTopTags);

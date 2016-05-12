@@ -187,7 +187,7 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
     @OnClick(R.id.iv_play_album)
     public void onPlayAlbumClick() {
-        if (mAlbumsDetailEntity != null) {
+        if (mAlbumsDetailEntity != null && mAlbumsDetailEntity.getTracks() != null && mAlbumsDetailEntity.getTracks().size() > 0) {
             EventPlaylistStart event = new EventPlaylistStart();
             event.setData(mAlbumsDetailEntity.getTracks());
             event.setAlbumImageUrl(mAlbumImage);
