@@ -57,7 +57,7 @@
                             android:id="@+id/iv_add_to_favorite"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_star_outline_grey600_48dp"
+                            app:srcCompat="@drawable/ic_star_outline_grey600_36dp"
                             android:layout_gravity="right"/>
 
 
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_content_save_grey600_48dp"
+                    app:srcCompat="@drawable/ic_content_save_grey600_36dp"
                     android:layout_gravity="right"
                     android:visibility="invisible"/>
 

@@ -26,18 +26,15 @@
                 android:orientation="vertical">
 
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_album_name"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="2"
                         android:textColor="@color/colorAccent"
                         android:textSize="26sp" />
 
@@ -45,10 +42,10 @@
                         android:id="@+id/iv_add_to_favorite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_alignParentRight="true"
                         app:srcCompat="@drawable/ic_star_outline_grey600_36dp" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_artist_name"

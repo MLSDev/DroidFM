@@ -191,7 +191,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         if (MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack)) {
             MusicPlayerUtil.setupPlayIconState(mIvPlayPause);
         } else {
-            mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_48dp);
+            mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
         }
     }
 
@@ -199,8 +199,8 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     public void showTrackIsFavorite(boolean isFavorite) {
         this.mIsFavorite = isFavorite;
         if (isFavorite) {
-            mIvAddToFavorite.setImageResource(R.drawable.ic_star_grey600_48dp);
-        } else mIvAddToFavorite.setImageResource(R.drawable.ic_star_outline_grey600_48dp);
+            mIvAddToFavorite.setImageResource(R.drawable.ic_star_grey600_36dp);
+        } else mIvAddToFavorite.setImageResource(R.drawable.ic_star_outline_grey600_36dp);
     }
 
     @Override
@@ -221,7 +221,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         mAlbumImage = event.getmAlbumImageUrl();
         mArtist = event.getmArtistName();
         mTrackUrl = event.getmTrackUrl();
-        mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_48dp);
+        mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
     }
 
     @Subscribe
