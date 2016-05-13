@@ -20,8 +20,8 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
@@ -41,6 +41,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.AlbumsDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.SavedTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TrackDetailFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
@@ -230,6 +231,13 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                     }
                     drNavigation.closeDrawers();
                     return true;
+                case R.id.action_saved_item:
+                    if (!(mFirstFragment instanceof SavedTracksFragment)) {
+                        navigateToSavedTracksScreen();
+                        getSupportActionBar().setSubtitle(getString(R.string.saved_section_title));
+                    }
+                    drNavigation.closeDrawers();
+                    return true;
                 default:
                     return true;
             }
@@ -340,6 +348,15 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         mFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment)
                 .addToBackStack(TrackDetailFragment.class.getName() + mbid)
+                .commit();
+    }
+
+    @Override
+    public void navigateToSavedTracksScreen() {
+        mFirstFragment = SavedTracksFragment.newInstance();
+        AnimationUtil.detailTransition(mFirstFragment);
+        mFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, mFirstFragment)
                 .commit();
     }
 
@@ -491,13 +508,19 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     @Subscribe
     public void playlistStartEvent(EventPlaylistStart event) {
         mAlbumImage = event.getAlbumImageUrl();
-        Glide.with(this).load(mAlbumImage).asBitmap().into(new BitmapImageViewTarget(mIvAlbumsTrackImage) {
+        Glide.with(this).load(mAlbumImage).asBitmap().listener(new RequestListener<String, Bitmap>() {
             @Override
-            public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
-                Bitmap bitmapBlur = BlurEffect.fastblur(MainActivity.this, bitmap, 12);
-                super.onResourceReady(bitmapBlur, anim);
+            public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
+                return false;
             }
-        });
+
+            @Override
+            public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                Bitmap bitmapBlur = BlurEffect.fastblur(MainActivity.this, resource, 12);
+                mIvAlbumsTrackImage.setImageBitmap(bitmapBlur);
+                return true;
+            }
+        }).into(mIvAlbumsTrackImage);
         List<TrackPlayerEntity> trackPlayerEntities = Observable.from(event.getData()).map(trackEntity -> {
             TrackPlayerEntity trackPlayerEntity = new TrackPlayerEntity();
             trackPlayerEntity.setmTrackName(trackEntity.getName());

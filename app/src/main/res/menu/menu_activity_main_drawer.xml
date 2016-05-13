@@ -4,25 +4,30 @@
         <item
             android:id="@+id/action_artists_item"
             android:checked="true"
-            android:title="@string/artists_section_title"
-            android:icon="@drawable/ic_person_black_48dp"/>
+            android:icon="@drawable/ic_person_black_48dp"
+            android:title="@string/artists_section_title" />
 
         <item
             android:id="@+id/action_tracks_item"
             android:checked="false"
-            android:title="@string/tracks_section_title"
-            android:icon="@drawable/ic_music_circle_black_48dp"/>
+            android:icon="@drawable/ic_music_circle_black_48dp"
+            android:title="@string/tracks_section_title" />
 
         <item
             android:id="@+id/action_charts_item"
             android:checked="false"
-            android:title="@string/charts_section_title"
-            android:icon="@drawable/ic_bubble_chart_black_48dp"/>
+            android:icon="@drawable/ic_bubble_chart_black_48dp"
+            android:title="@string/charts_section_title" />
 
         <item
             android:id="@+id/action_favorite_item"
             android:checked="false"
-            android:title="@string/favorite_section_title"
-            android:icon="@drawable/ic_star_black_48dp"/>
+            android:icon="@drawable/ic_star_black_48dp"
+            android:title="@string/favorite_section_title" />
+        <item
+            android:id="@+id/action_saved_item"
+            android:checked="false"
+            android:icon="@drawable/ic_content_save_black_48dp"
+            android:title="@string/saved_section_title" />
     </group>
 </menu>

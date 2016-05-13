@@ -211,7 +211,6 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
         if (mCurrentTrack.getmTrackUrl() != null) {
             mediaPlayer.reset();
             try {
-
                 mediaPlayer.setDataSource(mCurrentTrack.getmTrackUrl());
             } catch (IOException e) {
                 e.printStackTrace();

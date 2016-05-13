@@ -14,6 +14,7 @@
     <string name="charts_section_title">Charts</string>
     <string name="artists_section_title">Artists</string>
     <string name="favorite_section_title">Favorites</string>
+    <string name="saved_section_title">Saved tracks</string>
 
     <!--Artist content details-->
     <string name="tab_title_top_tracks">Top Tracks</string>

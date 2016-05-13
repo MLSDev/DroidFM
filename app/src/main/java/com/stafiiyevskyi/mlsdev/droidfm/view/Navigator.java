@@ -23,6 +23,8 @@ public interface Navigator {
 
     void navigateToTrackDetails(String artist, String track, String mbid);
 
+    void navigateToSavedTracksScreen();
+
     void navigateToLoginVKDialog();
 
     void navigateToFavoritesScreen();
