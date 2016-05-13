@@ -1,7 +1,10 @@
 package com.stafiiyevskyi.mlsdev.droidfm.view.adapter;
 
+import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventSynchronizingAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.view.util.FileTrackUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,6 +31,7 @@ public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdap
 
     private List<TrackPlayerEntity> mData;
     private OnPlaylistTrackClick mListener;
+    private Context mContext;
 
     public AlbumPlaylistAdapter(OnPlaylistTrackClick mListener) {
         this.mListener = mListener;
@@ -45,6 +50,7 @@ public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdap
 
     @Override
     public PlaylistVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (mContext == null) mContext = parent.getContext();
         View view;
         switch (viewType) {
             case PAUSED:
@@ -143,7 +149,12 @@ public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdap
             super(itemView);
             mTvTrackName = (AppCompatTextView) itemView.findViewById(R.id.tv_track_name);
             itemView.setOnClickListener(view -> {
-                mListener.onPlaylistTrackClick(mData.get(getAdapterPosition()));
+                TrackPlayerEntity track = mData.get(getAdapterPosition());
+                Pair<Boolean, Uri> pair = FileTrackUtil.isTrackExist(mContext, track.getmArtistName(), track.getmTrackName());
+                if (pair.first) {
+                    track.setmTrackUrl(pair.second.getPath());
+                }
+                mListener.onPlaylistTrackClick(track);
             });
         }
 

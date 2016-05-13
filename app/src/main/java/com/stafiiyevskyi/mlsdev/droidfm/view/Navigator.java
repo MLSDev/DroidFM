@@ -24,8 +24,6 @@ public interface Navigator {
 
     void navigateToTrackDetails(String artist, String track, String mbid);
 
-    void navigateToTrackDetails(String artist, String track, String mbid, Uri fileUri);
-
     void navigateToSavedTracksScreen();
 
     void navigateToLoginVKDialog();

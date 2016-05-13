@@ -77,7 +77,6 @@ public class SavedTracksFragment extends BaseFragment implements SavedTracksAdap
         String[] parts = name.split(" - ");
         String trackName = parts[1];
         String artistName = parts[0];
-
-        ((Navigator) getActivity()).navigateToTrackDetails(artistName, trackName, "", track.getUri());
+        ((Navigator) getActivity()).navigateToTrackDetails(artistName, trackName, "");
     }
 }

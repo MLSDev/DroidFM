@@ -9,6 +9,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackDetailEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.TrackDetailScreenPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.TrackDetailScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.util.FileTrackUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.LinkUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.MusicPlayerUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.TimeFormatUtil;
@@ -47,7 +49,6 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     private static final String MBID_BUNDLE_KEY = "mbid_bundle_key_track_detail_fragment";
     private static final String ARTIST_BUNDLE_KEY = "artist_bundle_key_track_detail_fragment";
     private static final String TRACK_BUNDLE_KEY = "track_bundle_key_track_detail_fragment";
-    private static final String URI_BUNDLE_KEY = "uri_bundle_key_track_detail_fragment";
 
     @Bind(R.id.tv_track_name)
     AppCompatTextView mTvTrackName;
@@ -81,7 +82,6 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     private String mTrack;
     private String mTrackUrl;
     private String mAlbumImage;
-    private Uri mFileUri;
     private boolean mIsFavorite = false;
 
     private TrackDetailEntity mDetailEntity;
@@ -95,14 +95,6 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         TrackDetailFragment fragment = new TrackDetailFragment();
         fragment.setArguments(args);
 
-        return fragment;
-    }
-
-    public static BaseFragment newInstance(String artist, String track, String mbid, Uri fileUri) {
-        BaseFragment fragment = newInstance(artist, track, mbid);
-        Bundle args = fragment.getArguments();
-        args.putParcelable(URI_BUNDLE_KEY, fileUri);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -128,7 +120,6 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         mBid = args.getString(MBID_BUNDLE_KEY);
         mTrack = args.getString(TRACK_BUNDLE_KEY);
         mArtist = args.getString(ARTIST_BUNDLE_KEY);
-        mFileUri = args.getParcelable(URI_BUNDLE_KEY);
         mPresenter = new TrackDetailScreenPresenterImpl(this);
         mPresenter.getTrackDetails(mArtist, mTrack, mBid);
         mPresenter.getTrackStreamUrl(mArtist + " - " + mTrack);
@@ -234,13 +225,14 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     public void onPlayPauseClick() {
         TrackPlayerEntity track = new TrackPlayerEntity();
         track.setmAlbumImageUrl(mAlbumImage);
-        if (mFileUri != null) {
-            track.setmTrackUrl(mFileUri.getPath());
+        track.setmTrackName(mTrack);
+        track.setmArtistName(mArtist);
+        Pair<Boolean, Uri> pair = FileTrackUtil.isTrackExist(getActivity(), track.getmArtistName(), track.getmTrackName());
+        if (pair.first) {
+            track.setmTrackUrl(pair.second.getPath());
         } else {
             track.setmTrackUrl(mTrackUrl);
         }
-        track.setmTrackName(mTrack);
-        track.setmArtistName(mArtist);
         if (!MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack))
             MediaPlayerWrapper.getInstance().setFromAlbum(false);
 

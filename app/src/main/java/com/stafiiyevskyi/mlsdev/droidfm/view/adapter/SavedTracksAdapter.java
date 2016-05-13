@@ -58,9 +58,8 @@ public class SavedTracksAdapter extends RecyclerView.Adapter<SavedTracksAdapter.
         public SavedTrackVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(view -> {
-                mListener.onTrackClick(mData.get(getAdapterPosition()));
-            });
+            itemView.setOnClickListener(view -> mListener.onTrackClick(mData.get(getAdapterPosition()))
+            );
         }
     }
 }
