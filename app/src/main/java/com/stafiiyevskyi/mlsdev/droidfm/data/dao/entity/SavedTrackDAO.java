@@ -7,12 +7,13 @@ import io.realm.annotations.Required;
 /**
  * Created by oleksandr on 12.05.16.
  */
-public class PlaylistDAO extends RealmObject {
+public class SavedTrackDAO extends RealmObject {
+
     @Required
     private String id;
     private String name;
-    private RealmList<FavoriteTrackDAO> tracks;
-
+    private String artist;
+    private String file_name;
 
     public String getId() {
         return id;
@@ -30,11 +31,19 @@ public class PlaylistDAO extends RealmObject {
         this.name = name;
     }
 
-    public RealmList<FavoriteTrackDAO> getTracks() {
-        return tracks;
+    public String getArtist() {
+        return artist;
     }
 
-    public void setTracks(RealmList<FavoriteTrackDAO> tracks) {
-        this.tracks = tracks;
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public String getFile_name() {
+        return file_name;
+    }
+
+    public void setFile_name(String file_name) {
+        this.file_name = file_name;
     }
 }

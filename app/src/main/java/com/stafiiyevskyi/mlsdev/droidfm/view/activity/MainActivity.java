@@ -30,6 +30,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventPlaylistStart;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventSynchronizingAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.app.service.DownloadService;
 import com.stafiiyevskyi.mlsdev.droidfm.app.service.TracksPlayerService;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.NetworkUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.app.util.PreferencesManager;
@@ -106,6 +107,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         setupNavigation();
         getSupportActionBar().setSubtitle(getString(R.string.artists_section_title));
         startService(new Intent(this, TracksPlayerService.class));
+        startService(new Intent(this, DownloadService.class));
 
         if (!JUnitTestHelper.getInstance().isJunitRunning())
             VKSdk.wakeUpSession(this, new VKCallback<VKSdk.LoginState>() {

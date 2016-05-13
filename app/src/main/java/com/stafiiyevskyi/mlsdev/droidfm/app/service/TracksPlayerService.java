@@ -30,14 +30,11 @@ public class TracksPlayerService extends Service {
     public static final String ACTION_NOTIFICATION_REWIND = "action_notification_rewind";
 
 
-    private static TracksPlayerService mInstance;
     private AudioManager mAudioManager;
     private AFListener mAFListener;
     private NotificationManager notificationManager;
 
-    public static TracksPlayerService getInstance() {
-        return mInstance;
-    }
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -53,7 +50,6 @@ public class TracksPlayerService extends Service {
                 AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
         Log.e(TracksPlayerService.class.getSimpleName(), "Music request focus, result: " + requestResult);
         MediaPlayerWrapper.getInstance().init();
-        mInstance = this;
     }
 
     @Override
@@ -121,8 +117,7 @@ public class TracksPlayerService extends Service {
         } else {
             customView.setImageViewResource(R.id.ib_play_pause, R.drawable.ic_play_white_36dp);
         }
-//        customView.setImageViewResource(R.id.ib_rewind, R.drawable.ic_rewind_white_36dp);
-//        customView.setImageViewResource(R.id.ib_fast_forward, R.drawable.ic_fast_forward_white_36dp);
+
         customView.setTextViewText(R.id.tv_notification, MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName()+" - "+MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
 
         Intent intent = new Intent(getApplicationContext(), TracksPlayerService.class);
@@ -131,14 +126,6 @@ public class TracksPlayerService extends Service {
         intent.setAction(ACTION_NOTIFICATION_PLAY_PAUSE);
         PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 1, intent, 0);
         customView.setOnClickPendingIntent(R.id.ib_play_pause, pendingIntent);
-
-//        intent.setAction(ACTION_NOTIFICATION_FAST_FORWARD);
-//        pendingIntent = PendingIntent.getService(getApplicationContext(), 1, intent, 0);
-//        customView.setOnClickPendingIntent(R.id.ib_fast_forward, pendingIntent);
-//
-//        intent.setAction(ACTION_NOTIFICATION_REWIND);
-//        pendingIntent = PendingIntent.getService(getApplicationContext(), 1, intent, 0);
-//        customView.setOnClickPendingIntent(R.id.ib_rewind, pendingIntent);
 
         return customView;
     }

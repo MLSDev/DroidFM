@@ -72,7 +72,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/ic_content_save_grey600_48dp"
-                    android:layout_gravity="right"/>
+                    android:layout_gravity="right"
+                    android:visibility="invisible"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_artist_name"

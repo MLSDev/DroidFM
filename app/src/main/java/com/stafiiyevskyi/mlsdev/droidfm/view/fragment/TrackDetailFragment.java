@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
+import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventDownloadTrack;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.TrackPlayerEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.TrackDetailScreenPresenter;
@@ -76,6 +77,8 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     AppCompatImageView mIvAddToFavorite;
     @Bind(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
+    @Bind(R.id.iv_save_track)
+    AppCompatImageView mIvSaveTrack;
 
     private TrackDetailScreenPresenter mPresenter;
 
@@ -174,7 +177,8 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
 
     @Override
     public void showTrackStreamUrl(String url, int trackDuration) {
-        if (mAlbumImage != null) mIvPlayPause.setVisibility(View.VISIBLE);
+        mIvPlayPause.setVisibility(View.VISIBLE);
+        mIvSaveTrack.setVisibility(View.VISIBLE);
         mTvTrackDuration.setText(String.format(getString(R.string.duration), TimeFormatUtil.getFormattedTimeSecondsToMinutes(trackDuration)));
         mTrackUrl = url;
         if (MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack)) {
@@ -247,23 +251,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
 
     @OnClick(R.id.iv_save_track)
     public void onSaveTrackClick() {
-        File mediaStorageDir = new File(
-                getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC), mDetailEntity.getArtistName() + " - " + mDetailEntity.getName() + ".mp3");
-        if (!mediaStorageDir.exists()) {
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(mTrackUrl));
-            request.setTitle("DroidFM save track "+mDetailEntity.getArtistName() + " - " + mDetailEntity.getName());
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                request.allowScanningByMediaScanner();
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            }
-            request.setDestinationInExternalFilesDir(getActivity(), Environment.DIRECTORY_MUSIC, mDetailEntity.getArtistName() + " - " + mDetailEntity.getName() + ".mp3");
-            DownloadManager manager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-            manager.enqueue(request);
-            Toast.makeText(getContext(), "Downloading started", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(getContext(), "The track was downloaded earlier", Toast.LENGTH_LONG).show();
-        }
+        EventBus.getDefault().post(new EventDownloadTrack(mTrackUrl, mDetailEntity));
     }
 
     @Override

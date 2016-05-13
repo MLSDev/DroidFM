@@ -30,6 +30,7 @@
             android:theme="@style/VK.Transparent" />
 
         <service android:name=".app.service.TracksPlayerService"></service>
+        <service android:name=".app.service.DownloadService"></service>
     </application>
 
 </manifest>
