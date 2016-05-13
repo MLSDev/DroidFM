@@ -509,7 +509,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     @Subscribe
     public void playlistStartEvent(EventPlaylistStart event) {
         mAlbumImage = event.getAlbumImageUrl();
-        Glide.with(this).load(mAlbumImage).asBitmap().listener(new RequestListener<String, Bitmap>() {
+        Glide.with(this).load(mAlbumImage)/*.asBitmap().listener(new RequestListener<String, Bitmap>() {
             @Override
             public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
                 return false;
@@ -521,7 +521,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 mIvAlbumsTrackImage.setImageBitmap(bitmapBlur);
                 return true;
             }
-        }).into(mIvAlbumsTrackImage);
+        })*/.into(mIvAlbumsTrackImage);
         List<TrackPlayerEntity> trackPlayerEntities = Observable.from(event.getData()).map(trackEntity -> {
             TrackPlayerEntity trackPlayerEntity = new TrackPlayerEntity();
             trackPlayerEntity.setmTrackName(trackEntity.getName());
