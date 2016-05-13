@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -16,6 +17,7 @@
             android:layout_marginTop="5dp" />
 
         <LinearLayout
+            android:id="@+id/ll_seekbar_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_play_track_name"
@@ -65,19 +67,22 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/tv_album_name"
-            android:layout_width="match_parent"
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_save_track"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorAccent"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_content_save_white_48dp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_playlist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tv_album_name"
-            android:clickable="true"/>
+            android:layout_below="@id/iv_save_track"
+            android:clickable="true" />
 
     </RelativeLayout>
 

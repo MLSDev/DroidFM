@@ -27,4 +27,8 @@
 
     <string name="duration">duration: %1$2s</string>
     <string name="not_track_error_message">Oops,can\'t find</string>
+    <string name="download_title">"DroidFM save track "</string>
+    <string name="download_start_toast">Downloading started</string>
+    <string name="download_was_downloaded_toast">The track was downloaded earlier</string>
+    <string name="mp3_file">.mp3</string>
 </resources>

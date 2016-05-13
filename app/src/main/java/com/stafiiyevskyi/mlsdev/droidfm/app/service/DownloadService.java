@@ -11,8 +11,10 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventDownloadCurrentTrack;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventDownloadTrack;
+import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,26 +52,36 @@ public class DownloadService extends Service {
 
     @Subscribe
     public void onDownloadTrackEvent(EventDownloadTrack event) {
-        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC), event.getTrack().getArtistName() + " - " + event.getTrack().getName() + ".mp3");
+        String trackName = event.getTrack().getArtistName() + " - " + event.getTrack().getName();
+        String trackUrl = event.getTrackUrl();
+        downloadTrack(trackName, trackUrl);
+    }
+
+    @Subscribe
+    public void onDownloadCurrentTrack(EventDownloadCurrentTrack event) {
+        if (MediaPlayerWrapper.getInstance().getCurrentTrack() != null) {
+            String trackName = MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() + " - " + MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName();
+            String trackUrl = MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackUrl();
+            downloadTrack(trackName, trackUrl);
+        }
+    }
+
+    private void downloadTrack(String trackName, String trackUrl) {
+        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC), trackName + getString(R.string.mp3_file));
         if (!mediaStorageDir.exists()) {
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(event.getTrackUrl()));
-            request.setTitle("DroidFM save track " + event.getTrack().getArtistName() + " - " + event.getTrack().getName());
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(trackUrl));
+            request.setTitle(getString(R.string.download_title) + trackName);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 request.allowScanningByMediaScanner();
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             }
-            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_MUSIC, event.getTrack().getArtistName() + " - " + event.getTrack().getName() + ".mp3");
+            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_MUSIC, trackName + getString(R.string.mp3_file));
             DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
             manager.enqueue(request);
-            Toast.makeText(this, "Downloading started", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.download_start_toast, Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, "The track was downloaded earlier", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.download_was_downloaded_toast, Toast.LENGTH_LONG).show();
         }
-    }
-
-    @Subscribe
-    public void onDownloadCurrentTrack(EventDownloadCurrentTrack event) {
-
     }
 }

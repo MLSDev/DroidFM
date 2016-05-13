@@ -26,6 +26,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
+import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventDownloadCurrentTrack;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventPlaylistStart;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventSynchronizingAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
@@ -64,6 +65,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import rx.Observable;
 
 public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnSeekBarChangeListener, AlbumPlaylistAdapter.OnPlaylistTrackClick {
@@ -488,7 +490,6 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Subscribe
     public void playlistStartEvent(EventPlaylistStart event) {
-        EventBus.getDefault().post(new EventSynchronizingAdapter());
         mAlbumImage = event.getAlbumImageUrl();
         Glide.with(this).load(mAlbumImage).asBitmap().into(new BitmapImageViewTarget(mIvAlbumsTrackImage) {
             @Override
@@ -506,10 +507,16 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         MediaPlayerWrapper.getInstance().setFromAlbum(true);
         mPlaylistAdapter.setData(trackPlayerEntities);
         mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        EventBus.getDefault().post(new EventSynchronizingAdapter());
     }
 
     @Override
     public void onPlaylistTrackClick(TrackPlayerEntity trackPlayerEntity) {
         MediaPlayerWrapper.getInstance().playTrack(trackPlayerEntity, false);
+    }
+
+    @OnClick(R.id.iv_save_track)
+    public void onSaveCurrentTrackClick() {
+        EventBus.getDefault().post(new EventDownloadCurrentTrack());
     }
 }

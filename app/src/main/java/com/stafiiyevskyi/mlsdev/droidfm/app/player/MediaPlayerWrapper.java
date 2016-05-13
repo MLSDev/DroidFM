@@ -114,7 +114,6 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
 
     private void chooseAnotherTrack(TrackPlayerEntity mCurrentTrack) {
         this.mCurrentTrack = mCurrentTrack;
-        EventBus.getDefault().post(mCurrentTrack);
         switch (mState) {
             case Stopped:
                 preparedPlayer();
@@ -134,6 +133,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
             default:
                 break;
         }
+        EventBus.getDefault().post(mCurrentTrack);
     }
 
     public void playTrack(boolean isFromNotification) {
