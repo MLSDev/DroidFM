@@ -1,5 +1,7 @@
 package com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.track;
 
+import android.net.Uri;
+
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.SavedTrackEntity;
 
 import java.io.File;
@@ -15,6 +17,7 @@ public class FileToSavedTrackEntityMapper implements Func1<File, SavedTrackEntit
         SavedTrackEntity track = new SavedTrackEntity();
         track.setName(file.getName());
         track.setPath(file.getPath());
+        track.setUri(Uri.fromFile(file));
         return track;
     }
 }

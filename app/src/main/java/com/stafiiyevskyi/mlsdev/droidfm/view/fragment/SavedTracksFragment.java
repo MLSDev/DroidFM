@@ -10,6 +10,8 @@ import android.view.View;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.SavedTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.track.FileToSavedTrackEntityMapper;
+import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.activity.BaseActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.SavedTracksAdapter;
 
 import java.io.File;
@@ -64,11 +66,18 @@ public class SavedTracksFragment extends BaseFragment implements SavedTracksAdap
 
     @Override
     public void updateToolbar() {
-
+        ((BaseActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.saved_section_title);
+        getActivity().supportInvalidateOptionsMenu();
+        ((Navigator) getActivity()).setDrawerToggleEnabled();
     }
 
     @Override
     public void onTrackClick(SavedTrackEntity track) {
+        String name = track.getName().replaceFirst(".mp3", "");
+        String[] parts = name.split(" - ");
+        String trackName = parts[1];
+        String artistName = parts[0];
 
+        ((Navigator) getActivity()).navigateToTrackDetails(artistName, trackName, "", track.getUri());
     }
 }

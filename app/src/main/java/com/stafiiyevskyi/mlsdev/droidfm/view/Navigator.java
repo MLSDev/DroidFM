@@ -1,5 +1,6 @@
 package com.stafiiyevskyi.mlsdev.droidfm.view;
 
+import android.net.Uri;
 import android.support.v7.widget.AppCompatImageView;
 
 /**
@@ -22,6 +23,8 @@ public interface Navigator {
     void navigateToAlbumDetails(String artist, String album, String mbidl, String albumImage);
 
     void navigateToTrackDetails(String artist, String track, String mbid);
+
+    void navigateToTrackDetails(String artist, String track, String mbid, Uri fileUri);
 
     void navigateToSavedTracksScreen();
 
