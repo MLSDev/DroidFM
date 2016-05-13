@@ -88,6 +88,7 @@ public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdap
                         trackPlayerEntity.setPaused(true);
                     } else {
                         trackPlayerEntity.setPaused(false);
+                        notifyDataSetChanged();
                     }
                 } else {
                     trackPlayerEntity.setPaused(true);
@@ -106,6 +107,7 @@ public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdap
                         trackPlayerEntity.setPaused(true);
                     } else {
                         trackPlayerEntity.setPaused(false);
+                        notifyDataSetChanged();
                     }
                 } else {
                     trackPlayerEntity.setPaused(true);
@@ -121,6 +123,7 @@ public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdap
             for (TrackPlayerEntity trackPlayerEntity : mData) {
                 if (trackPlayerEntity.getmTrackName().equalsIgnoreCase(event.getmTrackName())) {
                     trackPlayerEntity.setPaused(false);
+                    notifyDataSetChanged();
                 } else {
                     trackPlayerEntity.setPaused(true);
                 }
