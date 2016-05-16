@@ -8,7 +8,7 @@
     android:id="@+id/fl_chart_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_above="@+id/nb_navigation"></FrameLayout>
+    android:layout_above="@+id/nb_navigation"/>
 
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
         android:id="@+id/nb_navigation"

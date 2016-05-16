@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.activity.BaseActivity;
@@ -66,7 +67,8 @@ public class TopChartsContentFragment extends BaseFragment {
                     break;
             }
         });
-        selectTopArtist();
+        if (!JUnitTestHelper.getInstance().isJunitRunning())
+            selectTopArtist();
     }
 
     @Override
@@ -76,7 +78,7 @@ public class TopChartsContentFragment extends BaseFragment {
 
     @Override
     public void updateToolbar() {
-        ((BaseActivity)getActivity()).getSupportActionBar().setSubtitle(R.string.charts_section_title);
+        ((BaseActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.charts_section_title);
         getActivity().supportInvalidateOptionsMenu();
         ((Navigator) getActivity()).setDrawerToggleEnabled();
     }

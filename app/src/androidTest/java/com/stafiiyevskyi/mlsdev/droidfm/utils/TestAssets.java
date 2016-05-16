@@ -49,6 +49,21 @@ public class TestAssets {
         return getStringFromFile(context, "rihanna_track_detail_response.json");
     }
 
+    public static String getTopAlbumsTagRock(Context context) {
+        return getStringFromFile(context, "top_albums_tag_rock_response.json");
+    }
+
+    public static String getChartTopTags(Context context) {
+        return getStringFromFile(context, "top_tag_response.json");
+    }
+
+    public static String getChartTopTracks(Context context) {
+        return getStringFromFile(context, "chart_top_tracks_response.json");
+    }
+
+    public static String getChartTopArtist(Context context) {
+        return getStringFromFile(context, "chart_top_artists_response.json");
+    }
 
     private static String getStringFromFile(Context context, String filePath) {
         String result = null;

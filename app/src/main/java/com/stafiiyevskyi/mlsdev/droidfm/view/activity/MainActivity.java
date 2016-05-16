@@ -109,7 +109,6 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         setupPlayerWidget();
         mFragmentManager = getSupportFragmentManager();
         setupNavigation();
-        getSupportActionBar().setSubtitle(getString(R.string.artists_section_title));
         startService(new Intent(this, TracksPlayerService.class));
         startService(new Intent(this, DownloadService.class));
 
@@ -119,10 +118,12 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 public void onResult(VKSdk.LoginState res) {
                     switch (res) {
                         case LoggedOut:
+                            getSupportActionBar().setSubtitle(getString(R.string.artists_section_title));
                             navigateToArtistsSearchScreen();
                             navigateToLoginVKDialog();
                             return;
                         case LoggedIn:
+                            getSupportActionBar().setSubtitle(getString(R.string.artists_section_title));
                             navigateToArtistsSearchScreen();
                             return;
                         case Pending:

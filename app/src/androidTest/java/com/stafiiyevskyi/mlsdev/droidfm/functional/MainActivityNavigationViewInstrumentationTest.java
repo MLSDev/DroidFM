@@ -74,4 +74,31 @@ public class MainActivityNavigationViewInstrumentationTest {
         onView(withText("Charts")).perform(click());
         Spoon.screenshot(activityTestRule.getActivity(), MainActivity.class.getSimpleName());
     }
+
+    @Test
+    public void testNavigationViewItemArtisClick() {
+        onView(ViewMatchers.withId(R.id.drawer_layout))
+                .check(matches(isClosed(Gravity.LEFT)))
+                .perform(open());
+        onView(withText("Artists")).perform(click());
+        Spoon.screenshot(activityTestRule.getActivity(), MainActivity.class.getSimpleName());
+    }
+
+    @Test
+    public void testNavigationViewItemFavoritesClick() {
+        onView(ViewMatchers.withId(R.id.drawer_layout))
+                .check(matches(isClosed(Gravity.LEFT)))
+                .perform(open());
+        onView(withText("Favorites")).perform(click());
+        Spoon.screenshot(activityTestRule.getActivity(), MainActivity.class.getSimpleName());
+    }
+
+    @Test
+    public void testNavigationViewItemSavedClick() {
+        onView(ViewMatchers.withId(R.id.drawer_layout))
+                .check(matches(isClosed(Gravity.LEFT)))
+                .perform(open());
+        onView(withText("Saved tracks")).perform(click());
+        Spoon.screenshot(activityTestRule.getActivity(), MainActivity.class.getSimpleName());
+    }
 }

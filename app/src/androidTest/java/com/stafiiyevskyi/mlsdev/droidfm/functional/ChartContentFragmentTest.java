@@ -1,6 +1,5 @@
 package com.stafiiyevskyi.mlsdev.droidfm.functional;
 
-import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -10,7 +9,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
 import com.stafiiyevskyi.mlsdev.droidfm.utils.CheckValues;
-import com.stafiiyevskyi.mlsdev.droidfm.utils.TestDispatcher;
+import com.stafiiyevskyi.mlsdev.droidfm.utils.TestDispatcherChartsConten;
 import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 
 import org.junit.After;
@@ -29,17 +28,18 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.allOf;
 
 /**
- * Created by oleksandr on 28.04.16.
+ * Created by oleksandr on 16.05.16.
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4.class)
-public class TopTracksFragmentTest {
+public class ChartContentFragmentTest {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @Rule
@@ -64,47 +64,20 @@ public class TopTracksFragmentTest {
         mockWebServer.shutdown();
     }
 
-
     @Test
-    public void testA_TracksShown() {
+    public void testA_startDefaultScreenTest() {
         initMockWithExpectedResponse();
-        onView(withId(R.id.pb_progress)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.rv_toptracks)).check(matches(hasDescendant(withText(CheckValues.TITLE_FROM_TOP_TRACKS_FIRST_PAGE))));
-        Spoon.screenshot(activityTestRule.getActivity(), TAG);
-    }
-
-    @Test
-    public void testB_Pagination() {
-        initMockWithExpectedResponse();
-        onView(withId(R.id.rv_toptracks)).perform(RecyclerViewActions.scrollToPosition(49));
-        onView(withId(R.id.rv_toptracks)).perform(RecyclerViewActions.scrollToPosition(CheckValues.TOP_TRACKS_SECOND_PAGE));
-        onView(withId(R.id.rv_toptracks)).check(matches(hasDescendant(withText(CheckValues.TITLE_FROM_TOP_TRACKS_SECOND_PAGE))));
-        Spoon.screenshot(activityTestRule.getActivity(), TAG);
-    }
-
-    @Test
-    public void testC_ClickOnItem() {
-        initMockWithExpectedResponse();
-        onView(withText(CheckValues.TITLE_FROM_TOP_TRACKS_FIRST_PAGE)).perform(click());
-        onView(withId(R.id.ll_content)).check(matches(hasDescendant(withText(CheckValues.TITLE_FROM_TOP_TRACKS_FIRST_PAGE))));
-        Spoon.screenshot(activityTestRule.getActivity(), TAG);
-    }
-
-    @Test
-    public void testD_RefreshTracksListTest(){
-        initMockWithExpectedResponse();
-        onView(withId(R.id.rv_toptracks)).perform(ViewActions.swipeDown());
-        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+        onView(withId(R.id.nb_navigation))
+                .perform(click());
+        onView(allOf(withId(R.id.rv_toptracks), isDisplayed())).
+        perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
     }
 
 
     private void initMockWithExpectedResponse() {
-        mockWebServer.setDispatcher(new TestDispatcher());
-        launchActivity();
-    }
-
-    private void launchActivity() {
-        activityTestRule.getActivity().navigateToTopTracksScreen();
+        activityTestRule.getActivity().navigateToChartsContentScreen();
+        mockWebServer.setDispatcher(new TestDispatcherChartsConten());
         Spoon.screenshot(activityTestRule.getActivity(), TAG);
     }
+
 }
