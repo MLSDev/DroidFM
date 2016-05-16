@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +17,7 @@ import com.bumptech.glide.request.target.Target;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ImageEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,8 @@ import butterknife.ButterKnife;
  * Created by oleksandr on 21.04.16.
  */
 public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH> {
-
+    private static final int ANIMATED_ITEMS_COUNT = 10;
+    private int lastAnimatedPosition = -1;
     private List<ArtistEntity> mData = new ArrayList<>();
     private OnArtistClickListener mListener;
     private Context mContext;
@@ -45,6 +48,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
 
     @Override
     public void onBindViewHolder(ArtistVH holder, int position) {
+        runEnterAnimation(holder.itemView, position);
         ArtistEntity entity = mData.get(position);
         String imageUrl = "";
         for (ImageEntity imageEntity : entity.getArtistImages()) {
@@ -55,6 +59,22 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
         }
         holder.bindArtistName(entity.getArtistName());
         holder.bindArtistPhoto(imageUrl);
+    }
+
+    private void runEnterAnimation(View view, int position) {
+        if (position >= ANIMATED_ITEMS_COUNT - 1) {
+            return;
+        }
+
+        if (position > lastAnimatedPosition) {
+            lastAnimatedPosition = position;
+            view.setTranslationY(AnimationUtil.getScreenHeight(mContext));
+            view.animate()
+                    .translationY(0)
+                    .setInterpolator(new DecelerateInterpolator(3.f))
+                    .setDuration(700)
+                    .start();
+        }
     }
 
     @Override

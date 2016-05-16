@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 
 import com.bumptech.glide.Glide;
@@ -15,6 +16,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.FavoriteArtistEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,8 @@ import butterknife.ButterKnife;
  * Created by oleksandr on 11.05.16.
  */
 public class FavoriteArtistsAdapter extends RecyclerView.Adapter<FavoriteArtistsAdapter.ArtistVH> {
+    private static final int ANIMATED_ITEMS_COUNT = 10;
+    private int lastAnimatedPosition = -1;
 
     private List<FavoriteArtistEntity> mData = new ArrayList<>();
     private OnArtistClickListener mListener;
@@ -44,9 +48,28 @@ public class FavoriteArtistsAdapter extends RecyclerView.Adapter<FavoriteArtists
 
     @Override
     public void onBindViewHolder(ArtistVH holder, int position) {
+        runEnterAnimation(holder.itemView, position);
         FavoriteArtistEntity entity = mData.get(position);
         holder.bindArtistName(entity.getName());
         holder.bindArtistPhoto(entity.getImage());
+    }
+
+
+
+    private void runEnterAnimation(View view, int position) {
+        if (position >= ANIMATED_ITEMS_COUNT - 1) {
+            return;
+        }
+
+        if (position > lastAnimatedPosition) {
+            lastAnimatedPosition = position;
+            view.setTranslationY(AnimationUtil.getScreenHeight(mContext));
+            view.animate()
+                    .translationY(0)
+                    .setInterpolator(new DecelerateInterpolator(3.f))
+                    .setDuration(700)
+                    .start();
+        }
     }
 
     @Override
