@@ -6,26 +6,26 @@ This application shows how you can integrate the [RxJava], [Realm], [LastFM API]
 for information on popular artists, their songs and albums.
 Additionally this app can stream and download any tracks that are available in [VK].
 
-<img src="/screens/s1.png">
-<img src="/screens/s2.png">
-<img src="/screens/s3.png">
-<img src="/screens/s4.png">
-<img src="/screens/s5.png">
-<img src="/screens/s6.png">
-<img src="/screens/s7.png">
-<img src="/screens/s8.png">
-<img src="/screens/s9.png">
-<img src="/screens/s11.png">
-<img src="/screens/s12.png">
-<img src="/screens/s13.png">
-<img src="/screens/s14.png">
-<img src="/screens/s15.png">
-<img src="/screens/s16.png">
-<img src="/screens/s17.png">
-<img src="/screens/s18.png">
-<img src="/screens/s19.png">
-<img src="/screens/s20.png">
-<img src="/screens/s21.png">
+<img src="/screens/s1.jpg" width="200">
+<img src="/screens/s2.jpg" width="200">
+<img src="/screens/s3.jpg" width="200">
+<img src="/screens/s4.jpg" width="200">
+<img src="/screens/s5.jpg" width="200">
+<img src="/screens/s6.jpg" width="200">
+<img src="/screens/s7.jpg" width="200">
+<img src="/screens/s8.jpg" width="200">
+<img src="/screens/s9.jpg" width="200">
+<img src="/screens/s11.jpg" width="200">
+<img src="/screens/s12.jpg" width="200">
+<img src="/screens/s13.jpg" width="200">
+<img src="/screens/s14.jpg" width="200">
+<img src="/screens/s15.jpg" width="200">
+<img src="/screens/s16.jpg" width="200">
+<img src="/screens/s17.jpg" width="200">
+<img src="/screens/s18.jpg" width="200">
+<img src="/screens/s19.jpg" width="200">
+<img src="/screens/s20.jpg" width="200">
+<img src="/screens/s21.jpg" width="200">
 
 ## Requirements
 Install the following software:
