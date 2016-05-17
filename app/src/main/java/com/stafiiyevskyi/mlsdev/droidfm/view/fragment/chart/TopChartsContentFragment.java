@@ -12,6 +12,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.activity.BaseActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
 
 import butterknife.Bind;
 
@@ -85,6 +86,7 @@ public class TopChartsContentFragment extends BaseFragment {
 
     private void selectTopArtist() {
         mCurrentFragment = ArtistSearchListFragment.newInstance();
+        AnimationUtil.detailTransition(mCurrentFragment);
         mFragmentManager.beginTransaction()
                 .replace(R.id.fl_chart_content, mCurrentFragment)
                 .commit();
@@ -92,6 +94,7 @@ public class TopChartsContentFragment extends BaseFragment {
 
     private void selectTopTracks() {
         mCurrentFragment = ChartTopTracksFragment.newInstance();
+        AnimationUtil.detailTransition(mCurrentFragment);
         mFragmentManager.beginTransaction()
                 .replace(R.id.fl_chart_content, mCurrentFragment)
                 .commit();
@@ -99,6 +102,7 @@ public class TopChartsContentFragment extends BaseFragment {
 
     private void selectTopTags() {
         mCurrentFragment = ChartTopTagsFragment.newInstance();
+        AnimationUtil.detailTransition(mCurrentFragment);
         mFragmentManager.beginTransaction()
                 .replace(R.id.fl_chart_content, mCurrentFragment)
                 .commit();
