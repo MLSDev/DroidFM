@@ -31,6 +31,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 
 /**
@@ -84,7 +85,8 @@ public class TopArtistFragmentTest {
     @Test
     public void testC_OnAlbumClick() {
         initWithExpectedResponse();
-        onView(withText("Rihanna")).perform(click());
+        onView(allOf(withId(R.id.rv_artists), isDisplayed())).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withText("Good Girl Gone Bad")).perform(click());
         Spoon.screenshot(activityTestRule.getActivity(), TAG);
     }
@@ -92,7 +94,8 @@ public class TopArtistFragmentTest {
     @Test
     public void testD_OnTrackClick() {
         initWithExpectedResponse();
-        onView(withText("Rihanna")).perform(click());
+        onView(allOf(withId(R.id.rv_artists), isDisplayed())).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withText("Top Tracks")).perform(click());
         Spoon.screenshot(activityTestRule.getActivity(), TAG);
         onView(withText("Umbrella")).perform(click());
