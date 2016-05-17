@@ -25,6 +25,7 @@ import okhttp3.mockwebserver.MockWebServer;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.swipeDown;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -68,6 +69,8 @@ public class ChartContentFragmentTest {
 
         onView(allOf(withText("Artists"), isDisplayed())).perform(click());
         Spoon.screenshot(activityTestRule.getActivity(), TAG);
+        onView(allOf(withId(R.id.rv_artists), isDisplayed())).perform(swipeDown());
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
         onView(allOf(withId(R.id.rv_artists), isDisplayed())).
                 perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
         Spoon.screenshot(activityTestRule.getActivity(), TAG);
@@ -79,6 +82,8 @@ public class ChartContentFragmentTest {
         navigateToChartsContentScreen();
         onView(allOf(withText("Tracks"), isDisplayed())).perform(click());
         Spoon.screenshot(activityTestRule.getActivity(), TAG);
+        onView(allOf(withId(R.id.rv_toptracks), isDisplayed())).perform(swipeDown());
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
         onView(allOf(withId(R.id.rv_toptracks), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
         Spoon.screenshot(activityTestRule.getActivity(), TAG);
     }
@@ -88,6 +93,8 @@ public class ChartContentFragmentTest {
         initMockWithExpectedResponse();
         navigateToChartsContentScreen();
         onView(allOf(withText("Tags"), isDisplayed())).perform(click());
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+        onView(allOf(withId(R.id.rv_toptags), isDisplayed())).perform(swipeDown());
         Spoon.screenshot(activityTestRule.getActivity(), TAG);
         onView(allOf(withId(R.id.rv_toptags), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         Spoon.screenshot(activityTestRule.getActivity(), TAG);
@@ -104,7 +111,6 @@ public class ChartContentFragmentTest {
         onView(allOf(withId(R.id.vp_content), isDisplayed())).perform(swipeLeft());
         Spoon.screenshot(activityTestRule.getActivity(), TAG);
     }
-
 
     private void initMockWithExpectedResponse() {
         mockWebServer.setDispatcher(new TestDispatcherChartsContent());
