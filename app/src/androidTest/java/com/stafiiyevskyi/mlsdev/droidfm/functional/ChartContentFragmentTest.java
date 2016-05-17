@@ -8,8 +8,7 @@ import com.squareup.spoon.Spoon;
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
-import com.stafiiyevskyi.mlsdev.droidfm.utils.CheckValues;
-import com.stafiiyevskyi.mlsdev.droidfm.utils.TestDispatcherChartsConten;
+import com.stafiiyevskyi.mlsdev.droidfm.utils.TestDispatcherChartsContent;
 import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 
 import org.junit.After;
@@ -26,9 +25,7 @@ import okhttp3.mockwebserver.MockWebServer;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
-import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -65,19 +62,56 @@ public class ChartContentFragmentTest {
     }
 
     @Test
-    public void testA_startDefaultScreenTest() {
+    public void testA_startChartTopArtistsScreen() {
         initMockWithExpectedResponse();
-        onView(withId(R.id.nb_navigation))
-                .perform(click());
-        onView(allOf(withId(R.id.rv_toptracks), isDisplayed())).
-        perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        navigateToChartsContentScreen();
+
+        onView(allOf(withText("Artists"), isDisplayed())).perform(click());
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+        onView(allOf(withId(R.id.rv_artists), isDisplayed())).
+                perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+    }
+
+    @Test
+    public void testB_startChartTopTracksScreen() {
+        initMockWithExpectedResponse();
+        navigateToChartsContentScreen();
+        onView(allOf(withText("Tracks"), isDisplayed())).perform(click());
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+        onView(allOf(withId(R.id.rv_toptracks), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+    }
+
+    @Test
+    public void testC_startChartTopTagsScreen() {
+        initMockWithExpectedResponse();
+        navigateToChartsContentScreen();
+        onView(allOf(withText("Tags"), isDisplayed())).perform(click());
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+        onView(allOf(withId(R.id.rv_toptags), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+
+    }
+
+    @Test
+    public void testD_swipePagerTagContent() {
+        initMockWithExpectedResponse();
+        activityTestRule.getActivity().navigateToTagTopContent("rock");
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+        onView(allOf(withId(R.id.vp_content), isDisplayed())).perform(swipeLeft());
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
+        onView(allOf(withId(R.id.vp_content), isDisplayed())).perform(swipeLeft());
+        Spoon.screenshot(activityTestRule.getActivity(), TAG);
     }
 
 
     private void initMockWithExpectedResponse() {
+        mockWebServer.setDispatcher(new TestDispatcherChartsContent());
+    }
+
+    private void navigateToChartsContentScreen() {
         activityTestRule.getActivity().navigateToChartsContentScreen();
-        mockWebServer.setDispatcher(new TestDispatcherChartsConten());
-        Spoon.screenshot(activityTestRule.getActivity(), TAG);
     }
 
 }

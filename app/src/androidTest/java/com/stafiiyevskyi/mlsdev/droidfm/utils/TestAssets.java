@@ -50,7 +50,7 @@ public class TestAssets {
     }
 
     public static String getTopAlbumsTagRock(Context context) {
-        return getStringFromFile(context, "top_albums_tag_rock_response.json");
+        return getStringFromFile(context, "top_albums_tag_rock_resposne.json");
     }
 
     public static String getChartTopTags(Context context) {
@@ -63,6 +63,14 @@ public class TestAssets {
 
     public static String getChartTopArtist(Context context) {
         return getStringFromFile(context, "chart_top_artists_response.json");
+    }
+
+    public static String getTagRockTopArtists(Context context) {
+        return getStringFromFile(context, "top_artists_tag_rock_response.json");
+    }
+
+    public static String getTagRockTopTracks(Context context) {
+        return getStringFromFile(context, "top_tracks_tag_rock_response.json");
     }
 
     private static String getStringFromFile(Context context, String filePath) {

@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class TagTopContentFragment extends BaseFragment implements ViewPager.OnP
         super.onViewCreated(view, savedInstanceState);
         Bundle args = getArguments();
         mTag = args.getString(TAG_BUNDLE_KEY);
+        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(mTag);
         setupViewPager();
         ((Navigator) getActivity()).setDrawerToggleNotEnabled();
     }

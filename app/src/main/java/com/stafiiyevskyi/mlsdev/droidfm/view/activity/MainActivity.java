@@ -324,7 +324,6 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Override
     public void navigateToTagTopContent(String tag) {
-        getSupportActionBar().setSubtitle(tag);
         BaseFragment fragment = TagTopContentFragment.newInstance(tag);
         AnimationUtil.detailTransition(fragment);
         mFragmentManager.beginTransaction()
