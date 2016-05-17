@@ -32,21 +32,21 @@ import rx.Subscription;
  */
 public class TrackDetailScreenPresenterImpl extends BasePresenter implements TrackDetailScreenPresenter, TransactionCallback {
 
-    private TrackModel mTrackModel;
-    private VKTrackModel mVKTrackModel;
-    private DBTrackModel mDBTrackModel;
-    private TrackDetailScreenView mView;
+    private TrackModel trackModel;
+    private VKTrackModel vkTrackModel;
+    private DBTrackModel dbTrackModel;
+    private TrackDetailScreenView view;
 
-    public TrackDetailScreenPresenterImpl(TrackDetailScreenView mView) {
-        this.mView = mView;
-        this.mTrackModel = new TrackModelImpl();
-        this.mVKTrackModel = new VKTrackModelImpl();
-        this.mDBTrackModel = new DBTrackModelImpl(this);
+    public TrackDetailScreenPresenterImpl(TrackDetailScreenView view) {
+        this.view = view;
+        this.trackModel = new TrackModelImpl();
+        this.vkTrackModel = new VKTrackModelImpl();
+        this.dbTrackModel = new DBTrackModelImpl(this);
     }
 
     @Override
     public void getTrackDetails(String artist, String track, String mbid) {
-        Subscription subscription = mTrackModel.getTrackDetail(artist, track, mbid)
+        Subscription subscription = trackModel.getTrackDetail(artist, track, mbid)
                 .map(this::unwrapResponse)
                 .map(new TrackDetailMapper())
                 .subscribe(new Observer<TrackDetailEntity>() {
@@ -58,12 +58,12 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
                     @Override
                     public void onError(Throwable e) {
                         Log.e("Error Track Detail", e.getMessage());
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(TrackDetailEntity trackDetailEntity) {
-                        mView.showTrackDetail(trackDetailEntity);
+                        view.showTrackDetail(trackDetailEntity);
                     }
                 });
         addSubscription(subscription);
@@ -71,7 +71,7 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
 
     @Override
     public void isTrackFavorite(TrackDetailEntity trackDetailEntity) {
-        Subscription subscription = mDBTrackModel.findTracks(trackDetailEntity.getArtistName(), trackDetailEntity.getName())
+        Subscription subscription = dbTrackModel.findTracks(trackDetailEntity.getArtistName(), trackDetailEntity.getName())
                 .map(new FavoriteListTracksFromDAOMapper())
                 .subscribe(new Observer<List<FavoriteTrackEntity>>() {
                     @Override
@@ -87,9 +87,9 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
                     @Override
                     public void onNext(List<FavoriteTrackEntity> favoriteTrackEntities) {
                         if (favoriteTrackEntities.size() > 0) {
-                            mView.showTrackIsFavorite(true);
+                            view.showTrackIsFavorite(true);
                         } else {
-                            mView.showTrackIsFavorite(false);
+                            view.showTrackIsFavorite(false);
                         }
 
                     }
@@ -100,7 +100,7 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
 
     @Override
     public void getTrackStreamUrl(String trackSearch) {
-        Subscription subscription = mVKTrackModel.getVKTrack(trackSearch)
+        Subscription subscription = vkTrackModel.getVKTrack(trackSearch)
                 .subscribe(new Observer<VKTrackResponse>() {
                     @Override
                     public void onCompleted() {
@@ -109,13 +109,13 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(VKTrackResponse vkTrackResponse) {
                         VkTrackItemResponse response = vkTrackResponse.getResponse()[0];
-                        mView.showTrackStreamUrl(response.getUrl(), response.getDuration());
+                        view.showTrackStreamUrl(response.getUrl(), response.getDuration());
                     }
                 });
         addSubscription(subscription);
@@ -124,12 +124,12 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
 
     @Override
     public void addTrackToFavorite(FavoriteTrackEntity track) {
-        mDBTrackModel.addFavoriteTrack(new FavoriteTrackToDAOMapper().call(track));
+        dbTrackModel.addFavoriteTrack(new FavoriteTrackToDAOMapper().call(track));
     }
 
     @Override
     public void deleteFromFavorite(FavoriteTrackEntity track) {
-        mDBTrackModel.deleteFromFavorites(new FavoriteTrackToDAOMapper().call(track));
+        dbTrackModel.deleteFromFavorites(new FavoriteTrackToDAOMapper().call(track));
     }
 
     private TrackDetail unwrapResponse(TrackDetailResponse response) {
@@ -138,6 +138,6 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
 
     @Override
     public void onSuccess() {
-        mView.onSuccess();
+        view.onSuccess();
     }
 }

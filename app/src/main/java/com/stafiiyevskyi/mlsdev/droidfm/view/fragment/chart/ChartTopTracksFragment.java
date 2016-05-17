@@ -30,26 +30,26 @@ import butterknife.Bind;
  */
 public class ChartTopTracksFragment extends BaseFragment implements TopTracksAdapter.OnTopTrackClickListener, ChartTopTracksScreenView, SearchView.OnQueryTextListener, SearchView.OnCloseListener, SwipeRefreshLayout.OnRefreshListener {
     @Bind(R.id.rv_toptracks)
-    RecyclerView mRvTracks;
+    RecyclerView rvTracks;
     @Bind(R.id.pb_progress)
-    ProgressBar mPbProgress;
+    ProgressBar pbProgress;
     @Bind(R.id.srl_refresh)
-    SwipeRefreshLayout mSrlRefresh;
-    private SearchView mSearchView;
+    SwipeRefreshLayout srlRefresh;
+    private SearchView searchView;
 
-    private ChartTopTracksScreenPresenter mPresenter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private TopTracksAdapter mAdapter;
+    private ChartTopTracksScreenPresenter presenter;
+    private RecyclerView.LayoutManager layoutManager;
+    private TopTracksAdapter adapter;
 
-    private boolean mIsLoading = true;
-    private boolean mIsSearchFirstCall = false;
-    private boolean mIsSearchActivate = false;
-    private int mCurrentPageNumber = 1;
-    private int mVisibleItemCount, mTotalItemCount;
-    private int mLastVisibleItemPosition;
-    private String mSearchQuery = "";
+    private boolean isLoading = true;
+    private boolean isSearchFirstCall = false;
+    private boolean isSearchActivate = false;
+    private int currentPageNumber = 1;
+    private int visibleItemCount, totalItemCount;
+    private int lastVisibleItemPosition;
+    private String searchQuery = "";
 
-    private RecyclerView.OnScrollListener mRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+    private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
@@ -58,20 +58,20 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            mVisibleItemCount = mLayoutManager.getChildCount();
-            mTotalItemCount = mAdapter.getItemCount();
-            mLastVisibleItemPosition = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+            visibleItemCount = layoutManager.getChildCount();
+            totalItemCount = adapter.getItemCount();
+            lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
 
-            if (!mIsLoading) {
-                if ((mVisibleItemCount + mLastVisibleItemPosition) >= mTotalItemCount
-                        && mLastVisibleItemPosition >= 0) {
-                    mIsLoading = true;
-                    mCurrentPageNumber = ++mCurrentPageNumber;
-                    mPbProgress.setVisibility(View.VISIBLE);
-                    if (mIsSearchActivate) {
-                        mPresenter.searchTracks(mSearchQuery, mCurrentPageNumber);
+            if (!isLoading) {
+                if ((visibleItemCount + lastVisibleItemPosition) >= totalItemCount
+                        && lastVisibleItemPosition >= 0) {
+                    isLoading = true;
+                    currentPageNumber = ++currentPageNumber;
+                    pbProgress.setVisibility(View.VISIBLE);
+                    if (isSearchActivate) {
+                        presenter.searchTracks(searchQuery, currentPageNumber);
                     } else {
-                        mPresenter.getChartTopTracks(mCurrentPageNumber);
+                        presenter.getChartTopTracks(currentPageNumber);
                     }
 
                 }
@@ -94,9 +94,9 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupRvTracks();
-        mSrlRefresh.setOnRefreshListener(this);
-        mPresenter = new ChartTopTrackPresenterImpl(this);
-        mPresenter.getChartTopTracks(mCurrentPageNumber);
+        srlRefresh.setOnRefreshListener(this);
+        presenter = new ChartTopTrackPresenterImpl(this);
+        presenter.getChartTopTracks(currentPageNumber);
     }
 
 
@@ -106,24 +106,24 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
         if (isVisible()) {
             menu.clear();
             inflater.inflate(R.menu.menu_artist_top_tracks_screen, menu);
-            mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-            mSearchView.setOnQueryTextListener(this);
-            mSearchView.setOnCloseListener(this);
+            searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+            searchView.setOnQueryTextListener(this);
+            searchView.setOnCloseListener(this);
         }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stop();
+        presenter.stop();
     }
 
     private void setupRvTracks() {
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new TopTracksAdapter(this);
-        mRvTracks.setLayoutManager(mLayoutManager);
-        mRvTracks.setAdapter(mAdapter);
-        mRvTracks.addOnScrollListener(mRecyclerViewOnScrollListener);
+        layoutManager = new LinearLayoutManager(getActivity());
+        adapter = new TopTracksAdapter(this);
+        rvTracks.setLayoutManager(layoutManager);
+        rvTracks.setAdapter(adapter);
+        rvTracks.addOnScrollListener(recyclerViewOnScrollListener);
     }
 
     @Override
@@ -146,42 +146,42 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
 
     @Override
     public void showChartTopTracks(List<TopTrackEntity> trackEntities) {
-        mPbProgress.setVisibility(View.GONE);
-        mSrlRefresh.setRefreshing(false);
-        if (mIsSearchFirstCall) {
-            mAdapter.setData(trackEntities);
-            mIsSearchFirstCall = false;
+        pbProgress.setVisibility(View.GONE);
+        srlRefresh.setRefreshing(false);
+        if (isSearchFirstCall) {
+            adapter.setData(trackEntities);
+            isSearchFirstCall = false;
         } else {
-            mAdapter.addData(trackEntities);
-            mIsLoading = false;
+            adapter.addData(trackEntities);
+            isLoading = false;
         }
     }
 
     @Override
     public void showError(String errorMessage) {
-        mPbProgress.setVisibility(View.GONE);
-        mSrlRefresh.setRefreshing(false);
-        Snackbar.make(mRvTracks, errorMessage, Snackbar.LENGTH_LONG).show();
+        pbProgress.setVisibility(View.GONE);
+        srlRefresh.setRefreshing(false);
+        Snackbar.make(rvTracks, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public boolean onClose() {
-        mIsSearchFirstCall = true;
-        mIsSearchActivate = false;
-        mCurrentPageNumber = 1;
-        mPbProgress.setVisibility(View.VISIBLE);
-        mPresenter.getChartTopTracks(mCurrentPageNumber);
+        isSearchFirstCall = true;
+        isSearchActivate = false;
+        currentPageNumber = 1;
+        pbProgress.setVisibility(View.VISIBLE);
+        presenter.getChartTopTracks(currentPageNumber);
         return false;
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        mPbProgress.setVisibility(View.VISIBLE);
-        mIsSearchFirstCall = true;
-        mIsSearchActivate = true;
-        mCurrentPageNumber = 1;
-        mSearchQuery = query;
-        mPresenter.searchTracks(mSearchQuery, mCurrentPageNumber);
+        pbProgress.setVisibility(View.VISIBLE);
+        isSearchFirstCall = true;
+        isSearchActivate = true;
+        currentPageNumber = 1;
+        searchQuery = query;
+        presenter.searchTracks(searchQuery, currentPageNumber);
         return false;
     }
 
@@ -192,9 +192,9 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
 
     @Override
     public void onRefresh() {
-        mIsSearchFirstCall = true;
-        mIsSearchActivate = false;
-        mCurrentPageNumber = 1;
-        mPresenter.getChartTopTracks(mCurrentPageNumber);
+        isSearchFirstCall = true;
+        isSearchActivate = false;
+        currentPageNumber = 1;
+        presenter.getChartTopTracks(currentPageNumber);
     }
 }

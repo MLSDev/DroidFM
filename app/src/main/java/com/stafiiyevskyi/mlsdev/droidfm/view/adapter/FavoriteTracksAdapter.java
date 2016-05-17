@@ -21,12 +21,12 @@ public class FavoriteTracksAdapter extends RecyclerView.Adapter<FavoriteTracksAd
     private static final int ANIMATED_ITEMS_COUNT = 10;
     private int lastAnimatedPosition = -1;
 
-    private List<FavoriteTrackEntity> mData;
-    private OnFavoriteTrackClickListener mListener;
+    private List<FavoriteTrackEntity> data;
+    private OnFavoriteTrackClickListener listener;
     private Context mContext;
 
-    public FavoriteTracksAdapter(OnFavoriteTrackClickListener mListener) {
-        this.mListener = mListener;
+    public FavoriteTracksAdapter(OnFavoriteTrackClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -55,24 +55,24 @@ public class FavoriteTracksAdapter extends RecyclerView.Adapter<FavoriteTracksAd
     @Override
     public void onBindViewHolder(FavoriteTrackVH holder, int position) {
         runEnterAnimation(holder.itemView,position);
-        FavoriteTrackEntity track = mData.get(position);
+        FavoriteTrackEntity track = data.get(position);
         holder.bindTrackName(track.getTrackName());
         holder.bindArtistName(track.getArtistName());
     }
 
     @Override
     public int getItemCount() {
-        if (mData != null) return mData.size();
+        if (data != null) return data.size();
         return 0;
     }
 
     public void addData(List<FavoriteTrackEntity> tracks) {
-        mData.addAll(tracks);
+        data.addAll(tracks);
         notifyDataSetChanged();
     }
 
     public void setData(List<FavoriteTrackEntity> tracks) {
-        mData = tracks;
+        data = tracks;
         notifyDataSetChanged();
     }
 
@@ -88,7 +88,7 @@ public class FavoriteTracksAdapter extends RecyclerView.Adapter<FavoriteTracksAd
             super(itemView);
             mTvArtistName = (AppCompatTextView) itemView.findViewById(R.id.tv_artist_name);
             mTvTrackName = (AppCompatTextView) itemView.findViewById(R.id.tv_track_name);
-            itemView.setOnClickListener(view -> mListener.onFavoriteTrackClick(mData.get(getAdapterPosition())));
+            itemView.setOnClickListener(view -> listener.onFavoriteTrackClick(data.get(getAdapterPosition())));
         }
 
         public void bindArtistName(String artist) {

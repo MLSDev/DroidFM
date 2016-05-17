@@ -34,31 +34,31 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
     public static final String ARTIST_NAME_BUNDLE_KEY = "artist_top_tracks_fragment_name";
 
     @Bind(R.id.rv_toptracks)
-    RecyclerView mRvToptracks;
+    RecyclerView rvToptracks;
     @Bind(R.id.pb_progress)
-    ProgressBar mPbProgress;
+    ProgressBar pbProgress;
     @Bind(R.id.srl_refresh)
-    SwipeRefreshLayout mSrlRefresh;
+    SwipeRefreshLayout srlRefresh;
 
-    private SearchView mSearchView;
+    private SearchView searchView;
 
-    private String mMbid;
-    private String mArtistName;
+    private String mbid;
+    private String artistName;
 
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ArtistTopTracksAdapter mAdapter;
-    private ArtistTopTracksScreenPresenter mPresenter;
+    private RecyclerView.LayoutManager layoutManager;
+    private ArtistTopTracksAdapter adapter;
+    private ArtistTopTracksScreenPresenter presenter;
 
 
-    private boolean mIsLoading = true;
-    private boolean mIsSearchFirstCall = false;
-    private boolean mIsSearchActivate = false;
-    private int mCurrentPageNumber = 1;
-    private int mVisibleItemCount, mTotalItemCount;
-    private int mLastVisibleItemPosition;
-    private String mSearchQuery = "";
+    private boolean isLoading = true;
+    private boolean isSearchFirstCall = false;
+    private boolean isSearchActivate = false;
+    private int currentPageNumber = 1;
+    private int visibleItemCount, totalItemCount;
+    private int lastVisibleItemPosition;
+    private String searchQuery = "";
 
-    private RecyclerView.OnScrollListener mRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+    private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
@@ -67,20 +67,20 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            mVisibleItemCount = mLayoutManager.getChildCount();
-            mTotalItemCount = mAdapter.getItemCount();
-            mLastVisibleItemPosition = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+            visibleItemCount = layoutManager.getChildCount();
+            totalItemCount = adapter.getItemCount();
+            lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
 
-            if (!mIsLoading) {
-                if ((mVisibleItemCount + mLastVisibleItemPosition) >= mTotalItemCount
-                        && mLastVisibleItemPosition >= 0) {
-                    mIsLoading = true;
-                    mCurrentPageNumber = ++mCurrentPageNumber;
-                    mPbProgress.setVisibility(View.VISIBLE);
-                    if (mIsSearchActivate) {
-                        mPresenter.searchArtistTracks(mArtistName, mSearchQuery, mCurrentPageNumber);
+            if (!isLoading) {
+                if ((visibleItemCount + lastVisibleItemPosition) >= totalItemCount
+                        && lastVisibleItemPosition >= 0) {
+                    isLoading = true;
+                    currentPageNumber = ++currentPageNumber;
+                    pbProgress.setVisibility(View.VISIBLE);
+                    if (isSearchActivate) {
+                        presenter.searchArtistTracks(artistName, searchQuery, currentPageNumber);
                     } else {
-                        mPresenter.getArtistTopTracks(mArtistName, mMbid, mCurrentPageNumber);
+                        presenter.getArtistTopTracks(artistName, mbid, currentPageNumber);
                     }
 
                 }
@@ -109,11 +109,11 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle args = getArguments();
-        mSrlRefresh.setOnRefreshListener(this);
-        mMbid = args.getString(ARTIST_MBID_BUNDLE_KEY);
-        mArtistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
-        mPresenter = new ArtistTopTracksScreenPresenterImpl(this);
-        mPresenter.getArtistTopTracks(mArtistName, mMbid, mCurrentPageNumber);
+        srlRefresh.setOnRefreshListener(this);
+        mbid = args.getString(ARTIST_MBID_BUNDLE_KEY);
+        artistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
+        presenter = new ArtistTopTracksScreenPresenterImpl(this);
+        presenter.getArtistTopTracks(artistName, mbid, currentPageNumber);
         setupRvTracks();
     }
 
@@ -123,16 +123,16 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
         if (isVisible()) {
             menu.clear();
             inflater.inflate(R.menu.menu_artist_top_tracks_screen, menu);
-            mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-            mSearchView.setOnQueryTextListener(this);
-            mSearchView.setOnCloseListener(this);
+            searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+            searchView.setOnQueryTextListener(this);
+            searchView.setOnCloseListener(this);
         }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stop();
+        presenter.stop();
     }
 
     @Override
@@ -147,11 +147,11 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
     }
 
     private void setupRvTracks() {
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new ArtistTopTracksAdapter(this);
-        mRvToptracks.setLayoutManager(mLayoutManager);
-        mRvToptracks.setAdapter(mAdapter);
-        mRvToptracks.addOnScrollListener(mRecyclerViewOnScrollListener);
+        layoutManager = new LinearLayoutManager(getActivity());
+        adapter = new ArtistTopTracksAdapter(this);
+        rvToptracks.setLayoutManager(layoutManager);
+        rvToptracks.setAdapter(adapter);
+        rvToptracks.addOnScrollListener(recyclerViewOnScrollListener);
     }
 
     @Override
@@ -161,41 +161,41 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
 
     @Override
     public void showTracks(List<TopTrackEntity> tracks) {
-        mSrlRefresh.setRefreshing(false);
-        mPbProgress.setVisibility(View.GONE);
-        if (mIsSearchFirstCall) {
-            mAdapter.setData(tracks);
-            mIsSearchFirstCall = false;
+        srlRefresh.setRefreshing(false);
+        pbProgress.setVisibility(View.GONE);
+        if (isSearchFirstCall) {
+            adapter.setData(tracks);
+            isSearchFirstCall = false;
         } else {
-            mAdapter.addData(tracks);
-            mIsLoading = false;
+            adapter.addData(tracks);
+            isLoading = false;
         }
     }
 
     @Override
     public void showError(String errorMessage) {
-        mSrlRefresh.setRefreshing(false);
-        Snackbar.make(mRvToptracks, errorMessage, Snackbar.LENGTH_LONG).show();
+        srlRefresh.setRefreshing(false);
+        Snackbar.make(rvToptracks, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public boolean onClose() {
-        mIsSearchActivate = false;
-        mIsSearchFirstCall = true;
-        mCurrentPageNumber = 1;
-        mPbProgress.setVisibility(View.VISIBLE);
-        mPresenter.getArtistTopTracks(mArtistName, mMbid, mCurrentPageNumber);
+        isSearchActivate = false;
+        isSearchFirstCall = true;
+        currentPageNumber = 1;
+        pbProgress.setVisibility(View.VISIBLE);
+        presenter.getArtistTopTracks(artistName, mbid, currentPageNumber);
         return false;
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        mPbProgress.setVisibility(View.VISIBLE);
-        mIsSearchFirstCall = true;
-        mIsSearchActivate = true;
-        mCurrentPageNumber = 1;
-        mSearchQuery = query;
-        mPresenter.searchArtistTracks(mArtistName, mSearchQuery, mCurrentPageNumber);
+        pbProgress.setVisibility(View.VISIBLE);
+        isSearchFirstCall = true;
+        isSearchActivate = true;
+        currentPageNumber = 1;
+        searchQuery = query;
+        presenter.searchArtistTracks(artistName, searchQuery, currentPageNumber);
         return false;
     }
 
@@ -206,9 +206,9 @@ public class ArtistTopTracksFragment extends BaseFragment implements SearchView.
 
     @Override
     public void onRefresh() {
-        mIsSearchActivate = false;
-        mIsSearchFirstCall = true;
-        mCurrentPageNumber = 1;
-        mPresenter.getArtistTopTracks(mArtistName, mMbid, mCurrentPageNumber);
+        isSearchActivate = false;
+        isSearchFirstCall = true;
+        currentPageNumber = 1;
+        presenter.getArtistTopTracks(artistName, mbid, currentPageNumber);
     }
 }

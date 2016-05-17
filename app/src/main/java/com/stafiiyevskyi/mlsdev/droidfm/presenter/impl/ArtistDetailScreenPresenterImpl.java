@@ -16,17 +16,17 @@ import rx.Subscription;
  */
 public class ArtistDetailScreenPresenterImpl extends BasePresenter implements ArtistDetailScreenPresenter {
 
-    private ArtistModel mModel;
-    private ArtistDetailScreenView mView;
+    private ArtistModel model;
+    private ArtistDetailScreenView view;
 
-    public ArtistDetailScreenPresenterImpl(ArtistDetailScreenView mView) {
-        this.mView = mView;
-        this.mModel = new ArtistModelImpl();
+    public ArtistDetailScreenPresenterImpl(ArtistDetailScreenView view) {
+        this.view = view;
+        this.model = new ArtistModelImpl();
     }
 
     @Override
     public void getArtistInformation(String artistName, String mbid) {
-        Subscription subscription = mModel.getArtistInfo(mbid)
+        Subscription subscription = model.getArtistInfo(mbid)
                 .map(new ArtistDetailMapper())
                 .subscribe(new Observer<ArtistDetailEntity>() {
                     @Override
@@ -36,12 +36,12 @@ public class ArtistDetailScreenPresenterImpl extends BasePresenter implements Ar
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(ArtistDetailEntity artistDetailEntity) {
-                        mView.showArtistDetailInformation(artistDetailEntity);
+                        view.showArtistDetailInformation(artistDetailEntity);
                     }
                 });
         addSubscription(subscription);

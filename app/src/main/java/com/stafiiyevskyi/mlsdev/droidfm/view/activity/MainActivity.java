@@ -2,8 +2,6 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -21,8 +19,6 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
@@ -52,7 +48,6 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.favorite.FavoriteTracksFra
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.signin.LoginVKDialogFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.tag.TagTopContentFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
-import com.stafiiyevskyi.mlsdev.droidfm.view.util.BlurEffect;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.MusicPlayerUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.SeekBarUtils;
 import com.stafiiyevskyi.mlsdev.droidfm.view.widget.MenuArrowDrawable;
@@ -77,37 +72,37 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     NavigationView nvNavigation;
 
     @Bind(R.id.sb_player_seekbar)
-    SeekBar mSbSeekbar;
+    SeekBar sbSeekbar;
     @Bind(R.id.tv_play_track_name)
-    AppCompatTextView mTvPlayTrackName;
+    AppCompatTextView tvPlayTrackName;
     @Bind(R.id.iv_album_image)
-    AppCompatImageView mIvAlbumsTrackImage;
+    AppCompatImageView ivAlbumsTrackImage;
     @Bind(R.id.iv_play_pause)
-    AppCompatImageView mIvPlayPause;
+    AppCompatImageView ivPlayPause;
     @Bind(R.id.tv_current_track_position)
-    AppCompatTextView mTvCurrentTrackPosition;
+    AppCompatTextView tvCurrentTrackPosition;
     @Bind(R.id.tv_track_duration)
-    AppCompatTextView mTvTrackTotalDuration;
+    AppCompatTextView tvTrackTotalDuration;
     @Bind(R.id.rv_playlist)
-    RecyclerView mRvPlaylist;
+    RecyclerView rvPlaylist;
 
-    private FragmentManager mFragmentManager;
-    private AlbumPlaylistAdapter mPlaylistAdapter;
+    private FragmentManager fragmentManager;
+    private AlbumPlaylistAdapter playlistAdapter;
 
-    private ActionBarDrawerToggle mDrawerToggle;
-    private MenuArrowDrawable mDrawerArrowDrawable;
-    private BaseFragment mFirstFragment;
-    private Handler mHandler;
-    private String mAlbumImage;
+    private ActionBarDrawerToggle drawerToggle;
+    private MenuArrowDrawable drawerArrowDrawable;
+    private BaseFragment firstFragment;
+    private Handler handler;
+    private String albumImage;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        mHandler = new Handler();
+        handler = new Handler();
         setupPlayerWidget();
-        mFragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         setupNavigation();
         startService(new Intent(this, TracksPlayerService.class));
         startService(new Intent(this, DownloadService.class));
@@ -148,7 +143,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        mHandler.removeCallbacks(mUpdateTimeTask);
+        handler.removeCallbacks(mUpdateTimeTask);
     }
 
     @Override
@@ -174,19 +169,19 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+        drawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         } else {
             onBackPressed();
@@ -195,24 +190,24 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     }
 
     private void setupNavigation() {
-        mDrawerArrowDrawable = new MenuArrowDrawable(new ContextThemeWrapper(this, R.style.AppTheme_AppBarOverlay), getSupportActionBar());
+        drawerArrowDrawable = new MenuArrowDrawable(new ContextThemeWrapper(this, R.style.AppTheme_AppBarOverlay), getSupportActionBar());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        mDrawerToggle = new ActionBarDrawerToggle(this, drNavigation,
+        drawerToggle = new ActionBarDrawerToggle(this, drNavigation,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         nvNavigation.setNavigationItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
                 case R.id.action_tracks_item:
-                    if (!(mFirstFragment instanceof ChartTopTracksFragment)) {
+                    if (!(firstFragment instanceof ChartTopTracksFragment)) {
                         navigateToTopTracksScreen();
                         getSupportActionBar().setSubtitle(getString(R.string.tracks_section_title));
                     }
                     drNavigation.closeDrawers();
                     return true;
                 case R.id.action_artists_item:
-                    if (!(mFirstFragment instanceof ArtistSearchListFragment)) {
+                    if (!(firstFragment instanceof ArtistSearchListFragment)) {
                         navigateToArtistsSearchScreen();
                         getSupportActionBar().setSubtitle(getString(R.string.artists_section_title));
                     }
@@ -220,21 +215,21 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                     drNavigation.closeDrawers();
                     return true;
                 case R.id.action_charts_item:
-                    if (!(mFirstFragment instanceof TopChartsContentFragment)) {
+                    if (!(firstFragment instanceof TopChartsContentFragment)) {
                         navigateToChartsContentScreen();
                         getSupportActionBar().setSubtitle(getString(R.string.charts_section_title));
                     }
                     drNavigation.closeDrawers();
                     return true;
                 case R.id.action_favorite_item:
-                    if (!(mFirstFragment instanceof FavoriteTracksFragment)) {
+                    if (!(firstFragment instanceof FavoriteTracksFragment)) {
                         navigateToFavoritesScreen();
                         getSupportActionBar().setSubtitle(getString(R.string.favorite_section_title));
                     }
                     drNavigation.closeDrawers();
                     return true;
                 case R.id.action_saved_item:
-                    if (!(mFirstFragment instanceof SavedTracksFragment)) {
+                    if (!(firstFragment instanceof SavedTracksFragment)) {
                         navigateToSavedTracksScreen();
                         getSupportActionBar().setSubtitle(getString(R.string.saved_section_title));
                     }
@@ -254,41 +249,41 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     @Override
     public void setDrawerToggleEnabled() {
         backToMenu();
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        drawerToggle.setDrawerIndicatorEnabled(true);
         drNavigation.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        drNavigation.addDrawerListener(mDrawerToggle);
+        drNavigation.addDrawerListener(drawerToggle);
     }
 
     @Override
     public void setDrawerToggleNotEnabled() {
         menuToBack();
-        mDrawerToggle.setDrawerIndicatorEnabled(false);
+        drawerToggle.setDrawerIndicatorEnabled(false);
         drNavigation.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     public void menuToBack() {
-        this.mDrawerArrowDrawable.animateDrawable(true);
+        this.drawerArrowDrawable.animateDrawable(true);
     }
 
     public void backToMenu() {
-        this.mDrawerArrowDrawable.animateDrawable(false);
+        this.drawerArrowDrawable.animateDrawable(false);
     }
 
     @Override
     public void navigateToArtistsSearchScreen() {
-        mFirstFragment = ArtistSearchListFragment.newInstance();
-        AnimationUtil.detailTransition(mFirstFragment);
-        mFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, mFirstFragment)
+        firstFragment = ArtistSearchListFragment.newInstance();
+        AnimationUtil.detailTransition(firstFragment);
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, firstFragment)
                 .commit();
     }
 
     @Override
     public void navigateToChartsContentScreen() {
-        mFirstFragment = TopChartsContentFragment.newInstance();
-        AnimationUtil.detailTransition(mFirstFragment);
-        mFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, mFirstFragment)
+        firstFragment = TopChartsContentFragment.newInstance();
+        AnimationUtil.detailTransition(firstFragment);
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, firstFragment)
                 .commit();
     }
 
@@ -296,7 +291,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     public void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl, AppCompatImageView imageView) {
         BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
         AnimationUtil.detailTransitionShared(fragment, imageView, getString(R.string.transition_artist_image));
-        mFragmentManager.beginTransaction()
+        fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment)
                 .addSharedElement(imageView, getString(R.string.transition_artist_image))
                 .addToBackStack(ArtistContentDetailsFragment.class.getName() + mbid)
@@ -305,10 +300,10 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Override
     public void navigateToTopTracksScreen() {
-        mFirstFragment = ChartTopTracksFragment.newInstance();
-        AnimationUtil.detailTransition(mFirstFragment);
-        mFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, mFirstFragment)
+        firstFragment = ChartTopTracksFragment.newInstance();
+        AnimationUtil.detailTransition(firstFragment);
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, firstFragment)
                 .commit();
     }
 
@@ -316,7 +311,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     public void navigateToArtistFullDetailsScreen(String mbid) {
         BaseFragment fragment = ArtistDetailFullFragment.newInstance(mbid);
         AnimationUtil.detailTransition(fragment);
-        mFragmentManager.beginTransaction()
+        fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment)
                 .addToBackStack(ArtistDetailFullFragment.class.getName() + mbid)
                 .commit();
@@ -326,7 +321,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     public void navigateToTagTopContent(String tag) {
         BaseFragment fragment = TagTopContentFragment.newInstance(tag);
         AnimationUtil.detailTransition(fragment);
-        mFragmentManager.beginTransaction()
+        fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment)
                 .addToBackStack(TagTopContentFragment.class.getName() + tag)
                 .commit();
@@ -336,7 +331,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     public void navigateToAlbumDetails(String artist, String album, String mbid, String albumImage) {
         BaseFragment fragment = AlbumsDetailsFragment.newInstance(artist, album, mbid, albumImage);
         AnimationUtil.detailTransition(fragment);
-        mFragmentManager.beginTransaction()
+        fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment)
                 .addToBackStack(AlbumsDetailsFragment.class.getName() + mbid)
                 .commit();
@@ -346,7 +341,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     public void navigateToTrackDetails(String artist, String track, String mbid) {
         BaseFragment fragment = TrackDetailFragment.newInstance(artist, track, mbid);
         AnimationUtil.detailTransition(fragment);
-        mFragmentManager.beginTransaction()
+        fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment)
                 .addToBackStack(TrackDetailFragment.class.getName() + mbid)
                 .commit();
@@ -354,65 +349,65 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     @Override
     public void navigateToSavedTracksScreen() {
-        mFirstFragment = SavedTracksFragment.newInstance();
-        AnimationUtil.detailTransition(mFirstFragment);
-        mFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, mFirstFragment)
+        firstFragment = SavedTracksFragment.newInstance();
+        AnimationUtil.detailTransition(firstFragment);
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, firstFragment)
                 .commit();
     }
 
     @Override
     public void navigateToLoginVKDialog() {
-        LoginVKDialogFragment.newInstance().show(mFragmentManager, LoginVKDialogFragment.class.getName());
+        LoginVKDialogFragment.newInstance().show(fragmentManager, LoginVKDialogFragment.class.getName());
     }
 
     @Override
     public void navigateToFavoritesScreen() {
-        mFirstFragment = FavoriteContentFragment.newInstance();
-        AnimationUtil.detailTransition(mFirstFragment);
-        mFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, mFirstFragment)
+        firstFragment = FavoriteContentFragment.newInstance();
+        AnimationUtil.detailTransition(firstFragment);
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, firstFragment)
                 .commit();
     }
 
     @Override
     public void navigateBack() {
-        int i = mFragmentManager.getBackStackEntryCount();
+        int i = fragmentManager.getBackStackEntryCount();
         if (i >= 1) {
-            FragmentManager.BackStackEntry backEntry = mFragmentManager
-                    .getBackStackEntryAt(mFragmentManager.getBackStackEntryCount() - 1);
+            FragmentManager.BackStackEntry backEntry = fragmentManager
+                    .getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1);
             String str = backEntry.getName();
-            BaseFragment currentFragment = (BaseFragment) mFragmentManager.findFragmentByTag(str);
+            BaseFragment currentFragment = (BaseFragment) fragmentManager.findFragmentByTag(str);
             if (currentFragment != null) {
                 currentFragment.updateToolbar();
             }
         } else {
-            if (mFirstFragment != null && mFirstFragment.isVisible())
-                mFirstFragment.updateToolbar();
+            if (firstFragment != null && firstFragment.isVisible())
+                firstFragment.updateToolbar();
         }
     }
 
 
     public void updateProgressBar() {
-        mHandler.postDelayed(mUpdateTimeTask, 100);
+        handler.postDelayed(mUpdateTimeTask, 100);
     }
 
     private Runnable mUpdateTimeTask = new Runnable() {
         public void run() {
-            MusicPlayerUtil.setupPlayIconState(mIvPlayPause);
+            MusicPlayerUtil.setupPlayIconState(ivPlayPause);
 
             MediaPlayerWrapper.State state = MediaPlayerWrapper.getInstance().getCurrentState();
             if (!(state.equals(MediaPlayerWrapper.State.Retrieving)
                     || state.equals(MediaPlayerWrapper.State.Stopped) || state.equals(MediaPlayerWrapper.State.Preparing))) {
                 long totalDuration = MediaPlayerWrapper.getInstance().getPlayerTotalDuration();
                 long currentDuration = MediaPlayerWrapper.getInstance().getPlayerCurrentPosition();
-                mTvTrackTotalDuration.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(totalDuration)));
-                mTvCurrentTrackPosition.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(currentDuration)));
-                mTvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() + " - " + MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
+                tvTrackTotalDuration.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(totalDuration)));
+                tvCurrentTrackPosition.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(currentDuration)));
+                tvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() + " - " + MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
                 int progress = SeekBarUtils.getProgressPercentage(currentDuration, totalDuration);
-                mSbSeekbar.setProgress(progress);
+                sbSeekbar.setProgress(progress);
             }
-            mHandler.postDelayed(this, 100);
+            handler.postDelayed(this, 100);
         }
     };
 
@@ -423,14 +418,14 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
             int totalDuration = MediaPlayerWrapper.getInstance().getPlayerTotalDuration();
             int currentPosition = SeekBarUtils.progressToTimer(seekBar.getProgress(), totalDuration);
             MediaPlayerWrapper.getInstance().seekPlayerTo(currentPosition);
-            mTvCurrentTrackPosition.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(currentPosition)));
+            tvCurrentTrackPosition.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(currentPosition)));
         }
     }
 
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-        mHandler.removeCallbacks(mUpdateTimeTask);
+        handler.removeCallbacks(mUpdateTimeTask);
     }
 
 
@@ -440,10 +435,10 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     }
 
     private void setupPlayerWidget() {
-        mPlaylistAdapter = new AlbumPlaylistAdapter(this);
-        mRvPlaylist = (RecyclerView) findViewById(R.id.rv_playlist);
-        mRvPlaylist.setLayoutManager(new LinearLayoutManager(this));
-        mRvPlaylist.setAdapter(mPlaylistAdapter);
+        playlistAdapter = new AlbumPlaylistAdapter(this);
+        rvPlaylist = (RecyclerView) findViewById(R.id.rv_playlist);
+        rvPlaylist.setLayoutManager(new LinearLayoutManager(this));
+        rvPlaylist.setAdapter(playlistAdapter);
 
         switch (MediaPlayerWrapper.getInstance().getCurrentState()) {
             case Paused:
@@ -459,13 +454,13 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 break;
         }
 
-        mSbSeekbar.setOnSeekBarChangeListener(this);
+        sbSeekbar.setOnSeekBarChangeListener(this);
         updateProgressBar();
-        mIvPlayPause.setOnClickListener(view -> {
+        ivPlayPause.setOnClickListener(view -> {
 
             if (MediaPlayerWrapper.getInstance().getCurrentTrack() != null) {
                 MediaPlayerWrapper.getInstance().playTrack(MediaPlayerWrapper.getInstance().getCurrentTrack(), false);
-                MusicPlayerUtil.setupPlayIconState(mIvPlayPause);
+                MusicPlayerUtil.setupPlayIconState(ivPlayPause);
             }
         });
     }
@@ -485,12 +480,12 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         if (mSmPlayer.getPanelState().equals(SlidingUpPanelLayout.PanelState.HIDDEN))
             mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
 
-        if (!MediaPlayerWrapper.getInstance().isFromAlbum()) mPlaylistAdapter.setData(null);
+        if (!MediaPlayerWrapper.getInstance().isFromAlbum()) playlistAdapter.setData(null);
 
-        mTvPlayTrackName.setText(event.getmArtistName() + " - " + event.getmTrackName());
+        tvPlayTrackName.setText(event.getmArtistName() + " - " + event.getmTrackName());
         if (!MediaPlayerWrapper.getInstance().isFromAlbum() || event.getmAlbumImageUrl() != null) {
-            mAlbumImage = event.getmAlbumImageUrl();
-            Glide.with(this).load(mAlbumImage).into(mIvAlbumsTrackImage);
+            albumImage = event.getmAlbumImageUrl();
+            Glide.with(this).load(albumImage).into(ivAlbumsTrackImage);
         }
         updateProgressBar();
     }
@@ -502,14 +497,14 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         if (mSmPlayer.getPanelState().equals(SlidingUpPanelLayout.PanelState.HIDDEN))
             mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         if (!MediaPlayerWrapper.getInstance().isFromAlbum()) {
-            mPlaylistAdapter.setData(null);
+            playlistAdapter.setData(null);
         }
     }
 
     @Subscribe
     public void playlistStartEvent(EventPlaylistStart event) {
-        mAlbumImage = event.getAlbumImageUrl();
-        Glide.with(this).load(mAlbumImage)/*.asBitmap().listener(new RequestListener<String, Bitmap>() {
+        albumImage = event.getAlbumImageUrl();
+        Glide.with(this).load(albumImage)/*.asBitmap().listener(new RequestListener<String, Bitmap>() {
             @Override
             public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
                 return false;
@@ -518,10 +513,10 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
             @Override
             public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
                 Bitmap bitmapBlur = BlurEffect.fastblur(MainActivity.this, resource, 12);
-                mIvAlbumsTrackImage.setImageBitmap(bitmapBlur);
+                ivAlbumsTrackImage.setImageBitmap(bitmapBlur);
                 return true;
             }
-        })*/.into(mIvAlbumsTrackImage);
+        })*/.into(ivAlbumsTrackImage);
         List<TrackPlayerEntity> trackPlayerEntities = Observable.from(event.getData()).map(trackEntity -> {
             TrackPlayerEntity trackPlayerEntity = new TrackPlayerEntity();
             trackPlayerEntity.setmTrackName(trackEntity.getName());
@@ -529,7 +524,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
             return trackPlayerEntity;
         }).toList().toBlocking().first();
         MediaPlayerWrapper.getInstance().setFromAlbum(true);
-        mPlaylistAdapter.setData(trackPlayerEntities);
+        playlistAdapter.setData(trackPlayerEntities);
         mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
         EventBus.getDefault().post(new EventSynchronizingAdapter());
     }

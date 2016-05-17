@@ -35,25 +35,25 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
     private static final String ARTIST_NAME_BUNDLE_KEY = "artist_conten_details_fragment_name";
     private static final String ARTIST_IMAGE_URL_BUNDLE_KEY = "artist_conten_details_fragment_image_url";
     @Bind(R.id.iv_artist)
-    CircleImageView mIvArtistPhoto;
+    CircleImageView ivArtistPhoto;
     @Bind(R.id.vp_content)
-    ViewPager mVpTabContent;
+    ViewPager vpTabContent;
     @Bind(R.id.tabs)
-    TabLayout mTlTabs;
+    TabLayout tlTabs;
     @Bind(R.id.tv_artist_name)
-    AppCompatTextView mTvArtistName;
+    AppCompatTextView tvArtistName;
     @Bind(R.id.iv_add_to_favorite)
-    AppCompatImageView mIvAddToFavorite;
+    AppCompatImageView ivAddToFavorite;
 
-    private ArtistContentDetailsScreenPresenter mPresenter;
+    private ArtistContentDetailsScreenPresenter presenter;
 
-    private String mMbid;
-    private String mArtistName;
-    private String mImageUrl;
+    private String mbid;
+    private String artistName;
+    private String imageUrl;
     FavoriteArtistEntity artistEntity;
 
-    private FragmentViewPagerAdapter mAdapter;
-    private boolean mIsFavorite = false;
+    private FragmentViewPagerAdapter adapter;
+    private boolean isFavorite = false;
 
     public static BaseFragment newInstance(@NonNull String artistMbid, @NonNull String artistName, @NonNull String imageUrl) {
 
@@ -69,20 +69,20 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter = new ArtistContentDetailsScreenPresenterImp(this);
+        presenter = new ArtistContentDetailsScreenPresenterImp(this);
         Bundle args = getArguments();
-        mMbid = args.getString(ARTIST_MBID_BUNDLE_KEY);
-        mArtistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
-        mImageUrl = args.getString(ARTIST_IMAGE_URL_BUNDLE_KEY);
+        mbid = args.getString(ARTIST_MBID_BUNDLE_KEY);
+        artistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
+        imageUrl = args.getString(ARTIST_IMAGE_URL_BUNDLE_KEY);
         setupGeneralInfo();
-        setupViewPager(mVpTabContent);
-        mTlTabs.setupWithViewPager(mVpTabContent);
+        setupViewPager(vpTabContent);
+        tlTabs.setupWithViewPager(vpTabContent);
         ((Navigator) getActivity()).setDrawerToggleNotEnabled();
         artistEntity = new FavoriteArtistEntity();
-        artistEntity.setImage(mImageUrl);
-        artistEntity.setName(mArtistName);
-        artistEntity.setMbid(mMbid);
-        mPresenter.isArtistFavorite(artistEntity);
+        artistEntity.setImage(imageUrl);
+        artistEntity.setName(artistName);
+        artistEntity.setMbid(mbid);
+        presenter.isArtistFavorite(artistEntity);
     }
 
     @Override
@@ -91,21 +91,21 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
     }
 
     private void setupGeneralInfo() {
-        Glide.with(this).load(mImageUrl).into(mIvArtistPhoto);
-        mTvArtistName.setText(mArtistName);
+        Glide.with(this).load(imageUrl).into(ivArtistPhoto);
+        tvArtistName.setText(artistName);
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        mAdapter = new FragmentViewPagerAdapter(getChildFragmentManager());
-        mAdapter.addFragment(ArtistTopAlbumsFragment.newInstance(mMbid, mArtistName), getActivity().getString(R.string.tab_title_top_albums));
-        mAdapter.addFragment(ArtistTopTracksFragment.newInstance(mMbid, mArtistName), getActivity().getString(R.string.tab_title_top_tracks));
-        viewPager.setAdapter(mAdapter);
+        adapter = new FragmentViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(ArtistTopAlbumsFragment.newInstance(mbid, artistName), getActivity().getString(R.string.tab_title_top_albums));
+        adapter.addFragment(ArtistTopTracksFragment.newInstance(mbid, artistName), getActivity().getString(R.string.tab_title_top_tracks));
+        viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);
     }
 
     @OnClick(R.id.tv_artist_name)
     public void OnDetailsClick() {
-        ((Navigator) getActivity()).navigateToArtistFullDetailsScreen(mMbid);
+        ((Navigator) getActivity()).navigateToArtistFullDetailsScreen(mbid);
     }
 
 
@@ -126,7 +126,7 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
 
     @Override
     public void onPageSelected(int position) {
-        mAdapter.getItem(position).updateToolbar();
+        adapter.getItem(position).updateToolbar();
     }
 
     @Override
@@ -136,10 +136,10 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
 
     @Override
     public void showArtistIsFavorite(boolean isFavorite) {
-        this.mIsFavorite = isFavorite;
+        this.isFavorite = isFavorite;
         if (isFavorite) {
-            mIvAddToFavorite.setImageResource(R.drawable.ic_star_white_48dp);
-        } else mIvAddToFavorite.setImageResource(R.drawable.ic_star_outline_white_48dp);
+            ivAddToFavorite.setImageResource(R.drawable.ic_star_white_48dp);
+        } else ivAddToFavorite.setImageResource(R.drawable.ic_star_outline_white_48dp);
     }
 
     @Override
@@ -154,10 +154,10 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
 
     @OnClick(R.id.iv_add_to_favorite)
     public void onAddToFavoriteClick() {
-        if (mIsFavorite) {
-            mPresenter.deleteFromFavorite(artistEntity);
+        if (isFavorite) {
+            presenter.deleteFromFavorite(artistEntity);
         } else {
-            mPresenter.addArtistToFavorite(artistEntity);
+            presenter.addArtistToFavorite(artistEntity);
         }
     }
 

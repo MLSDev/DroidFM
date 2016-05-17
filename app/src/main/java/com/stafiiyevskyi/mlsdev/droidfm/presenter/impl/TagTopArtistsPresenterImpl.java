@@ -21,19 +21,19 @@ import rx.Subscription;
  */
 public class TagTopArtistsPresenterImpl extends BasePresenter implements TagTopArtistsPresenter {
 
-    private TagModel mTagModel;
-    private ArtistModel mArtistModel;
-    private TagTopArtistScreenView mView;
+    private TagModel tagModel;
+    private ArtistModel artistModel;
+    private TagTopArtistScreenView view;
 
-    public TagTopArtistsPresenterImpl(TagTopArtistScreenView mView) {
-        this.mView = mView;
-        this.mTagModel = new TagModelImpl();
-        this.mArtistModel = new ArtistModelImpl();
+    public TagTopArtistsPresenterImpl(TagTopArtistScreenView view) {
+        this.view = view;
+        this.tagModel = new TagModelImpl();
+        this.artistModel = new ArtistModelImpl();
     }
 
     @Override
     public void getTopArtists(String tag, int pageNumber) {
-        Subscription subscription = mTagModel.getTagsTopArtists(tag, pageNumber)
+        Subscription subscription = tagModel.getTagsTopArtists(tag, pageNumber)
                 .map(new TagsTopArtistListMapper())
                 .subscribe(new Observer<List<ArtistEntity>>() {
                     @Override
@@ -43,12 +43,12 @@ public class TagTopArtistsPresenterImpl extends BasePresenter implements TagTopA
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<ArtistEntity> artistEntities) {
-                        mView.showTopArtist(artistEntities);
+                        view.showTopArtist(artistEntities);
                     }
                 });
         addSubscription(subscription);
@@ -56,7 +56,7 @@ public class TagTopArtistsPresenterImpl extends BasePresenter implements TagTopA
 
     @Override
     public void searchArtist(String artistName, int pageNumber) {
-        Subscription subscription = mArtistModel.searchArtistByName(artistName, pageNumber)
+        Subscription subscription = artistModel.searchArtistByName(artistName, pageNumber)
                 .map(new SearchArtistMapper())
                 .subscribe(new Observer<List<ArtistEntity>>() {
                     @Override
@@ -66,12 +66,12 @@ public class TagTopArtistsPresenterImpl extends BasePresenter implements TagTopA
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<ArtistEntity> artistEntities) {
-                        mView.showTopArtist(artistEntities);
+                        view.showTopArtist(artistEntities);
                     }
                 });
         addSubscription(subscription);

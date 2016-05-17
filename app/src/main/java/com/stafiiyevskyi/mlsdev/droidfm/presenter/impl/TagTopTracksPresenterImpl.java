@@ -21,19 +21,19 @@ import rx.Subscription;
  */
 public class TagTopTracksPresenterImpl extends BasePresenter implements TagTopTracksPresenter {
 
-    private TagTopTracksScreenView mView;
-    private TagModel mTagModel;
-    private TrackModel mTrackModel;
+    private TagTopTracksScreenView view;
+    private TagModel tagModel;
+    private TrackModel trackModel;
 
-    public TagTopTracksPresenterImpl(TagTopTracksScreenView mView) {
-        this.mView = mView;
-        this.mTagModel = new TagModelImpl();
-        this.mTrackModel = new TrackModelImpl();
+    public TagTopTracksPresenterImpl(TagTopTracksScreenView view) {
+        this.view = view;
+        this.tagModel = new TagModelImpl();
+        this.trackModel = new TrackModelImpl();
     }
 
     @Override
     public void getTopTracks(String tag, int pageNumber) {
-        Subscription subscription = mTagModel.getTagsTopTracks(tag, pageNumber)
+        Subscription subscription = tagModel.getTagsTopTracks(tag, pageNumber)
                 .map(new TagsTopTrackListMapper())
                 .subscribe(new Observer<List<TopTrackEntity>>() {
                     @Override
@@ -43,12 +43,12 @@ public class TagTopTracksPresenterImpl extends BasePresenter implements TagTopTr
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<TopTrackEntity> trackEntities) {
-                        mView.showTopArtists(trackEntities);
+                        view.showTopArtists(trackEntities);
                     }
                 });
         addSubscription(subscription);
@@ -56,7 +56,7 @@ public class TagTopTracksPresenterImpl extends BasePresenter implements TagTopTr
 
     @Override
     public void searchTracks(String trackName, int pageNumber) {
-        Subscription subscription = mTrackModel.searchTrack("", trackName, pageNumber)
+        Subscription subscription = trackModel.searchTrack("", trackName, pageNumber)
                 .map(new SearchTracksListMapper())
                 .subscribe(new Observer<List<TopTrackEntity>>() {
                     @Override
@@ -66,12 +66,12 @@ public class TagTopTracksPresenterImpl extends BasePresenter implements TagTopTr
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<TopTrackEntity> topTrackEntities) {
-                        mView.showTopArtists(topTrackEntities);
+                        view.showTopArtists(topTrackEntities);
                     }
                 });
         addSubscription(subscription);

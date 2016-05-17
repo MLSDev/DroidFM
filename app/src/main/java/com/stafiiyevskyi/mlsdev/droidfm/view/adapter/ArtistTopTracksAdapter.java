@@ -22,35 +22,35 @@ public class ArtistTopTracksAdapter extends RecyclerView.Adapter<ArtistTopTracks
     private static final int ANIMATED_ITEMS_COUNT = 10;
     private int lastAnimatedPosition = -1;
 
-    private List<TopTrackEntity> mData = new ArrayList<>();
-    private OnTopTrackClickListener mListener;
-    private Context mContext;
+    private List<TopTrackEntity> data = new ArrayList<>();
+    private OnTopTrackClickListener listener;
+    private Context context;
 
-    public ArtistTopTracksAdapter(OnTopTrackClickListener mListener) {
-        this.mListener = mListener;
+    public ArtistTopTracksAdapter(OnTopTrackClickListener listener) {
+        this.listener = listener;
     }
 
     public void setData(List<TopTrackEntity> data) {
-        this.mData = data;
+        this.data = data;
         notifyDataSetChanged();
     }
 
     public void addData(List<TopTrackEntity> data) {
-        this.mData.addAll(data);
+        this.data.addAll(data);
         notifyDataSetChanged();
     }
 
     @Override
     public TopTrackVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (mContext == null) mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_top_track_artist, parent, false);
+        if (context == null) context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.item_top_track_artist, parent, false);
         return new TopTrackVH(view);
     }
 
     @Override
     public void onBindViewHolder(TopTrackVH holder, int position) {
         runEnterAnimation(holder.itemView, position);
-        TopTrackEntity entity = mData.get(position);
+        TopTrackEntity entity = data.get(position);
         holder.bindTrackName(entity.getName());
     }
 
@@ -61,7 +61,7 @@ public class ArtistTopTracksAdapter extends RecyclerView.Adapter<ArtistTopTracks
 
         if (position > lastAnimatedPosition) {
             lastAnimatedPosition = position;
-            view.setTranslationY(AnimationUtil.getScreenHeight(mContext));
+            view.setTranslationY(AnimationUtil.getScreenHeight(context));
             view.animate()
                     .translationY(0)
                     .setInterpolator(new DecelerateInterpolator(3.f))
@@ -72,7 +72,7 @@ public class ArtistTopTracksAdapter extends RecyclerView.Adapter<ArtistTopTracks
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return data.size();
     }
 
     public interface OnTopTrackClickListener {
@@ -86,7 +86,7 @@ public class ArtistTopTracksAdapter extends RecyclerView.Adapter<ArtistTopTracks
         public TopTrackVH(View itemView) {
             super(itemView);
             mTvTopTrackName = (AppCompatTextView) itemView.findViewById(R.id.tv_track_name);
-            itemView.setOnClickListener(view -> mListener.onTopTrackClick(mData.get(getAdapterPosition())));
+            itemView.setOnClickListener(view -> listener.onTopTrackClick(data.get(getAdapterPosition())));
         }
 
         public void bindTrackName(String trackName) {

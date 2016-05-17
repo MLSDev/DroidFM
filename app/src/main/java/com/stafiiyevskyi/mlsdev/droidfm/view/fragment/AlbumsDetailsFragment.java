@@ -42,35 +42,35 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     private static final String ALBUM_IMAGE_BUNDLE_KEY = "album_image_bundle_key_albums_detail_fragment";
 
     @Bind(R.id.tv_album_name)
-    AppCompatTextView mTvAlbumName;
+    AppCompatTextView tvAlbumName;
     @Bind(R.id.tv_artist_name)
-    AppCompatTextView mTvAlbumArtistName;
+    AppCompatTextView tvAlbumArtistName;
     @Bind(R.id.tv_album_content)
-    AppCompatTextView mTvAlbumContent;
+    AppCompatTextView tvAlbumContent;
     @Bind(R.id.tv_album_published)
-    AppCompatTextView mTvAlbumPublished;
+    AppCompatTextView tvAlbumPublished;
     @Bind(R.id.rv_tracks)
-    RecyclerView mRvTracks;
+    RecyclerView rvTracks;
     @Bind(R.id.pb_progress)
-    ProgressBar mPbProgress;
+    ProgressBar pbProgress;
     @Bind(R.id.iv_play_album)
-    AppCompatImageView mIvPlayAlbum;
+    AppCompatImageView ivPlayAlbum;
     @Bind(R.id.iv_add_to_favorite)
-    AppCompatImageView mIvAddToFavorite;
+    AppCompatImageView ivAddToFavorite;
     @Bind(R.id.srl_refresh)
-    SwipeRefreshLayout mSrlRefresh;
+    SwipeRefreshLayout srlRefresh;
 
-    private AlbumsDetailScreenPresenter mPresenter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private AlbumsTracksAdapter mAdapter;
-    private AlbumsDetailEntity mAlbumsDetailEntity;
+    private AlbumsDetailScreenPresenter presenter;
+    private RecyclerView.LayoutManager layoutManager;
+    private AlbumsTracksAdapter adapter;
+    private AlbumsDetailEntity albumsDetailEntity;
 
-    private String mMbid;
-    private String mArtist;
-    private String mAlbum;
-    private String mAlbumImage;
+    private String mbid;
+    private String artist;
+    private String album;
+    private String albumImage;
 
-    private boolean mIsFavorite = false;
+    private boolean isFavorite = false;
 
 
     public static AlbumsDetailsFragment newInstance(String artist, String album, String mbid, String albumImage) {
@@ -96,21 +96,21 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle arg = getArguments();
-        mArtist = arg.getString(ARTIST_BUNDLE_KEY);
-        mAlbum = arg.getString(ALBUM_BUNDLE_KEY);
-        mMbid = arg.getString(MBID_BUNDLE_KEY);
-        mAlbumImage = arg.getString(ALBUM_IMAGE_BUNDLE_KEY);
+        artist = arg.getString(ARTIST_BUNDLE_KEY);
+        album = arg.getString(ALBUM_BUNDLE_KEY);
+        mbid = arg.getString(MBID_BUNDLE_KEY);
+        albumImage = arg.getString(ALBUM_IMAGE_BUNDLE_KEY);
         setupRvTracks();
         setupSwipeRefresh();
-        mPresenter = new AlbumsDetailScreenPresenterImpl(this);
-        mPresenter.getAlbumsDetails(mArtist, mAlbum, mMbid);
+        presenter = new AlbumsDetailScreenPresenterImpl(this);
+        presenter.getAlbumsDetails(artist, album, mbid);
         ((Navigator) getActivity()).setDrawerToggleNotEnabled();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stop();
+        presenter.stop();
     }
 
     @Override
@@ -120,14 +120,14 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     }
 
     private void setupRvTracks() {
-        mAdapter = new AlbumsTracksAdapter(this);
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mRvTracks.setAdapter(mAdapter);
-        mRvTracks.setLayoutManager(mLayoutManager);
+        adapter = new AlbumsTracksAdapter(this);
+        layoutManager = new LinearLayoutManager(getActivity());
+        rvTracks.setAdapter(adapter);
+        rvTracks.setLayoutManager(layoutManager);
     }
 
     private void setupSwipeRefresh() {
-        mSrlRefresh.setOnRefreshListener(this);
+        srlRefresh.setOnRefreshListener(this);
     }
 
     @Override
@@ -142,27 +142,27 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
     @Override
     public void showAlbumsDetails(AlbumsDetailEntity album) {
-        mSrlRefresh.setRefreshing(false);
-        mAlbumsDetailEntity = album;
-        mPbProgress.setVisibility(View.GONE);
-        mTvAlbumArtistName.setText(album.getArtistName());
+        srlRefresh.setRefreshing(false);
+        albumsDetailEntity = album;
+        pbProgress.setVisibility(View.GONE);
+        tvAlbumArtistName.setText(album.getArtistName());
         if (album.getContent() != null) {
-            mTvAlbumPublished.setText(album.getPublished());
-            mTvAlbumContent.setMovementMethod(LinkMovementMethod.getInstance());
-            mTvAlbumContent.setText(Html.fromHtml(album.getContent()));
+            tvAlbumPublished.setText(album.getPublished());
+            tvAlbumContent.setMovementMethod(LinkMovementMethod.getInstance());
+            tvAlbumContent.setText(Html.fromHtml(album.getContent()));
         }
 
-        mTvAlbumName.setText(album.getName());
-        mAdapter.setData(album.getTracks());
-        mPresenter.isTrackFavorite(mAlbumsDetailEntity);
+        tvAlbumName.setText(album.getName());
+        adapter.setData(album.getTracks());
+        presenter.isTrackFavorite(albumsDetailEntity);
     }
 
     @Override
     public void showAlbumIsFavorite(boolean isFavorite) {
-        this.mIsFavorite = isFavorite;
+        this.isFavorite = isFavorite;
         if (isFavorite) {
-            mIvAddToFavorite.setImageResource(R.drawable.ic_star_grey600_36dp);
-        } else mIvAddToFavorite.setImageResource(R.drawable.ic_star_outline_grey600_36dp);
+            ivAddToFavorite.setImageResource(R.drawable.ic_star_grey600_36dp);
+        } else ivAddToFavorite.setImageResource(R.drawable.ic_star_outline_grey600_36dp);
     }
 
     @Override
@@ -173,10 +173,10 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
     @Override
     public void showError(String errorMessage) {
-        mSrlRefresh.setRefreshing(false);
-        mPbProgress.setVisibility(View.GONE);
+        srlRefresh.setRefreshing(false);
+        pbProgress.setVisibility(View.GONE);
         Log.e("AlbumsDetail", errorMessage);
-        Snackbar.make(mRvTracks, errorMessage, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(rvTracks, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -186,10 +186,10 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
     @OnClick(R.id.iv_play_album)
     public void onPlayAlbumClick() {
-        if (mAlbumsDetailEntity != null && mAlbumsDetailEntity.getTracks() != null && mAlbumsDetailEntity.getTracks().size() > 0) {
+        if (albumsDetailEntity != null && albumsDetailEntity.getTracks() != null && albumsDetailEntity.getTracks().size() > 0) {
             EventPlaylistStart event = new EventPlaylistStart();
-            event.setData(mAlbumsDetailEntity.getTracks());
-            event.setAlbumImageUrl(mAlbumImage);
+            event.setData(albumsDetailEntity.getTracks());
+            event.setAlbumImageUrl(albumImage);
             EventBus.getDefault().post(event);
         }
 
@@ -197,11 +197,11 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
     @OnClick(R.id.iv_add_to_favorite)
     public void onAddToFavoriteClick() {
-        if (mAlbumsDetailEntity != null) {
-            if (mIsFavorite) {
-                mPresenter.deleteFromFavorite(mAlbumsDetailEntity);
+        if (albumsDetailEntity != null) {
+            if (isFavorite) {
+                presenter.deleteFromFavorite(albumsDetailEntity);
             } else {
-                mPresenter.addAlbumToFavorite(mAlbumsDetailEntity);
+                presenter.addAlbumToFavorite(albumsDetailEntity);
             }
         }
 
@@ -209,6 +209,6 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
 
     @Override
     public void onRefresh() {
-        mPresenter.getAlbumsDetails(mArtist, mAlbum, mMbid);
+        presenter.getAlbumsDetails(artist, album, mbid);
     }
 }

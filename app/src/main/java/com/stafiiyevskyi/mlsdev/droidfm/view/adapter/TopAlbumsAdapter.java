@@ -22,8 +22,6 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.processor.Utils;
-
 /**
  * Created by oleksandr on 22.04.16.
  */
@@ -32,30 +30,30 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.TopA
     private static final int ANIMATED_ITEMS_COUNT = 10;
     private int lastAnimatedPosition = -1;
 
-    private List<AlbumEntity> mData = new ArrayList<>();
-    private OnAlbumClickListener mListener;
-    private Context mContext;
+    private List<AlbumEntity> data = new ArrayList<>();
+    private OnAlbumClickListener listener;
+    private Context context;
 
     public TopAlbumsAdapter(OnAlbumClickListener mListener) {
-        this.mListener = mListener;
+        this.listener = mListener;
     }
 
     public void addData(List<AlbumEntity> data) {
-        this.mData.addAll(data);
+        this.data.addAll(data);
         notifyDataSetChanged();
     }
 
     @Override
     public TopAlbumsVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (mContext == null) mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_album, parent, false);
+        if (context == null) context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.item_album, parent, false);
         return new TopAlbumsVH(view);
     }
 
     @Override
     public void onBindViewHolder(TopAlbumsVH holder, int position) {
         runEnterAnimation(holder.itemView, position);
-        AlbumEntity albumEntity = mData.get(position);
+        AlbumEntity albumEntity = data.get(position);
         String imageUrl = "";
         for (ImageEntity imageEntity : albumEntity.getImage()) {
             if (imageEntity.getSize().equalsIgnoreCase("large")) {
@@ -75,7 +73,7 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.TopA
 
         if (position > lastAnimatedPosition) {
             lastAnimatedPosition = position;
-            view.setTranslationY(AnimationUtil.getScreenHeight(mContext));
+            view.setTranslationY(AnimationUtil.getScreenHeight(context));
             view.animate()
                     .translationY(0)
                     .setInterpolator(new DecelerateInterpolator(3.f))
@@ -86,7 +84,7 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.TopA
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return data.size();
     }
 
     public interface OnAlbumClickListener {
@@ -106,7 +104,7 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.TopA
             mTvAlbumName = (AppCompatTextView) itemView.findViewById(R.id.tv_album_name);
             mTvArtistName = (AppCompatTextView) itemView.findViewById(R.id.tv_artist_name);
             mFlProgress = (FrameLayout) itemView.findViewById(R.id.fl_progress);
-            itemView.setOnClickListener(view -> mListener.onAlbumClick(mData.get(getAdapterPosition())));
+            itemView.setOnClickListener(view -> listener.onAlbumClick(data.get(getAdapterPosition())));
         }
 
         public void bindAlbumName(String albumName) {
@@ -118,7 +116,7 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.TopA
         }
 
         public void bindAlbumIcon(String url) {
-            Glide.with(mContext)
+            Glide.with(context)
                     .load(url)
                     .centerCrop()
                     .listener(new RequestListener<String, GlideDrawable>() {

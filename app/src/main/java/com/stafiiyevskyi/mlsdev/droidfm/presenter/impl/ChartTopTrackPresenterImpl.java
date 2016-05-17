@@ -21,19 +21,19 @@ import rx.Subscription;
  */
 public class ChartTopTrackPresenterImpl extends BasePresenter implements ChartTopTracksScreenPresenter {
 
-    private ChartTopTracksScreenView mView;
-    private TopChartModel mTopChartModel;
-    private TrackModel mTrackModel;
+    private ChartTopTracksScreenView view;
+    private TopChartModel topChartModel;
+    private TrackModel trackModel;
 
-    public ChartTopTrackPresenterImpl(ChartTopTracksScreenView mView) {
-        this.mView = mView;
-        mTopChartModel = new TopChartModelImpl();
-        mTrackModel = new TrackModelImpl();
+    public ChartTopTrackPresenterImpl(ChartTopTracksScreenView view) {
+        this.view = view;
+        topChartModel = new TopChartModelImpl();
+        trackModel = new TrackModelImpl();
     }
 
     @Override
     public void getChartTopTracks(int pageNumber) {
-        Subscription subscription = mTopChartModel.getTopChartTracks(pageNumber)
+        Subscription subscription = topChartModel.getTopChartTracks(pageNumber)
                 .map(new ChartTopTrackListMapper())
                 .subscribe(new Observer<List<TopTrackEntity>>() {
                     @Override
@@ -43,12 +43,12 @@ public class ChartTopTrackPresenterImpl extends BasePresenter implements ChartTo
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<TopTrackEntity> trackEntities) {
-                        mView.showChartTopTracks(trackEntities);
+                        view.showChartTopTracks(trackEntities);
                     }
                 });
         addSubscription(subscription);
@@ -56,7 +56,7 @@ public class ChartTopTrackPresenterImpl extends BasePresenter implements ChartTo
 
     @Override
     public void searchTracks(String track, int page) {
-        Subscription subscription = mTrackModel.searchTrack("", track, page)
+        Subscription subscription = trackModel.searchTrack("", track, page)
                 .map(new SearchTracksListMapper())
                 .subscribe(new Observer<List<TopTrackEntity>>() {
                     @Override
@@ -66,12 +66,12 @@ public class ChartTopTrackPresenterImpl extends BasePresenter implements ChartTo
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<TopTrackEntity> trackEntities) {
-                        mView.showChartTopTracks(trackEntities);
+                        view.showChartTopTracks(trackEntities);
                     }
                 });
         addSubscription(subscription);

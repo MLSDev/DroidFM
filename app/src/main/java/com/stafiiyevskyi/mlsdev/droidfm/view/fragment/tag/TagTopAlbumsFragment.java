@@ -32,24 +32,24 @@ public class TagTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapt
     private static final String TAG_BUNDLE_KEY = "tag_bundle_key_tag_top_albums_fragment";
 
     @Bind(R.id.rv_topalbums)
-    RecyclerView mRvAlbums;
+    RecyclerView rvAlbums;
     @Bind(R.id.pb_progress)
-    ProgressBar mPbProgress;
+    ProgressBar pbProgress;
     @Bind(R.id.srl_refresh)
-    SwipeRefreshLayout mSrlRefresh;
+    SwipeRefreshLayout srlRefresh;
 
-    private RecyclerView.LayoutManager mLayoutManager;
-    private TopAlbumsAdapter mAdapter;
-    private TagTopAlbumsPresenter mPresenter;
-
-
-    private boolean mIsLoading = true;
-    private int mCurrentPageNumber = 1;
-    private int mVisibleItemCount, mTotalItemCount;
-    private int mLastVisibleItemPosition;
+    private RecyclerView.LayoutManager layoutManager;
+    private TopAlbumsAdapter adapter;
+    private TagTopAlbumsPresenter presenter;
 
 
-    private String mTag;
+    private boolean isLoading = true;
+    private int currentPageNumber = 1;
+    private int visibleItemCount, totalItemCount;
+    private int lastVisibleItemPosition;
+
+
+    private String tag;
 
     private RecyclerView.OnScrollListener mRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -60,17 +60,17 @@ public class TagTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapt
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            mVisibleItemCount = mLayoutManager.getChildCount();
-            mTotalItemCount = mAdapter.getItemCount();
-            mLastVisibleItemPosition = ((GridLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+            visibleItemCount = layoutManager.getChildCount();
+            totalItemCount = adapter.getItemCount();
+            lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
 
-            if (!mIsLoading) {
-                if ((mVisibleItemCount + mLastVisibleItemPosition) >= mTotalItemCount
-                        && mLastVisibleItemPosition >= 0) {
-                    mIsLoading = true;
-                    mCurrentPageNumber = ++mCurrentPageNumber;
-                    mPbProgress.setVisibility(View.VISIBLE);
-                    mPresenter.getTopAlbums(mTag, mCurrentPageNumber);
+            if (!isLoading) {
+                if ((visibleItemCount + lastVisibleItemPosition) >= totalItemCount
+                        && lastVisibleItemPosition >= 0) {
+                    isLoading = true;
+                    currentPageNumber = ++currentPageNumber;
+                    pbProgress.setVisibility(View.VISIBLE);
+                    presenter.getTopAlbums(tag, currentPageNumber);
                 }
             }
         }
@@ -88,10 +88,10 @@ public class TagTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapt
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
-        mSrlRefresh.setOnRefreshListener(this);
-        mTag = getArguments().getString(TAG_BUNDLE_KEY);
-        mPresenter = new TagTopAlbumsPresenterImpl(this);
-        mPresenter.getTopAlbums(mTag, mCurrentPageNumber);
+        srlRefresh.setOnRefreshListener(this);
+        tag = getArguments().getString(TAG_BUNDLE_KEY);
+        presenter = new TagTopAlbumsPresenterImpl(this);
+        presenter.getTopAlbums(tag, currentPageNumber);
         setupRvTracks();
     }
 
@@ -104,15 +104,15 @@ public class TagTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapt
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stop();
+        presenter.stop();
     }
 
     private void setupRvTracks() {
-        mLayoutManager = new GridLayoutManager(getActivity(), 2);
-        mAdapter = new TopAlbumsAdapter(this);
-        mRvAlbums.setLayoutManager(mLayoutManager);
-        mRvAlbums.setAdapter(mAdapter);
-        mRvAlbums.addOnScrollListener(mRecyclerViewOnScrollListener);
+        layoutManager = new GridLayoutManager(getActivity(), 2);
+        adapter = new TopAlbumsAdapter(this);
+        rvAlbums.setLayoutManager(layoutManager);
+        rvAlbums.setAdapter(adapter);
+        rvAlbums.addOnScrollListener(mRecyclerViewOnScrollListener);
     }
 
     @Override
@@ -132,20 +132,20 @@ public class TagTopAlbumsFragment extends BaseFragment implements TopAlbumsAdapt
 
     @Override
     public void showError(String errorMessage) {
-        mSrlRefresh.setRefreshing(false);
-        Snackbar.make(mRvAlbums, errorMessage, Snackbar.LENGTH_LONG).show();
+        srlRefresh.setRefreshing(false);
+        Snackbar.make(rvAlbums, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void showTopAlbums(List<AlbumEntity> albumEntities) {
-        mPbProgress.setVisibility(View.GONE);
-        mSrlRefresh.setRefreshing(false);
-        mAdapter.addData(albumEntities);
-        mIsLoading = false;
+        pbProgress.setVisibility(View.GONE);
+        srlRefresh.setRefreshing(false);
+        adapter.addData(albumEntities);
+        isLoading = false;
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.getTopAlbums(mTag, mCurrentPageNumber);
+        presenter.getTopAlbums(tag, currentPageNumber);
     }
 }

@@ -18,17 +18,17 @@ import rx.Subscription;
  */
 public class ArtistTopAlbumsScreenPresenterImpl extends BasePresenter implements ArtistTopAlbumsPresenter {
 
-    private ArtistModel mModel;
-    private ArtistTopAlbumsScreenView mView;
+    private ArtistModel model;
+    private ArtistTopAlbumsScreenView view;
 
     public ArtistTopAlbumsScreenPresenterImpl(ArtistTopAlbumsScreenView mView) {
-        this.mView = mView;
-        mModel = new ArtistModelImpl();
+        this.view = mView;
+        model = new ArtistModelImpl();
     }
 
     @Override
     public void getArtistTopAlbums(String artistName, String artistMbid, int page) {
-        Subscription subscription = mModel.getArtistTopAlbums(artistName, artistMbid, page)
+        Subscription subscription = model.getArtistTopAlbums(artistName, artistMbid, page)
                 .map(new TopAlbumsListMapper())
                 .subscribe(new Observer<List<AlbumEntity>>() {
                     @Override
@@ -38,12 +38,12 @@ public class ArtistTopAlbumsScreenPresenterImpl extends BasePresenter implements
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<AlbumEntity> albumEntities) {
-                        mView.showArtistTopAlbums(albumEntities);
+                        view.showArtistTopAlbums(albumEntities);
                     }
                 });
         addSubscription(subscription);

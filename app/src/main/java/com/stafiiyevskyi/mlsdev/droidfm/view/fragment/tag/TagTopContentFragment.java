@@ -27,13 +27,13 @@ public class TagTopContentFragment extends BaseFragment implements ViewPager.OnP
     private static final String TAG_BUNDLE_KEY = "tag_bundle_key_tag_top_content_fragment";
 
     @Bind(R.id.vp_content)
-    ViewPager mVpTabContent;
+    ViewPager vpTabContent;
     @Bind(R.id.tabs)
-    TabLayout mTlTabs;
+    TabLayout tlTabs;
 
-    private String mTag;
+    private String tag;
 
-    private FragmentViewPagerAdapter mAdapter;
+    private FragmentViewPagerAdapter adapter;
 
     public static BaseFragment newInstance(@NonNull String tag) {
         Bundle args = new Bundle();
@@ -47,8 +47,8 @@ public class TagTopContentFragment extends BaseFragment implements ViewPager.OnP
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle args = getArguments();
-        mTag = args.getString(TAG_BUNDLE_KEY);
-        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(mTag);
+        tag = args.getString(TAG_BUNDLE_KEY);
+        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(tag);
         setupViewPager();
         ((Navigator) getActivity()).setDrawerToggleNotEnabled();
     }
@@ -60,13 +60,13 @@ public class TagTopContentFragment extends BaseFragment implements ViewPager.OnP
 
 
     private void setupViewPager() {
-        mAdapter = new FragmentViewPagerAdapter(getChildFragmentManager());
-        mAdapter.addFragment(TagTopAlbumsFragment.newInstance(mTag), getActivity().getString(R.string.tab_title_top_albums));
-        mAdapter.addFragment(TagTopArtistsFragment.newInstance(mTag), getActivity().getString(R.string.tab_title_top_artists));
-        mAdapter.addFragment(TagTopTracksFragment.newInstance(mTag), getActivity().getString(R.string.tab_title_top_tracks));
-        mVpTabContent.setAdapter(mAdapter);
-        mVpTabContent.addOnPageChangeListener(this);
-        mTlTabs.setupWithViewPager(mVpTabContent);
+        adapter = new FragmentViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(TagTopAlbumsFragment.newInstance(tag), getActivity().getString(R.string.tab_title_top_albums));
+        adapter.addFragment(TagTopArtistsFragment.newInstance(tag), getActivity().getString(R.string.tab_title_top_artists));
+        adapter.addFragment(TagTopTracksFragment.newInstance(tag), getActivity().getString(R.string.tab_title_top_tracks));
+        vpTabContent.setAdapter(adapter);
+        vpTabContent.addOnPageChangeListener(this);
+        tlTabs.setupWithViewPager(vpTabContent);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class TagTopContentFragment extends BaseFragment implements ViewPager.OnP
 
     @Override
     public void onPageSelected(int position) {
-        mAdapter.getItem(position).updateToolbar();
+        adapter.getItem(position).updateToolbar();
     }
 
     @Override

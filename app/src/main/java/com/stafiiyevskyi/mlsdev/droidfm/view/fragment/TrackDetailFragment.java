@@ -51,40 +51,40 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     private static final String TRACK_BUNDLE_KEY = "track_bundle_key_track_detail_fragment";
 
     @Bind(R.id.tv_track_name)
-    AppCompatTextView mTvTrackName;
+    AppCompatTextView tvTrackName;
     @Bind(R.id.tv_track_duration)
-    AppCompatTextView mTvTrackDuration;
+    AppCompatTextView tvTrackDuration;
     @Bind(R.id.tv_artist_name)
-    AppCompatTextView mTvArtistName;
+    AppCompatTextView tvArtistName;
     @Bind(R.id.tv_track_content)
-    AppCompatTextView mTvTrackContent;
+    AppCompatTextView tvTrackContent;
     @Bind(R.id.tv_track_published)
-    AppCompatTextView mTvTrackPublished;
+    AppCompatTextView tvTrackPublished;
     @Bind(R.id.tv_track_tags)
-    AppCompatTextView mTvTrackTags;
+    AppCompatTextView tvTrackTags;
     @Bind(R.id.pb_progress)
-    ProgressBar mPbProgress;
+    ProgressBar pbProgress;
     @Bind(R.id.iv_play_pause)
-    AppCompatImageView mIvPlayPause;
+    AppCompatImageView ivPlayPause;
     @Bind(R.id.nested_scroll)
-    ScrollView mNsScrollContainer;
+    ScrollView nsScrollContainer;
     @Bind(R.id.iv_add_to_favorite)
-    AppCompatImageView mIvAddToFavorite;
+    AppCompatImageView ivAddToFavorite;
     @Bind(R.id.srl_refresh)
-    SwipeRefreshLayout mSrlRefresh;
+    SwipeRefreshLayout srlRefresh;
     @Bind(R.id.iv_save_track)
-    AppCompatImageView mIvSaveTrack;
+    AppCompatImageView ivSaveTrack;
 
-    private TrackDetailScreenPresenter mPresenter;
+    private TrackDetailScreenPresenter presenter;
 
-    private String mBid;
-    private String mArtist;
-    private String mTrack;
-    private String mTrackUrl;
-    private String mAlbumImage;
-    private boolean mIsFavorite = false;
+    private String mbid;
+    private String artist;
+    private String track;
+    private String trackUrl;
+    private String albumImage;
+    private boolean isFavorite = false;
 
-    private TrackDetailEntity mDetailEntity;
+    private TrackDetailEntity detailEntity;
 
     public static TrackDetailFragment newInstance(String artist, String track, String mbid) {
 
@@ -115,22 +115,22 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((Navigator) getActivity()).setDrawerToggleNotEnabled();
-        mSrlRefresh.setOnRefreshListener(this);
+        srlRefresh.setOnRefreshListener(this);
         Bundle args = getArguments();
-        mBid = args.getString(MBID_BUNDLE_KEY);
-        mTrack = args.getString(TRACK_BUNDLE_KEY);
-        mArtist = args.getString(ARTIST_BUNDLE_KEY);
-        mPresenter = new TrackDetailScreenPresenterImpl(this);
-        mPresenter.getTrackDetails(mArtist, mTrack, mBid);
-        mPresenter.getTrackStreamUrl(mArtist + " - " + mTrack);
-        mTvArtistName.setText(mArtist);
-        mTvTrackName.setText(mTrack);
+        mbid = args.getString(MBID_BUNDLE_KEY);
+        track = args.getString(TRACK_BUNDLE_KEY);
+        artist = args.getString(ARTIST_BUNDLE_KEY);
+        presenter = new TrackDetailScreenPresenterImpl(this);
+        presenter.getTrackDetails(artist, track, mbid);
+        presenter.getTrackStreamUrl(artist + " - " + track);
+        tvArtistName.setText(artist);
+        tvTrackName.setText(track);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stop();
+        presenter.stop();
         EventBus.getDefault().unregister(this);
     }
 
@@ -146,19 +146,19 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
 
     @Override
     public void showTrackDetail(TrackDetailEntity track) {
-        mSrlRefresh.setRefreshing(false);
-        mDetailEntity = track;
-        if (mTrackUrl != null) mIvPlayPause.setVisibility(View.VISIBLE);
-        mAlbumImage = track.getAlbumImage();
-        mPbProgress.setVisibility(View.GONE);
-        mTvArtistName.setText(track.getArtistName());
-        mTvTrackName.setText(track.getName());
+        srlRefresh.setRefreshing(false);
+        detailEntity = track;
+        if (trackUrl != null) ivPlayPause.setVisibility(View.VISIBLE);
+        albumImage = track.getAlbumImage();
+        pbProgress.setVisibility(View.GONE);
+        tvArtistName.setText(track.getArtistName());
+        tvTrackName.setText(track.getName());
 
 
         if (track.getContent() != null) {
-            mTvTrackContent.setMovementMethod(LinkMovementMethod.getInstance());
-            mTvTrackContent.setText(Html.fromHtml(track.getContent()));
-            mTvTrackPublished.setText(track.getPublished());
+            tvTrackContent.setMovementMethod(LinkMovementMethod.getInstance());
+            tvTrackContent.setText(Html.fromHtml(track.getContent()));
+            tvTrackPublished.setText(track.getPublished());
         }
 
 
@@ -168,98 +168,98 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
             builder.append(link + ";");
         }
         String tagsString = builder.toString();
-        mTvTrackTags.setMovementMethod(LinkMovementMethod.getInstance());
-        mTvTrackTags.setText(Html.fromHtml(tagsString));
-        mPresenter.isTrackFavorite(track);
+        tvTrackTags.setMovementMethod(LinkMovementMethod.getInstance());
+        tvTrackTags.setText(Html.fromHtml(tagsString));
+        presenter.isTrackFavorite(track);
     }
 
     @Override
     public void showTrackStreamUrl(String url, int trackDuration) {
-        mIvPlayPause.setVisibility(View.VISIBLE);
-        mIvSaveTrack.setVisibility(View.VISIBLE);
-        mTvTrackDuration.setText(String.format(getString(R.string.duration), TimeFormatUtil.getFormattedTimeSecondsToMinutes(trackDuration)));
-        mTrackUrl = url;
-        if (MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack)) {
-            MusicPlayerUtil.setupPlayIconState(mIvPlayPause);
+        ivPlayPause.setVisibility(View.VISIBLE);
+        ivSaveTrack.setVisibility(View.VISIBLE);
+        tvTrackDuration.setText(String.format(getString(R.string.duration), TimeFormatUtil.getFormattedTimeSecondsToMinutes(trackDuration)));
+        trackUrl = url;
+        if (MediaPlayerWrapper.getInstance().isTrackPlaying(track)) {
+            MusicPlayerUtil.setupPlayIconState(ivPlayPause);
         } else {
-            mIvPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
+            ivPlayPause.setImageResource(R.drawable.ic_play_grey600_36dp);
         }
     }
 
     @Override
     public void showTrackIsFavorite(boolean isFavorite) {
-        this.mIsFavorite = isFavorite;
+        this.isFavorite = isFavorite;
         if (isFavorite) {
-            mIvAddToFavorite.setImageResource(R.drawable.ic_star_grey600_36dp);
-        } else mIvAddToFavorite.setImageResource(R.drawable.ic_star_outline_grey600_36dp);
+            ivAddToFavorite.setImageResource(R.drawable.ic_star_grey600_36dp);
+        } else ivAddToFavorite.setImageResource(R.drawable.ic_star_outline_grey600_36dp);
     }
 
     @Override
     public void onSuccess() {
-        mPresenter.isTrackFavorite(mDetailEntity);
+        presenter.isTrackFavorite(detailEntity);
     }
 
     @Override
     public void showError(String errorMessage) {
-        mSrlRefresh.setRefreshing(false);
-        mPbProgress.setVisibility(View.GONE);
-        Snackbar.make(mNsScrollContainer, R.string.not_track_error_message, Snackbar.LENGTH_LONG).show();
+        srlRefresh.setRefreshing(false);
+        pbProgress.setVisibility(View.GONE);
+        Snackbar.make(nsScrollContainer, R.string.not_track_error_message, Snackbar.LENGTH_LONG).show();
     }
 
     @Subscribe
     public void trackStartEvent(TrackPlayerEntity event) {
-        mTrack = event.getmTrackName();
-        mAlbumImage = event.getmAlbumImageUrl();
-        mArtist = event.getmArtistName();
-        mTrackUrl = event.getmTrackUrl();
-        mIvPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
+        track = event.getmTrackName();
+        albumImage = event.getmAlbumImageUrl();
+        artist = event.getmArtistName();
+        trackUrl = event.getmTrackUrl();
+        ivPlayPause.setImageResource(R.drawable.ic_pause_grey600_36dp);
     }
 
     @Subscribe
     public void trackPauseEvent(EventCurrentTrackPause event) {
-        if (MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack))
-            MusicPlayerUtil.setupPlayIconState(mIvPlayPause);
+        if (MediaPlayerWrapper.getInstance().isTrackPlaying(track))
+            MusicPlayerUtil.setupPlayIconState(ivPlayPause);
     }
 
     @OnClick(R.id.iv_play_pause)
     public void onPlayPauseClick() {
         TrackPlayerEntity track = new TrackPlayerEntity();
-        track.setmAlbumImageUrl(mAlbumImage);
-        track.setmTrackName(mTrack);
-        track.setmArtistName(mArtist);
+        track.setmAlbumImageUrl(albumImage);
+        track.setmTrackName(this.track);
+        track.setmArtistName(artist);
         Pair<Boolean, Uri> pair = FileTrackUtil.isTrackExist(getActivity(), track.getmArtistName(), track.getmTrackName());
         if (pair.first) {
             track.setmTrackUrl(pair.second.getPath());
         } else {
-            track.setmTrackUrl(mTrackUrl);
+            track.setmTrackUrl(trackUrl);
         }
-        if (!MediaPlayerWrapper.getInstance().isTrackPlaying(mTrack))
+        if (!MediaPlayerWrapper.getInstance().isTrackPlaying(this.track))
             MediaPlayerWrapper.getInstance().setFromAlbum(false);
 
         MediaPlayerWrapper.getInstance().playTrack(track, false);
-        MusicPlayerUtil.setupPlayIconState(mIvPlayPause);
+        MusicPlayerUtil.setupPlayIconState(ivPlayPause);
     }
 
     @OnClick(R.id.iv_add_to_favorite)
     public void onAddToFavoriteClick() {
         FavoriteTrackEntity track = new FavoriteTrackEntity();
-        track.setTrackName(mTrack);
-        track.setArtistName(mArtist);
-        if (mIsFavorite) {
-            mPresenter.deleteFromFavorite(track);
+        track.setTrackName(this.track);
+        track.setArtistName(artist);
+        if (isFavorite) {
+            presenter.deleteFromFavorite(track);
         } else {
-            mPresenter.addTrackToFavorite(track);
+            presenter.addTrackToFavorite(track);
         }
     }
 
     @OnClick(R.id.iv_save_track)
     public void onSaveTrackClick() {
-        EventBus.getDefault().post(new EventDownloadTrack(mTrackUrl, mDetailEntity));
+        EventBus.getDefault().post(new EventDownloadTrack(trackUrl, detailEntity));
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.getTrackDetails(mArtist, mTrack, mBid);
-        mPresenter.getTrackStreamUrl(mArtist + " - " + mTrack);
+        presenter.getTrackDetails(artist, track, mbid);
+        presenter.getTrackStreamUrl(artist + " - " + track);
     }
 }

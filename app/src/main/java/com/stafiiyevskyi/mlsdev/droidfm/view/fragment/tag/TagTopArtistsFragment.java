@@ -35,27 +35,27 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
     private static final String TAG_BUNDLE_KEY = "tag_bundle_key_tag_top_artists_fragment";
 
     @Bind(R.id.rv_artists)
-    RecyclerView mRvArtists;
+    RecyclerView rvArtists;
     @Bind(R.id.pb_progress)
-    ProgressBar mPbProgress;
+    ProgressBar pbProgress;
     @Bind(R.id.srl_refresh)
-    SwipeRefreshLayout mSrlRefresh;
+    SwipeRefreshLayout srlRefresh;
 
-    private SearchView mSearchView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ArtistsAdapter mAdapter;
-    private TagTopArtistsPresenter mPresenter;
+    private SearchView searchView;
+    private RecyclerView.LayoutManager layoutManager;
+    private ArtistsAdapter adapter;
+    private TagTopArtistsPresenter presenter;
 
-    private boolean mIsLoading = true;
-    private boolean mIsFirstCall = false;
-    private boolean mIsSearchActivate = false;
-    private int mCurrentPageNumber = 1;
-    private int mVisibleItemCount, mTotalItemCount;
-    private int mLastVisibleItemPosition;
-    private String mSearchQuery = "";
+    private boolean isLoading = true;
+    private boolean isFirstCall = false;
+    private boolean isSearchActivate = false;
+    private int currentPageNumber = 1;
+    private int visibleItemCount, totalItemCount;
+    private int lastVisibleItemPosition;
+    private String searchQuery = "";
 
-    private String mTag;
-    private RecyclerView.OnScrollListener mRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+    private String tag;
+    private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
@@ -64,20 +64,20 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            mVisibleItemCount = mLayoutManager.getChildCount();
-            mTotalItemCount = mAdapter.getItemCount();
-            mLastVisibleItemPosition = ((GridLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+            visibleItemCount = layoutManager.getChildCount();
+            totalItemCount = adapter.getItemCount();
+            lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
 
-            if (!mIsLoading) {
-                if ((mVisibleItemCount + mLastVisibleItemPosition) >= mTotalItemCount
-                        && mLastVisibleItemPosition >= 0) {
-                    mIsLoading = true;
-                    mCurrentPageNumber = ++mCurrentPageNumber;
-                    mPbProgress.setVisibility(View.VISIBLE);
-                    if (mIsSearchActivate) {
-                        mPresenter.searchArtist(mSearchQuery, mCurrentPageNumber);
+            if (!isLoading) {
+                if ((visibleItemCount + lastVisibleItemPosition) >= totalItemCount
+                        && lastVisibleItemPosition >= 0) {
+                    isLoading = true;
+                    currentPageNumber = ++currentPageNumber;
+                    pbProgress.setVisibility(View.VISIBLE);
+                    if (isSearchActivate) {
+                        presenter.searchArtist(searchQuery, currentPageNumber);
                     } else {
-                        mPresenter.getTopArtists(mTag, mCurrentPageNumber);
+                        presenter.getTopArtists(tag, currentPageNumber);
                     }
 
                 }
@@ -104,18 +104,18 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupRecycler();
-        mSrlRefresh.setOnRefreshListener(this);
-        mTag = getArguments().getString(TAG_BUNDLE_KEY);
-        mPresenter = new TagTopArtistsPresenterImpl(this);
-        mPresenter.getTopArtists(mTag, mCurrentPageNumber);
+        srlRefresh.setOnRefreshListener(this);
+        tag = getArguments().getString(TAG_BUNDLE_KEY);
+        presenter = new TagTopArtistsPresenterImpl(this);
+        presenter.getTopArtists(tag, currentPageNumber);
     }
 
     private void setupRecycler() {
-        mAdapter = new ArtistsAdapter(this);
-        mLayoutManager = new GridLayoutManager(getActivity(), 2);
-        mRvArtists.setLayoutManager(mLayoutManager);
-        mRvArtists.setAdapter(mAdapter);
-        mRvArtists.addOnScrollListener(mRecyclerViewOnScrollListener);
+        adapter = new ArtistsAdapter(this);
+        layoutManager = new GridLayoutManager(getActivity(), 2);
+        rvArtists.setLayoutManager(layoutManager);
+        rvArtists.setAdapter(adapter);
+        rvArtists.addOnScrollListener(recyclerViewOnScrollListener);
 
     }
 
@@ -125,9 +125,9 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
         if (isVisible()) {
             menu.clear();
             inflater.inflate(R.menu.menu_artists_search_screen, menu);
-            mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-            mSearchView.setOnQueryTextListener(this);
-            mSearchView.setOnCloseListener(this);
+            searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+            searchView.setOnQueryTextListener(this);
+            searchView.setOnCloseListener(this);
         }
 
     }
@@ -135,7 +135,7 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stop();
+        presenter.stop();
     }
 
     @Override
@@ -158,28 +158,28 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
 
     @Override
     public void showError(String errorMessage) {
-        mSrlRefresh.setRefreshing(false);
-        Snackbar.make(mRvArtists, errorMessage, Snackbar.LENGTH_LONG).show();
+        srlRefresh.setRefreshing(false);
+        Snackbar.make(rvArtists, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public boolean onClose() {
-        mIsFirstCall = true;
-        mIsSearchActivate = false;
-        mCurrentPageNumber = 1;
-        mPbProgress.setVisibility(View.VISIBLE);
-        mPresenter.getTopArtists(mTag, mCurrentPageNumber);
+        isFirstCall = true;
+        isSearchActivate = false;
+        currentPageNumber = 1;
+        pbProgress.setVisibility(View.VISIBLE);
+        presenter.getTopArtists(tag, currentPageNumber);
         return false;
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        mPbProgress.setVisibility(View.VISIBLE);
-        mIsFirstCall = true;
-        mIsSearchActivate = true;
-        mCurrentPageNumber = 1;
-        mSearchQuery = query;
-        mPresenter.searchArtist(mSearchQuery, mCurrentPageNumber);
+        pbProgress.setVisibility(View.VISIBLE);
+        isFirstCall = true;
+        isSearchActivate = true;
+        currentPageNumber = 1;
+        searchQuery = query;
+        presenter.searchArtist(searchQuery, currentPageNumber);
         return false;
     }
 
@@ -190,22 +190,22 @@ public class TagTopArtistsFragment extends BaseFragment implements SearchView.On
 
     @Override
     public void showTopArtist(List<ArtistEntity> artistEntities) {
-        mSrlRefresh.setRefreshing(false);
-        mPbProgress.setVisibility(View.GONE);
-        if (mIsFirstCall) {
-            mAdapter.setData(artistEntities);
-            mIsFirstCall = false;
+        srlRefresh.setRefreshing(false);
+        pbProgress.setVisibility(View.GONE);
+        if (isFirstCall) {
+            adapter.setData(artistEntities);
+            isFirstCall = false;
         } else {
-            mAdapter.addData(artistEntities);
-            mIsLoading = false;
+            adapter.addData(artistEntities);
+            isLoading = false;
         }
     }
 
     @Override
     public void onRefresh() {
-        mIsFirstCall = true;
-        mIsSearchActivate = false;
-        mCurrentPageNumber = 1;
-        mPresenter.getTopArtists(mTag, mCurrentPageNumber);
+        isFirstCall = true;
+        isSearchActivate = false;
+        currentPageNumber = 1;
+        presenter.getTopArtists(tag, currentPageNumber);
     }
 }

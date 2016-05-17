@@ -29,17 +29,17 @@ public class ArtistDetailFullFragment extends BaseFragment implements ArtistDeta
 
 
     @Bind(R.id.tv_artist_published)
-    AppCompatTextView mTvArtistPublishedInfo;
+    AppCompatTextView tvArtistPublishedInfo;
     @Bind(R.id.tv_artist_summary)
-    AppCompatTextView mTvArtistSummary;
+    AppCompatTextView tvArtistSummary;
     @Bind(R.id.pb_progress)
-    ProgressBar mPbProgress;
+    ProgressBar pbProgress;
     @Bind(R.id.srl_refresh)
-    SwipeRefreshLayout mSrlRefresh;
+    SwipeRefreshLayout srlRefresh;
 
-    private ArtistDetailScreenPresenter mPresenter;
-    private String mMbid;
-    private String mImageUrl;
+    private ArtistDetailScreenPresenter presenter;
+    private String mbid;
+    private String imageUrl;
 
     public static BaseFragment newInstance(@NonNull String mbid) {
 
@@ -60,9 +60,9 @@ public class ArtistDetailFullFragment extends BaseFragment implements ArtistDeta
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupSwipeRefresh();
-        mMbid = getArguments().getString(MBID_BUNDLE_KEY);
-        mPresenter = new ArtistDetailScreenPresenterImpl(this);
-        mPresenter.getArtistInformation("", mMbid);
+        mbid = getArguments().getString(MBID_BUNDLE_KEY);
+        presenter = new ArtistDetailScreenPresenterImpl(this);
+        presenter.getArtistInformation("", mbid);
     }
 
     @Override
@@ -74,11 +74,11 @@ public class ArtistDetailFullFragment extends BaseFragment implements ArtistDeta
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stop();
+        presenter.stop();
     }
 
     private void setupSwipeRefresh() {
-        mSrlRefresh.setOnRefreshListener(this);
+        srlRefresh.setOnRefreshListener(this);
     }
 
     @Override
@@ -93,21 +93,21 @@ public class ArtistDetailFullFragment extends BaseFragment implements ArtistDeta
 
     @Override
     public void showArtistDetailInformation(ArtistDetailEntity artist) {
-        mSrlRefresh.setRefreshing(false);
-        mPbProgress.setVisibility(View.GONE);
-        mTvArtistPublishedInfo.setText(artist.getPublished());
-        mTvArtistSummary.setMovementMethod(LinkMovementMethod.getInstance());
-        mTvArtistSummary.setText(Html.fromHtml(artist.getSummary()));
+        srlRefresh.setRefreshing(false);
+        pbProgress.setVisibility(View.GONE);
+        tvArtistPublishedInfo.setText(artist.getPublished());
+        tvArtistSummary.setMovementMethod(LinkMovementMethod.getInstance());
+        tvArtistSummary.setText(Html.fromHtml(artist.getSummary()));
     }
 
     @Override
     public void showError(String errorMessage) {
-        mSrlRefresh.setRefreshing(false);
-        Snackbar.make(mTvArtistPublishedInfo, errorMessage, Snackbar.LENGTH_LONG).show();
+        srlRefresh.setRefreshing(false);
+        Snackbar.make(tvArtistPublishedInfo, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.getArtistInformation("", mMbid);
+        presenter.getArtistInformation("", mbid);
     }
 }

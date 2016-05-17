@@ -31,25 +31,25 @@ import butterknife.ButterKnife;
 public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH> {
     private static final int ANIMATED_ITEMS_COUNT = 10;
     private int lastAnimatedPosition = -1;
-    private List<ArtistEntity> mData = new ArrayList<>();
-    private OnArtistClickListener mListener;
-    private Context mContext;
+    private List<ArtistEntity> data = new ArrayList<>();
+    private OnArtistClickListener listener;
+    private Context context;
 
-    public ArtistsAdapter(OnArtistClickListener mListener) {
-        this.mListener = mListener;
+    public ArtistsAdapter(OnArtistClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
     public ArtistVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (mContext == null) mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_artist, parent, false);
+        if (context == null) context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.item_artist, parent, false);
         return new ArtistVH(view);
     }
 
     @Override
     public void onBindViewHolder(ArtistVH holder, int position) {
         runEnterAnimation(holder.itemView, position);
-        ArtistEntity entity = mData.get(position);
+        ArtistEntity entity = data.get(position);
         String imageUrl = "";
         for (ImageEntity imageEntity : entity.getArtistImages()) {
             if (imageEntity.getSize().equalsIgnoreCase("large")) {
@@ -68,7 +68,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
 
         if (position > lastAnimatedPosition) {
             lastAnimatedPosition = position;
-            view.setTranslationY(AnimationUtil.getScreenHeight(mContext));
+            view.setTranslationY(AnimationUtil.getScreenHeight(context));
             view.animate()
                     .translationY(0)
                     .setInterpolator(new DecelerateInterpolator(3.f))
@@ -79,17 +79,17 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return data.size();
     }
 
     public void addData(List<ArtistEntity> data) {
-        this.mData.addAll(data);
+        this.data.addAll(data);
         notifyDataSetChanged();
     }
 
     public void setData(List<ArtistEntity> data) {
-        this.mData.clear();
-        this.mData.addAll(data);
+        this.data.clear();
+        this.data.addAll(data);
         notifyDataSetChanged();
     }
 
@@ -111,7 +111,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
         public ArtistVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(view -> mListener.onArtistClick(mData.get(getAdapterPosition()), mIvArtistPhoto));
+            itemView.setOnClickListener(view -> listener.onArtistClick(data.get(getAdapterPosition()), mIvArtistPhoto));
         }
 
         public void bindArtistName(String artistName) {
@@ -119,7 +119,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistVH
         }
 
         public void bindArtistPhoto(String url) {
-            Glide.with(mContext)
+            Glide.with(context)
                     .load(url)
                     .centerCrop()
                     .listener(new RequestListener<String, GlideDrawable>() {

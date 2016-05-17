@@ -21,27 +21,27 @@ import rx.Subscription;
  * Created by oleksandr on 11.05.16.
  */
 public class ArtistContentDetailsScreenPresenterImp extends BasePresenter implements ArtistContentDetailsScreenPresenter, TransactionCallback {
-    private DBArtistModel mArtistModel;
-    private ArtistContentScreenView mView;
+    private DBArtistModel artistModel;
+    private ArtistContentScreenView view;
 
     public ArtistContentDetailsScreenPresenterImp(ArtistContentScreenView mView) {
-        mArtistModel = new DBArtistModelImpl(this);
-        this.mView = mView;
+        artistModel = new DBArtistModelImpl(this);
+        this.view = mView;
     }
 
     @Override
     public void addArtistToFavorite(FavoriteArtistEntity artist) {
-        mArtistModel.addFavoriteArtist(new FavoriteArtistToDAOMapper().call(artist));
+        artistModel.addFavoriteArtist(new FavoriteArtistToDAOMapper().call(artist));
     }
 
     @Override
     public void deleteFromFavorite(FavoriteArtistEntity artist) {
-        mArtistModel.deleteFromFavorites(new FavoriteArtistToDAOMapper().call(artist));
+        artistModel.deleteFromFavorites(new FavoriteArtistToDAOMapper().call(artist));
     }
 
     @Override
     public void isArtistFavorite(FavoriteArtistEntity artist) {
-        Subscription subscription = mArtistModel.findArtist(artist.getName(), artist.getMbid())
+        Subscription subscription = artistModel.findArtist(artist.getName(), artist.getMbid())
                 .map(new FavoriteListArtistFromDAOMapper())
                 .subscribe(new Observer<List<FavoriteArtistEntity>>() {
                     @Override
@@ -57,9 +57,9 @@ public class ArtistContentDetailsScreenPresenterImp extends BasePresenter implem
                     @Override
                     public void onNext(List<FavoriteArtistEntity> favoriteTrackEntities) {
                         if (favoriteTrackEntities.size() > 0) {
-                            mView.showArtistIsFavorite(true);
+                            view.showArtistIsFavorite(true);
                         } else {
-                            mView.showArtistIsFavorite(false);
+                            view.showArtistIsFavorite(false);
                         }
                     }
                 });
@@ -68,13 +68,13 @@ public class ArtistContentDetailsScreenPresenterImp extends BasePresenter implem
 
     @Override
     public void onSuccess() {
-        if (mView != null)
-            mView.showSuccess();
+        if (view != null)
+            view.showSuccess();
     }
 
     @Override
     public void stop() {
         super.stop();
-        mView = null;
+        view = null;
     }
 }

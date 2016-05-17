@@ -22,17 +22,17 @@ import rx.Subscription;
  */
 public class FavoriteTrackScreenPresenterImpl extends BasePresenter implements FavoriteTracksScreenPresenter, TransactionCallback {
 
-    private DBTrackModel mDBTrackModel;
-    private FavoriteTrackScreenView mView;
+    private DBTrackModel dbTrackModel;
+    private FavoriteTrackScreenView view;
 
-    public FavoriteTrackScreenPresenterImpl(FavoriteTrackScreenView mView) {
-        this.mView = mView;
-        mDBTrackModel = new DBTrackModelImpl(this);
+    public FavoriteTrackScreenPresenterImpl(FavoriteTrackScreenView view) {
+        this.view = view;
+        dbTrackModel = new DBTrackModelImpl(this);
     }
 
     @Override
     public void getFavoritesTrack() {
-        Subscription subscription = mDBTrackModel.getFavoriteTracks().map(new FavoriteListTracksFromDAOMapper())
+        Subscription subscription = dbTrackModel.getFavoriteTracks().map(new FavoriteListTracksFromDAOMapper())
                 .subscribe(new Observer<List<FavoriteTrackEntity>>() {
                     @Override
                     public void onCompleted() {
@@ -46,7 +46,7 @@ public class FavoriteTrackScreenPresenterImpl extends BasePresenter implements F
 
                     @Override
                     public void onNext(List<FavoriteTrackEntity> favoriteTrackEntities) {
-                        mView.showFavoriteTrack(favoriteTrackEntities);
+                        view.showFavoriteTrack(favoriteTrackEntities);
                     }
                 });
         addSubscription(subscription);
@@ -54,18 +54,18 @@ public class FavoriteTrackScreenPresenterImpl extends BasePresenter implements F
 
     @Override
     public void deleteFromFavorites(FavoriteTrackEntity track) {
-        mDBTrackModel.deleteFromFavorites(new FavoriteTrackToDAOMapper().call(track));
+        dbTrackModel.deleteFromFavorites(new FavoriteTrackToDAOMapper().call(track));
     }
 
     @Override
     public void onSuccess() {
-        if (mView != null)
-            mView.showSuccess();
+        if (view != null)
+            view.showSuccess();
     }
 
     @Override
     public void stop() {
         super.stop();
-        mView = null;
+        view = null;
     }
 }

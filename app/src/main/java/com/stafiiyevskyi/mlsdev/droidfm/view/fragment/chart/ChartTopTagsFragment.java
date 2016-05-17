@@ -30,18 +30,18 @@ import butterknife.Bind;
 public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter.OnTagClickListener, ChartTopTagScreenView, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.rv_toptags)
-    RecyclerView mRvTags;
+    RecyclerView rvTags;
     @Bind(R.id.pb_progress)
-    ProgressBar mPbProgress;
+    ProgressBar pbProgress;
     @Bind(R.id.srl_refresh)
-    SwipeRefreshLayout mSrlRefresh;
+    SwipeRefreshLayout srlRefresh;
 
 
-    private RecyclerView.LayoutManager mLayoutManager;
-    private TopTagsAdapter mAdapter;
-    private ChartTopTagScreenPresenter mPresenter;
+    private RecyclerView.LayoutManager layoutManager;
+    private TopTagsAdapter adapter;
+    private ChartTopTagScreenPresenter presenter;
 
-    private int mCurrentPageNumber = 1;
+    private int currentPageNumber = 1;
 
 
     public static BaseFragment newInstance() {
@@ -58,10 +58,10 @@ public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter = new ChartTopTagScreenPresenterImpl(this);
+        presenter = new ChartTopTagScreenPresenterImpl(this);
         setupRvTags();
-        mSrlRefresh.setOnRefreshListener(this);
-        mPresenter.getTopTags(mCurrentPageNumber);
+        srlRefresh.setOnRefreshListener(this);
+        presenter.getTopTags(currentPageNumber);
     }
 
     @Override
@@ -75,14 +75,14 @@ public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stop();
+        presenter.stop();
     }
 
     private void setupRvTags() {
-        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        mAdapter = new TopTagsAdapter(this);
-        mRvTags.setAdapter(mAdapter);
-        mRvTags.setLayoutManager(mLayoutManager);
+        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        adapter = new TopTagsAdapter(this);
+        rvTags.setAdapter(adapter);
+        rvTags.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -102,20 +102,20 @@ public class ChartTopTagsFragment extends BaseFragment implements TopTagsAdapter
 
     @Override
     public void showTopTags(List<TopTagEntity> tags) {
-        mSrlRefresh.setRefreshing(false);
-        mPbProgress.setVisibility(View.GONE);
-        mAdapter.addData(tags);
+        srlRefresh.setRefreshing(false);
+        pbProgress.setVisibility(View.GONE);
+        adapter.addData(tags);
     }
 
     @Override
     public void showError(String errorMessage) {
-        mSrlRefresh.setRefreshing(false);
-        Snackbar.make(mRvTags, errorMessage, Snackbar.LENGTH_LONG).show();
+        srlRefresh.setRefreshing(false);
+        Snackbar.make(rvTags, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void onRefresh() {
-        mCurrentPageNumber = 1;
-        mPresenter.getTopTags(mCurrentPageNumber);
+        currentPageNumber = 1;
+        presenter.getTopTags(currentPageNumber);
     }
 }

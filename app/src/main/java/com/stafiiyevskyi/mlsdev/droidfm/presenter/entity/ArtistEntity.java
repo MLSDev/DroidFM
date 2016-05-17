@@ -6,31 +6,31 @@ import java.util.List;
  * Created by oleksandr on 20.04.16.
  */
 public class ArtistEntity {
-    private String mArtistName;
-    private String mArtisMbid;
-    private List<ImageEntity> mArtistImages;
+    private String artistName;
+    private String artisMbid;
+    private List<ImageEntity> artistImages;
 
     public String getArtistName() {
-        return mArtistName;
+        return artistName;
     }
 
     public void setArtistName(String mArtistName) {
-        this.mArtistName = mArtistName;
+        this.artistName = mArtistName;
     }
 
     public String getArtisMbid() {
-        return mArtisMbid;
+        return artisMbid;
     }
 
     public void setArtisMbid(String mArtisMbid) {
-        this.mArtisMbid = mArtisMbid;
+        this.artisMbid = mArtisMbid;
     }
 
     public List<ImageEntity> getArtistImages() {
-        return mArtistImages;
+        return artistImages;
     }
 
     public void setArtistImages(List<ImageEntity> mArtistImages) {
-        this.mArtistImages = mArtistImages;
+        this.artistImages = mArtistImages;
     }
 }

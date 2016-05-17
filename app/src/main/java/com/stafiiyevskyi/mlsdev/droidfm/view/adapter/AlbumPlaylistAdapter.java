@@ -29,28 +29,28 @@ public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdap
     private static final int PAUSED = 101;
     private static final int PLAYING = 102;
 
-    private List<TrackPlayerEntity> mData;
-    private OnPlaylistTrackClick mListener;
-    private Context mContext;
+    private List<TrackPlayerEntity> data;
+    private OnPlaylistTrackClick listener;
+    private Context context;
 
-    public AlbumPlaylistAdapter(OnPlaylistTrackClick mListener) {
-        this.mListener = mListener;
+    public AlbumPlaylistAdapter(OnPlaylistTrackClick listener) {
+        this.listener = listener;
         EventBus.getDefault().register(this);
     }
 
     public void setData(List<TrackPlayerEntity> tracks) {
-        this.mData = tracks;
+        this.data = tracks;
         notifyDataSetChanged();
     }
 
     public void addData(List<TrackPlayerEntity> tracks) {
-        this.mData.addAll(tracks);
+        this.data.addAll(tracks);
         notifyDataSetChanged();
     }
 
     @Override
     public PlaylistVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (mContext == null) mContext = parent.getContext();
+        if (context == null) context = parent.getContext();
         View view;
         switch (viewType) {
             case PAUSED:
@@ -68,27 +68,27 @@ public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdap
 
     @Override
     public void onBindViewHolder(PlaylistVH holder, int position) {
-        TrackPlayerEntity track = mData.get(position);
+        TrackPlayerEntity track = data.get(position);
         holder.bindTrackName(track.getmArtistName().concat(" - ").concat(track.getmTrackName()));
     }
 
     @Override
     public int getItemCount() {
-        if (mData != null) return mData.size();
+        if (data != null) return data.size();
         return 0;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (mData.get(position).isPaused()) {
+        if (data.get(position).isPaused()) {
             return PAUSED;
         } else return PLAYING;
     }
 
     @Subscribe
     public void pauseTrackEvent(EventCurrentTrackPause event) {
-        if (mData != null) {
-            for (TrackPlayerEntity trackPlayerEntity : mData) {
+        if (data != null) {
+            for (TrackPlayerEntity trackPlayerEntity : data) {
                 if (trackPlayerEntity.getmTrackName().equalsIgnoreCase(event.getTrack().getmTrackName())) {
                     if (MediaPlayerWrapper.getInstance().getCurrentTrack().isPaused()) {
                         trackPlayerEntity.setPaused(true);
@@ -106,8 +106,8 @@ public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdap
 
     @Subscribe
     public void synchronizedEvent(EventSynchronizingAdapter event) {
-        if (mData != null) {
-            for (TrackPlayerEntity trackPlayerEntity : mData) {
+        if (data != null) {
+            for (TrackPlayerEntity trackPlayerEntity : data) {
                 if (trackPlayerEntity.getmTrackName().equalsIgnoreCase(MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName())) {
                     if (MediaPlayerWrapper.getInstance().getCurrentTrack().isPaused()) {
                         trackPlayerEntity.setPaused(true);
@@ -125,8 +125,8 @@ public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdap
 
     @Subscribe
     public void startTrackEvent(TrackPlayerEntity event) {
-        if (mData != null) {
-            for (TrackPlayerEntity trackPlayerEntity : mData) {
+        if (data != null) {
+            for (TrackPlayerEntity trackPlayerEntity : data) {
                 if (trackPlayerEntity.getmTrackName().equalsIgnoreCase(event.getmTrackName())) {
                     trackPlayerEntity.setPaused(false);
                     notifyDataSetChanged();
@@ -149,12 +149,12 @@ public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdap
             super(itemView);
             mTvTrackName = (AppCompatTextView) itemView.findViewById(R.id.tv_track_name);
             itemView.setOnClickListener(view -> {
-                TrackPlayerEntity track = mData.get(getAdapterPosition());
-                Pair<Boolean, Uri> pair = FileTrackUtil.isTrackExist(mContext, track.getmArtistName(), track.getmTrackName());
+                TrackPlayerEntity track = data.get(getAdapterPosition());
+                Pair<Boolean, Uri> pair = FileTrackUtil.isTrackExist(context, track.getmArtistName(), track.getmTrackName());
                 if (pair.first) {
                     track.setmTrackUrl(pair.second.getPath());
                 }
-                mListener.onPlaylistTrackClick(track);
+                listener.onPlaylistTrackClick(track);
             });
         }
 

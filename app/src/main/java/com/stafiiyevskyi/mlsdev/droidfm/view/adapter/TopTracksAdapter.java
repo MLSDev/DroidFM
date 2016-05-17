@@ -25,21 +25,21 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.TopT
     private static final int ANIMATED_ITEMS_COUNT = 10;
     private int lastAnimatedPosition = -1;
 
-    private List<TopTrackEntity> mData = new ArrayList<>();
-    private OnTopTrackClickListener mListener;
+    private List<TopTrackEntity> data = new ArrayList<>();
+    private OnTopTrackClickListener listener;
     private Context mContext;
 
-    public TopTracksAdapter(OnTopTrackClickListener mListener) {
-        this.mListener = mListener;
+    public TopTracksAdapter(OnTopTrackClickListener listener) {
+        this.listener = listener;
     }
 
     public void setData(List<TopTrackEntity> data) {
-        this.mData = data;
+        this.data = data;
         notifyDataSetChanged();
     }
 
     public void addData(List<TopTrackEntity> data) {
-        this.mData.addAll(data);
+        this.data.addAll(data);
         notifyDataSetChanged();
     }
 
@@ -53,7 +53,7 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.TopT
     @Override
     public void onBindViewHolder(TopTrackVH holder, int position) {
         runEnterAnimation(holder.itemView, position);
-        TopTrackEntity entity = mData.get(position);
+        TopTrackEntity entity = data.get(position);
         String imageUrl = "";
         for (ImageEntity imageEntity : entity.getTracksImages()) {
             if (imageEntity.getSize().equalsIgnoreCase("medium")) {
@@ -86,7 +86,7 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.TopT
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return data.size();
     }
 
     public interface OnTopTrackClickListener {
@@ -104,7 +104,7 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.TopT
             mIvTopTrackIcon = (AppCompatImageView) itemView.findViewById(R.id.iv_top_track);
             mTvTopTrackName = (AppCompatTextView) itemView.findViewById(R.id.tv_track_name);
             mTvArtistName = (AppCompatTextView) itemView.findViewById(R.id.tv_artist_name);
-            itemView.setOnClickListener(view -> mListener.onTopTrackClick(mData.get(getAdapterPosition())));
+            itemView.setOnClickListener(view -> listener.onTopTrackClick(data.get(getAdapterPosition())));
         }
 
         public void bindTrackName(String trackName) {

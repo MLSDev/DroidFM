@@ -20,17 +20,17 @@ import rx.Subscription;
  */
 public class FavoriteArtistScreenPresenterImpl extends BasePresenter implements FavoriteArtistScreenPresenter, TransactionCallback {
 
-    private FavoriteArtistScreenView mView;
-    private DBArtistModel mModel;
+    private FavoriteArtistScreenView view;
+    private DBArtistModel model;
 
-    public FavoriteArtistScreenPresenterImpl(FavoriteArtistScreenView mView) {
-        this.mView = mView;
-        this.mModel = new DBArtistModelImpl(this);
+    public FavoriteArtistScreenPresenterImpl(FavoriteArtistScreenView view) {
+        this.view = view;
+        this.model = new DBArtistModelImpl(this);
     }
 
     @Override
     public void getFavoriteArtists() {
-        Subscription subscription = mModel.getFavoriteArtists().map(new FavoriteListArtistFromDAOMapper())
+        Subscription subscription = model.getFavoriteArtists().map(new FavoriteListArtistFromDAOMapper())
                 .subscribe(new Observer<List<FavoriteArtistEntity>>() {
                     @Override
                     public void onCompleted() {
@@ -39,12 +39,12 @@ public class FavoriteArtistScreenPresenterImpl extends BasePresenter implements 
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<FavoriteArtistEntity> favoriteArtistEntities) {
-                        mView.showFavoriteArtists(favoriteArtistEntities);
+                        view.showFavoriteArtists(favoriteArtistEntities);
                     }
                 });
         addSubscription(subscription);
@@ -52,18 +52,18 @@ public class FavoriteArtistScreenPresenterImpl extends BasePresenter implements 
 
     @Override
     public void deleteFromFavorites(FavoriteArtistEntity artist) {
-        mModel.deleteFromFavorites(new FavoriteArtistToDAOMapper().call(artist));
+        model.deleteFromFavorites(new FavoriteArtistToDAOMapper().call(artist));
     }
 
     @Override
     public void onSuccess() {
-        if (mView != null)
-            mView.showSuccess();
+        if (view != null)
+            view.showSuccess();
     }
 
     @Override
     public void stop() {
         super.stop();
-        mView = null;
+        view = null;
     }
 }

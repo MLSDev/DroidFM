@@ -21,12 +21,12 @@ import rx.Subscription;
  */
 public class ArtistTopTracksScreenPresenterImpl extends BasePresenter implements ArtistTopTracksScreenPresenter {
 
-    private ArtistTopTracksScreenView mView;
+    private ArtistTopTracksScreenView view;
     private ArtistModel artistModel;
     private TrackModel trackModel;
 
-    public ArtistTopTracksScreenPresenterImpl(ArtistTopTracksScreenView mView) {
-        this.mView = mView;
+    public ArtistTopTracksScreenPresenterImpl(ArtistTopTracksScreenView view) {
+        this.view = view;
         artistModel = new ArtistModelImpl();
         trackModel = new TrackModelImpl();
     }
@@ -43,12 +43,12 @@ public class ArtistTopTracksScreenPresenterImpl extends BasePresenter implements
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<TopTrackEntity> trackEntities) {
-                        mView.showTracks(trackEntities);
+                        view.showTracks(trackEntities);
                     }
                 });
         addSubscription(subscription);
@@ -66,12 +66,12 @@ public class ArtistTopTracksScreenPresenterImpl extends BasePresenter implements
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<TopTrackEntity> topTrackEntities) {
-                        mView.showTracks(topTrackEntities);
+                        view.showTracks(topTrackEntities);
                     }
                 });
         addSubscription(subscription);

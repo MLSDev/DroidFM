@@ -24,11 +24,11 @@ import butterknife.Bind;
 public class FavoriteContentFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
     @Bind(R.id.vp_content)
-    ViewPager mVpTabContent;
+    ViewPager vpTabContent;
     @Bind(R.id.tabs)
-    TabLayout mTlTabs;
+    TabLayout tlTabs;
 
-    private FragmentViewPagerAdapter mAdapter;
+    private FragmentViewPagerAdapter adapter;
 
     public static BaseFragment newInstance() {
         BaseFragment fragment = new FavoriteContentFragment();
@@ -49,13 +49,13 @@ public class FavoriteContentFragment extends BaseFragment implements ViewPager.O
 
 
     private void setupViewPager() {
-        mAdapter = new FragmentViewPagerAdapter(getChildFragmentManager());
-        mAdapter.addFragment(FavoriteAlbumsFragment.newInstance(), getString(R.string.tab_title_top_albums));
-        mAdapter.addFragment(FavoriteTracksFragment.newInstance(), getString(R.string.tab_title_top_tracks));
-        mAdapter.addFragment(FavoriteArtistsFragment.newInstance(), getString(R.string.tab_title_top_artists));
-        mVpTabContent.setAdapter(mAdapter);
-        mVpTabContent.addOnPageChangeListener(this);
-        mTlTabs.setupWithViewPager(mVpTabContent);
+        adapter = new FragmentViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(FavoriteAlbumsFragment.newInstance(), getString(R.string.tab_title_top_albums));
+        adapter.addFragment(FavoriteTracksFragment.newInstance(), getString(R.string.tab_title_top_tracks));
+        adapter.addFragment(FavoriteArtistsFragment.newInstance(), getString(R.string.tab_title_top_artists));
+        vpTabContent.setAdapter(adapter);
+        vpTabContent.addOnPageChangeListener(this);
+        tlTabs.setupWithViewPager(vpTabContent);
     }
 
 
@@ -78,7 +78,7 @@ public class FavoriteContentFragment extends BaseFragment implements ViewPager.O
 
     @Override
     public void onPageSelected(int position) {
-        mAdapter.getItem(position).updateToolbar();
+        adapter.getItem(position).updateToolbar();
     }
 
     @Override

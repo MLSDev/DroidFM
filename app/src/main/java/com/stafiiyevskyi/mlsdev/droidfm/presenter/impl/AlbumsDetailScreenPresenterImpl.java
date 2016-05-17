@@ -28,19 +28,19 @@ import rx.Subscription;
  */
 public class AlbumsDetailScreenPresenterImpl extends BasePresenter implements AlbumsDetailScreenPresenter, TransactionCallback {
 
-    private AlbumModel mAlbumModel;
-    private DBAlbumModel mDBAlbumModel;
-    private AlbumDetailsScreenView mView;
+    private AlbumModel albumModel;
+    private DBAlbumModel dbAlbumModel;
+    private AlbumDetailsScreenView view;
 
-    public AlbumsDetailScreenPresenterImpl(AlbumDetailsScreenView mView) {
-        this.mView = mView;
-        mAlbumModel = new AlbumModelImpl();
-        mDBAlbumModel = new DBAlbumModelImpl(this);
+    public AlbumsDetailScreenPresenterImpl(AlbumDetailsScreenView view) {
+        this.view = view;
+        albumModel = new AlbumModelImpl();
+        dbAlbumModel = new DBAlbumModelImpl(this);
     }
 
     @Override
     public void getAlbumsDetails(String artist, String album, String mbid) {
-        Subscription subscription = mAlbumModel.getAlbumDetails(artist, album, mbid)
+        Subscription subscription = albumModel.getAlbumDetails(artist, album, mbid)
                 .map(this::unwrapResponse)
                 .map(new AlbumsDetailMapper())
                 .subscribe(new Observer<AlbumsDetailEntity>() {
@@ -51,12 +51,12 @@ public class AlbumsDetailScreenPresenterImpl extends BasePresenter implements Al
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(AlbumsDetailEntity albumsDetailEntity) {
-                        mView.showAlbumsDetails(albumsDetailEntity);
+                        view.showAlbumsDetails(albumsDetailEntity);
                     }
                 });
         addSubscription(subscription);
@@ -64,17 +64,17 @@ public class AlbumsDetailScreenPresenterImpl extends BasePresenter implements Al
 
     @Override
     public void addAlbumToFavorite(AlbumsDetailEntity album) {
-        mDBAlbumModel.addFavoriteAlbum(new AlbumsDetailToDAOMapper().call(album));
+        dbAlbumModel.addFavoriteAlbum(new AlbumsDetailToDAOMapper().call(album));
     }
 
     @Override
     public void deleteFromFavorite(AlbumsDetailEntity album) {
-        mDBAlbumModel.deleteFromFavorites(new AlbumsDetailToDAOMapper().call(album));
+        dbAlbumModel.deleteFromFavorites(new AlbumsDetailToDAOMapper().call(album));
     }
 
     @Override
     public void isTrackFavorite(AlbumsDetailEntity album) {
-        Subscription subscription = mDBAlbumModel.findAlbum(album.getArtistName(), album.getName())
+        Subscription subscription = dbAlbumModel.findAlbum(album.getArtistName(), album.getName())
                 .map(new FavoriteListAlbumsFromDAOMapper())
                 .subscribe(new Observer<List<FavoriteAlbumEntity>>() {
                     @Override
@@ -90,9 +90,9 @@ public class AlbumsDetailScreenPresenterImpl extends BasePresenter implements Al
                     @Override
                     public void onNext(List<FavoriteAlbumEntity> favoriteAlbumsEntities) {
                         if (favoriteAlbumsEntities.size() > 0) {
-                            mView.showAlbumIsFavorite(true);
+                            view.showAlbumIsFavorite(true);
                         } else {
-                            mView.showAlbumIsFavorite(false);
+                            view.showAlbumIsFavorite(false);
                         }
 
                     }
@@ -107,7 +107,7 @@ public class AlbumsDetailScreenPresenterImpl extends BasePresenter implements Al
 
     @Override
     public void onSuccess() {
-        if (mView != null) ;
-        mView.onSuccess();
+        if (view != null) ;
+        view.onSuccess();
     }
 }

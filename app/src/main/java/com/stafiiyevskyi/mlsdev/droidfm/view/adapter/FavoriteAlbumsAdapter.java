@@ -21,27 +21,27 @@ public class FavoriteAlbumsAdapter extends RecyclerView.Adapter<FavoriteAlbumsAd
     private static final int ANIMATED_ITEMS_COUNT = 10;
     private int lastAnimatedPosition = -1;
 
-    private OnAlbumClickListener mListener;
-    private List<FavoriteAlbumEntity> mData;
-    private Context mContext;
+    private OnAlbumClickListener listener;
+    private List<FavoriteAlbumEntity> data;
+    private Context context;
 
-    public FavoriteAlbumsAdapter(OnAlbumClickListener mListener) {
-        this.mListener = mListener;
+    public FavoriteAlbumsAdapter(OnAlbumClickListener listener) {
+        this.listener = listener;
     }
 
     public void setData(List<FavoriteAlbumEntity> albums) {
-        this.mData = albums;
+        this.data = albums;
         notifyDataSetChanged();
     }
 
     public void addData(List<FavoriteAlbumEntity> albums) {
-        this.mData.addAll(albums);
+        this.data.addAll(albums);
         notifyDataSetChanged();
     }
 
     @Override
     public AlbumVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (mContext == null) mContext = parent.getContext();
+        if (context == null) context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_favorite_album, parent, false);
         return new AlbumVH(view);
     }
@@ -49,7 +49,7 @@ public class FavoriteAlbumsAdapter extends RecyclerView.Adapter<FavoriteAlbumsAd
     @Override
     public void onBindViewHolder(AlbumVH holder, int position) {
         runEnterAnimation(holder.itemView,position);
-        FavoriteAlbumEntity album = mData.get(position);
+        FavoriteAlbumEntity album = data.get(position);
         holder.bindArtistName(album.getArtistName());
         holder.bindAlbumName(album.getAlbumName());
     }
@@ -62,7 +62,7 @@ public class FavoriteAlbumsAdapter extends RecyclerView.Adapter<FavoriteAlbumsAd
 
         if (position > lastAnimatedPosition) {
             lastAnimatedPosition = position;
-            view.setTranslationY(AnimationUtil.getScreenHeight(mContext));
+            view.setTranslationY(AnimationUtil.getScreenHeight(context));
             view.animate()
                     .translationY(0)
                     .setInterpolator(new DecelerateInterpolator(3.f))
@@ -73,7 +73,7 @@ public class FavoriteAlbumsAdapter extends RecyclerView.Adapter<FavoriteAlbumsAd
 
     @Override
     public int getItemCount() {
-        if (mData != null) return mData.size();
+        if (data != null) return data.size();
         return 0;
     }
 
@@ -89,7 +89,7 @@ public class FavoriteAlbumsAdapter extends RecyclerView.Adapter<FavoriteAlbumsAd
             super(itemView);
             mTvAlbumName = (AppCompatTextView) itemView.findViewById(R.id.tv_album_name);
             mTvArtistName = (AppCompatTextView) itemView.findViewById(R.id.tv_artist_name);
-            itemView.setOnClickListener(view -> mListener.onAlbumClick(mData.get(getAdapterPosition())));
+            itemView.setOnClickListener(view -> listener.onAlbumClick(data.get(getAdapterPosition())));
         }
 
         public void bindAlbumName(String album) {

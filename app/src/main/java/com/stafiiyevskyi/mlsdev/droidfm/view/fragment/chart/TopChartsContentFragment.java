@@ -21,10 +21,10 @@ import butterknife.Bind;
  */
 public class TopChartsContentFragment extends BaseFragment {
     @Bind(R.id.nb_navigation)
-    AHBottomNavigation mBnNavigation;
+    AHBottomNavigation bnNavigation;
 
-    private FragmentManager mFragmentManager;
-    private BaseFragment mCurrentFragment;
+    private FragmentManager fragmentManager;
+    private BaseFragment currentFragment;
 
     public static BaseFragment newInstance() {
 
@@ -38,7 +38,7 @@ public class TopChartsContentFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFragmentManager = getChildFragmentManager();
+        fragmentManager = getChildFragmentManager();
         prepareBottomNavigationItems();
     }
 
@@ -46,23 +46,23 @@ public class TopChartsContentFragment extends BaseFragment {
         AHBottomNavigationItem itemTopArtist = new AHBottomNavigationItem("Artists", R.drawable.ic_person_black_48dp);
         AHBottomNavigationItem itemTopTags = new AHBottomNavigationItem("Tags", R.drawable.ic_bubble_chart_black_48dp);
         AHBottomNavigationItem itemTopTracks = new AHBottomNavigationItem("Tracks", R.drawable.ic_music_circle_black_48dp);
-        mBnNavigation.addItem(itemTopArtist);
-        mBnNavigation.addItem(itemTopTracks);
-        mBnNavigation.addItem(itemTopTags);
-        mBnNavigation.setAccentColor(getActivity().getResources().getColor(R.color.colorAccent));
-        mBnNavigation.setInactiveColor(getActivity().getResources().getColor(R.color.colorPrimary));
-        mBnNavigation.setOnTabSelectedListener((position, wasSelected) -> {
+        bnNavigation.addItem(itemTopArtist);
+        bnNavigation.addItem(itemTopTracks);
+        bnNavigation.addItem(itemTopTags);
+        bnNavigation.setAccentColor(getActivity().getResources().getColor(R.color.colorAccent));
+        bnNavigation.setInactiveColor(getActivity().getResources().getColor(R.color.colorPrimary));
+        bnNavigation.setOnTabSelectedListener((position, wasSelected) -> {
             switch (position) {
                 case 0:
-                    if (!(mCurrentFragment instanceof ArtistSearchListFragment))
+                    if (!(currentFragment instanceof ArtistSearchListFragment))
                         selectTopArtist();
                     break;
                 case 1:
-                    if (!(mCurrentFragment instanceof ChartTopTracksFragment))
+                    if (!(currentFragment instanceof ChartTopTracksFragment))
                         selectTopTracks();
                     break;
                 case 2:
-                    if (!(mCurrentFragment instanceof ChartTopTagsFragment))
+                    if (!(currentFragment instanceof ChartTopTagsFragment))
                         selectTopTags();
                 default:
                     break;
@@ -85,26 +85,26 @@ public class TopChartsContentFragment extends BaseFragment {
     }
 
     private void selectTopArtist() {
-        mCurrentFragment = ArtistSearchListFragment.newInstance();
-        AnimationUtil.detailTransition(mCurrentFragment);
-        mFragmentManager.beginTransaction()
-                .replace(R.id.fl_chart_content, mCurrentFragment)
+        currentFragment = ArtistSearchListFragment.newInstance();
+        AnimationUtil.detailTransition(currentFragment);
+        fragmentManager.beginTransaction()
+                .replace(R.id.fl_chart_content, currentFragment)
                 .commit();
     }
 
     private void selectTopTracks() {
-        mCurrentFragment = ChartTopTracksFragment.newInstance();
-        AnimationUtil.detailTransition(mCurrentFragment);
-        mFragmentManager.beginTransaction()
-                .replace(R.id.fl_chart_content, mCurrentFragment)
+        currentFragment = ChartTopTracksFragment.newInstance();
+        AnimationUtil.detailTransition(currentFragment);
+        fragmentManager.beginTransaction()
+                .replace(R.id.fl_chart_content, currentFragment)
                 .commit();
     }
 
     private void selectTopTags() {
-        mCurrentFragment = ChartTopTagsFragment.newInstance();
-        AnimationUtil.detailTransition(mCurrentFragment);
-        mFragmentManager.beginTransaction()
-                .replace(R.id.fl_chart_content, mCurrentFragment)
+        currentFragment = ChartTopTagsFragment.newInstance();
+        AnimationUtil.detailTransition(currentFragment);
+        fragmentManager.beginTransaction()
+                .replace(R.id.fl_chart_content, currentFragment)
                 .commit();
     }
 }

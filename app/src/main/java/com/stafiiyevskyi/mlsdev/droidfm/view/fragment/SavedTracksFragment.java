@@ -26,11 +26,11 @@ import rx.Observable;
 public class SavedTracksFragment extends BaseFragment implements SavedTracksAdapter.OnSavedTrackClickListener {
 
     @Bind(R.id.rv_tracks)
-    RecyclerView mRvTracks;
+    RecyclerView rvTracks;
 
-    private RecyclerView.LayoutManager mLayoutManager;
-    private SavedTracksAdapter mAdapter;
-    private List<SavedTrackEntity> mTracks;
+    private RecyclerView.LayoutManager layoutManager;
+    private SavedTracksAdapter adapter;
+    private List<SavedTrackEntity> tarcks;
 
     public static BaseFragment newInstance() {
         BaseFragment fragment = new SavedTracksFragment();
@@ -47,16 +47,16 @@ public class SavedTracksFragment extends BaseFragment implements SavedTracksAdap
     private void loadTracks() {
         File file = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC), "");
         if (file.isDirectory()) {
-            mTracks = Observable.from(file.listFiles()).map(new FileToSavedTrackEntityMapper()).toList().toBlocking().first();
+            tarcks = Observable.from(file.listFiles()).map(new FileToSavedTrackEntityMapper()).toList().toBlocking().first();
         }
-        mAdapter.setData(mTracks);
+        adapter.setData(tarcks);
     }
 
     private void setupRvTracks() {
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new SavedTracksAdapter(this);
-        mRvTracks.setLayoutManager(mLayoutManager);
-        mRvTracks.setAdapter(mAdapter);
+        layoutManager = new LinearLayoutManager(getActivity());
+        adapter = new SavedTracksAdapter(this);
+        rvTracks.setLayoutManager(layoutManager);
+        rvTracks.setAdapter(adapter);
     }
 
     @Override

@@ -20,17 +20,17 @@ import rx.Subscription;
  */
 public class FavoriteAlbumsScreenPresenterImpl extends BasePresenter implements FavoriteAlbumsScreenPresenter, TransactionCallback {
 
-    private DBAlbumModel mAlbumModel;
-    private FavoriteAlbumScreenView mView;
+    private DBAlbumModel albumModel;
+    private FavoriteAlbumScreenView view;
 
-    public FavoriteAlbumsScreenPresenterImpl(FavoriteAlbumScreenView mView) {
-        this.mView = mView;
-        this.mAlbumModel = new DBAlbumModelImpl(this);
+    public FavoriteAlbumsScreenPresenterImpl(FavoriteAlbumScreenView view) {
+        this.view = view;
+        this.albumModel = new DBAlbumModelImpl(this);
     }
 
     @Override
     public void getFavoritesAlbums() {
-        Subscription subscription = mAlbumModel.getFavoriteAlbums()
+        Subscription subscription = albumModel.getFavoriteAlbums()
                 .map(new FavoriteListAlbumsFromDAOMapper())
                 .subscribe(new Observer<List<FavoriteAlbumEntity>>() {
                     @Override
@@ -40,12 +40,12 @@ public class FavoriteAlbumsScreenPresenterImpl extends BasePresenter implements 
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<FavoriteAlbumEntity> favoriteAlbumEntities) {
-                        mView.showFavoriteAlbums(favoriteAlbumEntities);
+                        view.showFavoriteAlbums(favoriteAlbumEntities);
                     }
                 });
         addSubscription(subscription);
@@ -53,18 +53,18 @@ public class FavoriteAlbumsScreenPresenterImpl extends BasePresenter implements 
 
     @Override
     public void deleteFromFavorites(FavoriteAlbumEntity album) {
-        mAlbumModel.deleteFromFavorites(new FavoriteAlbumToDAOMapper().call(album));
+        albumModel.deleteFromFavorites(new FavoriteAlbumToDAOMapper().call(album));
     }
 
     @Override
     public void onSuccess() {
-        if (mView != null)
-            mView.showSuccess();
+        if (view != null)
+            view.showSuccess();
     }
 
     @Override
     public void stop() {
         super.stop();
-        mView = null;
+        view = null;
     }
 }

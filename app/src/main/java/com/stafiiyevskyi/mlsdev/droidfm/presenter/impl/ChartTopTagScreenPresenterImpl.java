@@ -4,8 +4,8 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.model.TopChartModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.TopChartModelImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.BasePresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.ChartTopTagScreenPresenter;
-import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ChartTopTagListMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTagEntity;
+import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.chart.ChartTopTagListMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ChartTopTagScreenView;
 
 import java.util.List;
@@ -18,17 +18,17 @@ import rx.Subscription;
  */
 public class ChartTopTagScreenPresenterImpl extends BasePresenter implements ChartTopTagScreenPresenter {
 
-    private ChartTopTagScreenView mView;
-    private TopChartModel mModel;
+    private ChartTopTagScreenView view;
+    private TopChartModel model;
 
-    public ChartTopTagScreenPresenterImpl(ChartTopTagScreenView mView) {
-        this.mView = mView;
-        this.mModel = new TopChartModelImpl();
+    public ChartTopTagScreenPresenterImpl(ChartTopTagScreenView view) {
+        this.view = view;
+        this.model = new TopChartModelImpl();
     }
 
     @Override
     public void getTopTags(int pageNumber) {
-        Subscription subscription = mModel.getTopChartTags(pageNumber)
+        Subscription subscription = model.getTopChartTags(pageNumber)
                 .map(new ChartTopTagListMapper())
                 .subscribe(new Observer<List<TopTagEntity>>() {
                     @Override
@@ -38,12 +38,12 @@ public class ChartTopTagScreenPresenterImpl extends BasePresenter implements Cha
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<TopTagEntity> topTagEntities) {
-                        mView.showTopTags(topTagEntities);
+                        view.showTopTags(topTagEntities);
                     }
                 });
         addSubscription(subscription);

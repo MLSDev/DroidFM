@@ -6,49 +6,49 @@ import java.util.List;
  * Created by oleksandr on 21.04.16.
  */
 public class AlbumEntity {
-    private String mName;
-    private int mPlaycount;
-    private String mMbid;
-    private String mArtistName;
-    private List<ImageEntity> mImage;
+    private String name;
+    private int playcount;
+    private String mbid;
+    private String artistName;
+    private List<ImageEntity> image;
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void setName(String name) {
-        this.mName = name;
+        this.name = name;
     }
 
     public int getPlaycount() {
-        return mPlaycount;
+        return playcount;
     }
 
     public void setPlaycount(int playcount) {
-        this.mPlaycount = playcount;
+        this.playcount = playcount;
     }
 
     public String getMbid() {
-        return mMbid;
+        return mbid;
     }
 
     public void setMbid(String mMbid) {
-        this.mMbid = mMbid;
+        this.mbid = mMbid;
     }
 
     public String getArtistName() {
-        return mArtistName;
+        return artistName;
     }
 
     public void setArtistName(String mArtistName) {
-        this.mArtistName = mArtistName;
+        this.artistName = mArtistName;
     }
 
     public List<ImageEntity> getImage() {
-        return mImage;
+        return image;
     }
 
     public void setImage(List<ImageEntity> mImage) {
-        this.mImage = mImage;
+        this.image = mImage;
     }
 }

@@ -24,22 +24,22 @@ public class SavedTracksAdapter extends RecyclerView.Adapter<SavedTracksAdapter.
     private static final int ANIMATED_ITEMS_COUNT = 10;
     private int lastAnimatedPosition = -1;
 
-    private OnSavedTrackClickListener mListener;
-    private List<SavedTrackEntity> mData;
-    private Context mContext;
+    private OnSavedTrackClickListener listener;
+    private List<SavedTrackEntity> data;
+    private Context context;
 
-    public SavedTracksAdapter(OnSavedTrackClickListener mListener) {
-        this.mListener = mListener;
+    public SavedTracksAdapter(OnSavedTrackClickListener listener) {
+        this.listener = listener;
     }
 
     public void setData(List<SavedTrackEntity> data) {
-        this.mData = data;
+        this.data = data;
         notifyDataSetChanged();
     }
 
     @Override
     public SavedTrackVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (mContext == null) mContext = parent.getContext();
+        if (context == null) context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_top_track_artist, parent, false);
         return new SavedTrackVH(view);
     }
@@ -47,7 +47,7 @@ public class SavedTracksAdapter extends RecyclerView.Adapter<SavedTracksAdapter.
     @Override
     public void onBindViewHolder(SavedTrackVH holder, int position) {
         runEnterAnimation(holder.itemView, position);
-        holder.mTvTrackName.setText(mData.get(position).getName());
+        holder.mTvTrackName.setText(data.get(position).getName());
     }
 
     private void runEnterAnimation(View view, int position) {
@@ -57,7 +57,7 @@ public class SavedTracksAdapter extends RecyclerView.Adapter<SavedTracksAdapter.
 
         if (position > lastAnimatedPosition) {
             lastAnimatedPosition = position;
-            view.setTranslationY(AnimationUtil.getScreenHeight(mContext));
+            view.setTranslationY(AnimationUtil.getScreenHeight(context));
             view.animate()
                     .translationY(0)
                     .setInterpolator(new DecelerateInterpolator(3.f))
@@ -68,7 +68,7 @@ public class SavedTracksAdapter extends RecyclerView.Adapter<SavedTracksAdapter.
 
     @Override
     public int getItemCount() {
-        if (mData != null) return mData.size();
+        if (data != null) return data.size();
         return 0;
     }
 
@@ -83,7 +83,7 @@ public class SavedTracksAdapter extends RecyclerView.Adapter<SavedTracksAdapter.
         public SavedTrackVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(view -> mListener.onTrackClick(mData.get(getAdapterPosition()))
+            itemView.setOnClickListener(view -> listener.onTrackClick(data.get(getAdapterPosition()))
             );
         }
     }

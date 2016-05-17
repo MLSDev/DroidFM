@@ -28,13 +28,13 @@ import butterknife.Bind;
 public class FavoriteTracksFragment extends BaseFragment implements FavoriteTrackScreenView, FavoriteTracksAdapter.OnFavoriteTrackClickListener {
 
     @Bind(R.id.rv_tracks)
-    RecyclerView mRvTracks;
+    RecyclerView rvTracks;
     @Bind(R.id.pb_progress)
-    ProgressBar mPbProgress;
+    ProgressBar pbProgress;
 
-    private FavoriteTracksAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private FavoriteTracksScreenPresenter mPresenter;
+    private FavoriteTracksAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private FavoriteTracksScreenPresenter presenter;
 
     public static BaseFragment newInstance() {
         FavoriteTracksFragment fragment = new FavoriteTracksFragment();
@@ -45,14 +45,14 @@ public class FavoriteTracksFragment extends BaseFragment implements FavoriteTrac
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupRvTracks();
-        mPresenter = new FavoriteTrackScreenPresenterImpl(this);
-        mPresenter.getFavoritesTrack();
+        presenter = new FavoriteTrackScreenPresenterImpl(this);
+        presenter.getFavoritesTrack();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stop();
+        presenter.stop();
     }
 
     @Override
@@ -73,16 +73,16 @@ public class FavoriteTracksFragment extends BaseFragment implements FavoriteTrac
     }
 
     private void setupRvTracks() {
-        mAdapter = new FavoriteTracksAdapter(this);
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mRvTracks.setLayoutManager(mLayoutManager);
-        mRvTracks.setAdapter(mAdapter);
+        adapter = new FavoriteTracksAdapter(this);
+        layoutManager = new LinearLayoutManager(getActivity());
+        rvTracks.setLayoutManager(layoutManager);
+        rvTracks.setAdapter(adapter);
     }
 
     @Override
     public void showFavoriteTrack(List<FavoriteTrackEntity> tracks) {
-        mAdapter.setData(tracks);
-        mPbProgress.setVisibility(View.GONE);
+        adapter.setData(tracks);
+        pbProgress.setVisibility(View.GONE);
     }
 
     @Override

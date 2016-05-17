@@ -31,25 +31,25 @@ public class FavoriteArtistsAdapter extends RecyclerView.Adapter<FavoriteArtists
     private static final int ANIMATED_ITEMS_COUNT = 10;
     private int lastAnimatedPosition = -1;
 
-    private List<FavoriteArtistEntity> mData = new ArrayList<>();
-    private OnArtistClickListener mListener;
-    private Context mContext;
+    private List<FavoriteArtistEntity> data = new ArrayList<>();
+    private OnArtistClickListener listener;
+    private Context context;
 
-    public FavoriteArtistsAdapter(OnArtistClickListener mListener) {
-        this.mListener = mListener;
+    public FavoriteArtistsAdapter(OnArtistClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
     public ArtistVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (mContext == null) mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_artist, parent, false);
+        if (context == null) context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.item_artist, parent, false);
         return new ArtistVH(view);
     }
 
     @Override
     public void onBindViewHolder(ArtistVH holder, int position) {
         runEnterAnimation(holder.itemView, position);
-        FavoriteArtistEntity entity = mData.get(position);
+        FavoriteArtistEntity entity = data.get(position);
         holder.bindArtistName(entity.getName());
         holder.bindArtistPhoto(entity.getImage());
     }
@@ -63,7 +63,7 @@ public class FavoriteArtistsAdapter extends RecyclerView.Adapter<FavoriteArtists
 
         if (position > lastAnimatedPosition) {
             lastAnimatedPosition = position;
-            view.setTranslationY(AnimationUtil.getScreenHeight(mContext));
+            view.setTranslationY(AnimationUtil.getScreenHeight(context));
             view.animate()
                     .translationY(0)
                     .setInterpolator(new DecelerateInterpolator(3.f))
@@ -74,17 +74,17 @@ public class FavoriteArtistsAdapter extends RecyclerView.Adapter<FavoriteArtists
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return data.size();
     }
 
     public void addData(List<FavoriteArtistEntity> data) {
-        this.mData.addAll(data);
+        this.data.addAll(data);
         notifyDataSetChanged();
     }
 
     public void setData(List<FavoriteArtistEntity> data) {
-        this.mData.clear();
-        this.mData.addAll(data);
+        this.data.clear();
+        this.data.addAll(data);
         notifyDataSetChanged();
     }
 
@@ -104,7 +104,7 @@ public class FavoriteArtistsAdapter extends RecyclerView.Adapter<FavoriteArtists
         public ArtistVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(view -> mListener.onArtistClick(mData.get(getAdapterPosition()), mIvArtistPhoto));
+            itemView.setOnClickListener(view -> listener.onArtistClick(data.get(getAdapterPosition()), mIvArtistPhoto));
         }
 
         public void bindArtistName(String artistName) {
@@ -112,7 +112,7 @@ public class FavoriteArtistsAdapter extends RecyclerView.Adapter<FavoriteArtists
         }
 
         public void bindArtistPhoto(String url) {
-            Glide.with(mContext)
+            Glide.with(context)
                     .load(url)
                     .centerCrop()
                     .listener(new RequestListener<String, GlideDrawable>() {

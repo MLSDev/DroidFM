@@ -18,17 +18,17 @@ import rx.Subscription;
  */
 public class TagTopAlbumsPresenterImpl extends BasePresenter implements TagTopAlbumsPresenter {
 
-    private TagModel mModel;
-    private TagTopAlbumsScreenView mView;
+    private TagModel model;
+    private TagTopAlbumsScreenView view;
 
-    public TagTopAlbumsPresenterImpl(TagTopAlbumsScreenView mView) {
-        this.mView = mView;
-        this.mModel = new TagModelImpl();
+    public TagTopAlbumsPresenterImpl(TagTopAlbumsScreenView view) {
+        this.view = view;
+        this.model = new TagModelImpl();
     }
 
     @Override
     public void getTopAlbums(String tag, int pageNumber) {
-        Subscription subscription = mModel.getTagsTopAlbums(tag, pageNumber)
+        Subscription subscription = model.getTagsTopAlbums(tag, pageNumber)
                 .map(new TagsTopAlbumListMapper())
                 .subscribe(new Observer<List<AlbumEntity>>() {
                     @Override
@@ -38,12 +38,12 @@ public class TagTopAlbumsPresenterImpl extends BasePresenter implements TagTopAl
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<AlbumEntity> albumEntities) {
-                        mView.showTopAlbums(albumEntities);
+                        view.showTopAlbums(albumEntities);
                     }
                 });
         addSubscription(subscription);

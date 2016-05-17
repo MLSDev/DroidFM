@@ -28,14 +28,14 @@ import butterknife.Bind;
 public class FavoriteAlbumsFragment extends BaseFragment implements FavoriteAlbumScreenView, FavoriteAlbumsAdapter.OnAlbumClickListener {
 
     @Bind(R.id.rv_albums)
-    RecyclerView mRvAlbums;
+    RecyclerView rvAlbums;
     @Bind(R.id.pb_progress)
-    ProgressBar mPbProgress;
+    ProgressBar pbProgress;
 
 
-    private FavoriteAlbumsAdapter mAdapter;
-    private FavoriteAlbumsScreenPresenter mPresenter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private FavoriteAlbumsAdapter adapter;
+    private FavoriteAlbumsScreenPresenter presenter;
+    private RecyclerView.LayoutManager layoutManager;
 
     public static BaseFragment newInstance() {
         BaseFragment fragment = new FavoriteAlbumsFragment();
@@ -47,14 +47,14 @@ public class FavoriteAlbumsFragment extends BaseFragment implements FavoriteAlbu
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupRvAlbums();
-        mPresenter = new FavoriteAlbumsScreenPresenterImpl(this);
-        mPresenter.getFavoritesAlbums();
+        presenter = new FavoriteAlbumsScreenPresenterImpl(this);
+        presenter.getFavoritesAlbums();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stop();
+        presenter.stop();
     }
 
     @Override
@@ -64,10 +64,10 @@ public class FavoriteAlbumsFragment extends BaseFragment implements FavoriteAlbu
     }
 
     private void setupRvAlbums() {
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new FavoriteAlbumsAdapter(this);
-        mRvAlbums.setLayoutManager(mLayoutManager);
-        mRvAlbums.setAdapter(mAdapter);
+        layoutManager = new LinearLayoutManager(getActivity());
+        adapter = new FavoriteAlbumsAdapter(this);
+        rvAlbums.setLayoutManager(layoutManager);
+        rvAlbums.setAdapter(adapter);
     }
 
     @Override
@@ -82,8 +82,8 @@ public class FavoriteAlbumsFragment extends BaseFragment implements FavoriteAlbu
 
     @Override
     public void showFavoriteAlbums(List<FavoriteAlbumEntity> albums) {
-        mPbProgress.setVisibility(View.GONE);
-        mAdapter.setData(albums);
+        pbProgress.setVisibility(View.GONE);
+        adapter.setData(albums);
     }
 
     @Override

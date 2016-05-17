@@ -33,27 +33,27 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     public static final String ARTIST_NAME_BUNDLE_KEY = "artist_top_albums_fragment_name";
 
     @Bind(R.id.rv_topalbums)
-    RecyclerView mRvAlbums;
+    RecyclerView rvAlbums;
     @Bind(R.id.pb_progress)
-    ProgressBar mPbProgress;
+    ProgressBar pbProgress;
     @Bind(R.id.srl_refresh)
-    SwipeRefreshLayout mSrlRefresh;
+    SwipeRefreshLayout srlRefresh;
 
-    private String mMbid;
-    private String mArtistName;
+    private String mbid;
+    private String artistName;
 
-    private RecyclerView.LayoutManager mLayoutManager;
-    private TopAlbumsAdapter mAdapter;
-    private ArtistTopAlbumsPresenter mPresenter;
-
-
-    private boolean mIsLoading = true;
-    private int mCurrentPageNumber = 1;
-    private int mVisibleItemCount, mTotalItemCount;
-    private int mLastVisibleItemPosition;
+    private RecyclerView.LayoutManager layoutManager;
+    private TopAlbumsAdapter adapter;
+    private ArtistTopAlbumsPresenter presenter;
 
 
-    private RecyclerView.OnScrollListener mRecyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+    private boolean isLoading = true;
+    private int currentPageNumber = 1;
+    private int visibleItemCount, totalItemCount;
+    private int lastVisibleItemPosition;
+
+
+    private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
@@ -62,17 +62,17 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            mVisibleItemCount = mLayoutManager.getChildCount();
-            mTotalItemCount = mAdapter.getItemCount();
-            mLastVisibleItemPosition = ((GridLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+            visibleItemCount = layoutManager.getChildCount();
+            totalItemCount = adapter.getItemCount();
+            lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
 
-            if (!mIsLoading) {
-                if ((mVisibleItemCount + mLastVisibleItemPosition) >= mTotalItemCount
-                        && mLastVisibleItemPosition >= 0) {
-                    mIsLoading = true;
-                    mCurrentPageNumber = ++mCurrentPageNumber;
-                    mPbProgress.setVisibility(View.VISIBLE);
-                    mPresenter.getArtistTopAlbums(mArtistName, mMbid, mCurrentPageNumber);
+            if (!isLoading) {
+                if ((visibleItemCount + lastVisibleItemPosition) >= totalItemCount
+                        && lastVisibleItemPosition >= 0) {
+                    isLoading = true;
+                    currentPageNumber = ++currentPageNumber;
+                    pbProgress.setVisibility(View.VISIBLE);
+                    presenter.getArtistTopAlbums(artistName, mbid, currentPageNumber);
                 }
             }
         }
@@ -91,12 +91,12 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
-        mSrlRefresh.setOnRefreshListener(this);
+        srlRefresh.setOnRefreshListener(this);
         Bundle args = getArguments();
-        mMbid = args.getString(ARTIST_MBID_BUNDLE_KEY);
-        mArtistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
-        mPresenter = new ArtistTopAlbumsScreenPresenterImpl(this);
-        mPresenter.getArtistTopAlbums(mArtistName, mMbid, mCurrentPageNumber);
+        mbid = args.getString(ARTIST_MBID_BUNDLE_KEY);
+        artistName = args.getString(ARTIST_NAME_BUNDLE_KEY);
+        presenter = new ArtistTopAlbumsScreenPresenterImpl(this);
+        presenter.getArtistTopAlbums(artistName, mbid, currentPageNumber);
         setupRvTracks();
     }
 
@@ -109,15 +109,15 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stop();
+        presenter.stop();
     }
 
     private void setupRvTracks() {
-        mLayoutManager = new GridLayoutManager(getActivity(), 2);
-        mAdapter = new TopAlbumsAdapter(this);
-        mRvAlbums.setLayoutManager(mLayoutManager);
-        mRvAlbums.setAdapter(mAdapter);
-        mRvAlbums.addOnScrollListener(mRecyclerViewOnScrollListener);
+        layoutManager = new GridLayoutManager(getActivity(), 2);
+        adapter = new TopAlbumsAdapter(this);
+        rvAlbums.setLayoutManager(layoutManager);
+        rvAlbums.setAdapter(adapter);
+        rvAlbums.addOnScrollListener(recyclerViewOnScrollListener);
     }
 
     @Override
@@ -137,21 +137,21 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
 
     @Override
     public void showArtistTopAlbums(List<AlbumEntity> albumEntities) {
-        mSrlRefresh.setRefreshing(false);
-        mPbProgress.setVisibility(View.GONE);
-        mAdapter.addData(albumEntities);
-        mIsLoading = false;
+        srlRefresh.setRefreshing(false);
+        pbProgress.setVisibility(View.GONE);
+        adapter.addData(albumEntities);
+        isLoading = false;
     }
 
     @Override
     public void showError(String errorMessage) {
-        mSrlRefresh.setRefreshing(false);
-        Snackbar.make(mRvAlbums, errorMessage, Snackbar.LENGTH_LONG).show();
+        srlRefresh.setRefreshing(false);
+        Snackbar.make(rvAlbums, errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void onRefresh() {
-        mCurrentPageNumber = 1;
-        mPresenter.getArtistTopAlbums(mArtistName, mMbid, mCurrentPageNumber);
+        currentPageNumber = 1;
+        presenter.getArtistTopAlbums(artistName, mbid, currentPageNumber);
     }
 }

@@ -28,13 +28,13 @@ import butterknife.Bind;
  */
 public class FavoriteArtistsFragment extends BaseFragment implements FavoriteArtistScreenView, FavoriteArtistsAdapter.OnArtistClickListener {
     @Bind(R.id.rv_artists)
-    RecyclerView mRvArtists;
+    RecyclerView rvArtists;
     @Bind(R.id.pb_progress)
-    ProgressBar mPbProgress;
+    ProgressBar pbProgress;
 
-    private FavoriteArtistsAdapter mAdapter;
-    private FavoriteArtistScreenPresenter mPresenter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private FavoriteArtistsAdapter adapter;
+    private FavoriteArtistScreenPresenter presenter;
+    private RecyclerView.LayoutManager layoutManager;
 
 
     public static BaseFragment newInstance() {
@@ -46,8 +46,8 @@ public class FavoriteArtistsFragment extends BaseFragment implements FavoriteArt
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupRvArtists();
-        mPresenter = new FavoriteArtistScreenPresenterImpl(this);
-        mPresenter.getFavoriteArtists();
+        presenter = new FavoriteArtistScreenPresenterImpl(this);
+        presenter.getFavoriteArtists();
     }
 
     @Override
@@ -57,10 +57,10 @@ public class FavoriteArtistsFragment extends BaseFragment implements FavoriteArt
     }
 
     private void setupRvArtists() {
-        mLayoutManager = new GridLayoutManager(getActivity(), 2);
-        mAdapter = new FavoriteArtistsAdapter(this);
-        mRvArtists.setLayoutManager(mLayoutManager);
-        mRvArtists.setAdapter(mAdapter);
+        layoutManager = new GridLayoutManager(getActivity(), 2);
+        adapter = new FavoriteArtistsAdapter(this);
+        rvArtists.setLayoutManager(layoutManager);
+        rvArtists.setAdapter(adapter);
     }
 
     @Override
@@ -75,8 +75,8 @@ public class FavoriteArtistsFragment extends BaseFragment implements FavoriteArt
 
     @Override
     public void showFavoriteArtists(List<FavoriteArtistEntity> artists) {
-        mPbProgress.setVisibility(View.GONE);
-        mAdapter.setData(artists);
+        pbProgress.setVisibility(View.GONE);
+        adapter.setData(artists);
     }
 
     @Override

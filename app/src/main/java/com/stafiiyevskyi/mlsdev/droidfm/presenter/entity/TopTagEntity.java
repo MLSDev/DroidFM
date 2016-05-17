@@ -4,31 +4,31 @@ package com.stafiiyevskyi.mlsdev.droidfm.presenter.entity;
  * Created by oleksandr on 22.04.16.
  */
 public class TopTagEntity {
-    private String mName;
-    private String mTaggings;
-    private String mReach;
+    private String name;
+    private String taggings;
+    private String reach;
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void setName(String name) {
-        this.mName = name;
+        this.name = name;
     }
 
     public String getTaggings() {
-        return mTaggings;
+        return taggings;
     }
 
     public void setTaggings(String taggings) {
-        this.mTaggings = taggings;
+        this.taggings = taggings;
     }
 
     public String getReach() {
-        return mReach;
+        return reach;
     }
 
     public void setReach(String reach) {
-        this.mReach = reach;
+        this.reach = reach;
     }
 }
