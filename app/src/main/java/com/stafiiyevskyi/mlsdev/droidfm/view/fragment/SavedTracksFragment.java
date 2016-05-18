@@ -3,21 +3,26 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.stafiiyevskyi.mlsdev.droidfm.R;
+import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventPlayAllSavedTracks;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.SavedTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.mapper.track.FileToSavedTrackEntityMapper;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.activity.BaseActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.SavedTracksAdapter;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import rx.Observable;
 
 /**
@@ -27,6 +32,8 @@ public class SavedTracksFragment extends BaseFragment implements SavedTracksAdap
 
     @Bind(R.id.rv_tracks)
     RecyclerView rvTracks;
+    @Bind(R.id.fab)
+    FloatingActionButton fabPlayAllTracks;
 
     private RecyclerView.LayoutManager layoutManager;
     private SavedTracksAdapter adapter;
@@ -78,5 +85,12 @@ public class SavedTracksFragment extends BaseFragment implements SavedTracksAdap
         String trackName = parts[1];
         String artistName = parts[0];
         ((Navigator) getActivity()).navigateToTrackDetails(artistName, trackName, "");
+    }
+
+    @OnClick(R.id.fab)
+    public void onPlayAllTracksClick(){
+        EventPlayAllSavedTracks event = new EventPlayAllSavedTracks();
+        event.setTracks(tarcks);
+        EventBus.getDefault().post(event);
     }
 }

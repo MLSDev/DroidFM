@@ -54,7 +54,11 @@ public class DownloadService extends Service {
     public void onDownloadTrackEvent(EventDownloadTrack event) {
         String trackName = event.getTrack().getArtistName() + " - " + event.getTrack().getName();
         String trackUrl = event.getTrackUrl();
-        downloadTrack(trackName, trackUrl);
+        File trackFile = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC), trackName + getString(R.string.mp3_file));
+        if (!trackFile.exists())
+            downloadTrack(trackName, trackUrl);
+        else
+            Toast.makeText(getApplicationContext(), getString(R.string.download_was_downloaded_toast), Toast.LENGTH_LONG).show();
     }
 
     @Subscribe
@@ -62,26 +66,34 @@ public class DownloadService extends Service {
         if (MediaPlayerWrapper.getInstance().getCurrentTrack() != null) {
             String trackName = MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() + " - " + MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName();
             String trackUrl = MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackUrl();
-            downloadTrack(trackName, trackUrl);
+            File trackFile = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC), trackName + getString(R.string.mp3_file));
+            if (!trackFile.exists())
+                downloadTrack(trackName, trackUrl);
+            else
+                Toast.makeText(getApplicationContext(), getString(R.string.download_was_downloaded_toast), Toast.LENGTH_LONG).show();
         }
     }
 
     private void downloadTrack(String trackName, String trackUrl) {
-        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC), trackName + getString(R.string.mp3_file));
-        if (!mediaStorageDir.exists()) {
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(trackUrl));
-            request.setTitle(getString(R.string.download_title) + trackName);
+        File file = new File(trackUrl);
+        if (!file.exists()) {
+            File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC), trackName + getString(R.string.mp3_file));
+            if (!mediaStorageDir.exists()) {
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(trackUrl));
+                request.setTitle(getString(R.string.download_title) + trackName);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                request.allowScanningByMediaScanner();
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                    request.allowScanningByMediaScanner();
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                }
+                request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_MUSIC, trackName + getString(R.string.mp3_file));
+                DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                manager.enqueue(request);
+                Toast.makeText(this, R.string.download_start_toast, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, R.string.download_was_downloaded_toast, Toast.LENGTH_LONG).show();
             }
-            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_MUSIC, trackName + getString(R.string.mp3_file));
-            DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-            manager.enqueue(request);
-            Toast.makeText(this, R.string.download_start_toast, Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, R.string.download_was_downloaded_toast, Toast.LENGTH_LONG).show();
         }
+
     }
 }

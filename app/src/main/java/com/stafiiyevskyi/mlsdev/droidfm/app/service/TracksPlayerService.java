@@ -35,7 +35,6 @@ public class TracksPlayerService extends Service {
     private NotificationManager notificationManager;
 
 
-
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -64,7 +63,7 @@ public class TracksPlayerService extends Service {
             mAudioManager.abandonAudioFocus(mAFListener);
         MediaPlayerWrapper.getInstance().releaseMP();
         notificationManager.cancel(NOTIFICATION_ID);
-        Log.e("Service","onDestroy");
+        Log.e("Service", "onDestroy");
         super.onDestroy();
     }
 
@@ -118,7 +117,11 @@ public class TracksPlayerService extends Service {
             customView.setImageViewResource(R.id.ib_play_pause, R.drawable.ic_play_white_36dp);
         }
 
-        customView.setTextViewText(R.id.tv_notification, MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName()+" - "+MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
+        if (MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() != null) {
+            customView.setTextViewText(R.id.tv_notification, MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() + " - " + MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
+        } else {
+            customView.setTextViewText(R.id.tv_notification, MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
+        }
 
         Intent intent = new Intent(getApplicationContext(), TracksPlayerService.class);
         intent.putExtra(INTENT_PLAYER_KEY, FLAG_FROM_NOTIFICATION);

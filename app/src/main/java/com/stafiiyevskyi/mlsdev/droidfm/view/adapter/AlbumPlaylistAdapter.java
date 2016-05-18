@@ -69,7 +69,12 @@ public class AlbumPlaylistAdapter extends RecyclerView.Adapter<AlbumPlaylistAdap
     @Override
     public void onBindViewHolder(PlaylistVH holder, int position) {
         TrackPlayerEntity track = data.get(position);
-        holder.bindTrackName(track.getmArtistName().concat(" - ").concat(track.getmTrackName()));
+        if (track.getmArtistName()!=null){
+            holder.bindTrackName(track.getmArtistName().concat(" - ").concat(track.getmTrackName()));
+        } else {
+            holder.bindTrackName(track.getmTrackName());
+        }
+
     }
 
     @Override

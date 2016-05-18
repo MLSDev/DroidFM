@@ -24,6 +24,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventDownloadCurrentTrack;
+import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventPlayAllSavedTracks;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventPlaylistStart;
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventSynchronizingAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.app.player.MediaPlayerWrapper;
@@ -403,7 +404,12 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 long currentDuration = MediaPlayerWrapper.getInstance().getPlayerCurrentPosition();
                 tvTrackTotalDuration.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(totalDuration)));
                 tvCurrentTrackPosition.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(currentDuration)));
-                tvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() + " - " + MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
+                if (MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() != null){
+                    tvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() + " - " + MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
+                } else {
+                    tvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
+                }
+
                 int progress = SeekBarUtils.getProgressPercentage(currentDuration, totalDuration);
                 sbSeekbar.setProgress(progress);
             }
@@ -482,7 +488,12 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
         if (!MediaPlayerWrapper.getInstance().isFromAlbum()) playlistAdapter.setData(null);
 
-        tvPlayTrackName.setText(event.getmArtistName() + " - " + event.getmTrackName());
+        if (event.getmArtistName() != null){
+            tvPlayTrackName.setText(event.getmArtistName() + " - " + event.getmTrackName());
+        } else {
+            tvPlayTrackName.setText(event.getmTrackName());
+        }
+
         if (!MediaPlayerWrapper.getInstance().isFromAlbum() || event.getmAlbumImageUrl() != null) {
             albumImage = event.getmAlbumImageUrl();
             Glide.with(this).load(albumImage).into(ivAlbumsTrackImage);
@@ -521,6 +532,21 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
             TrackPlayerEntity trackPlayerEntity = new TrackPlayerEntity();
             trackPlayerEntity.setmTrackName(trackEntity.getName());
             trackPlayerEntity.setmArtistName(trackEntity.getArtistName());
+            return trackPlayerEntity;
+        }).toList().toBlocking().first();
+        MediaPlayerWrapper.getInstance().setFromAlbum(true);
+        playlistAdapter.setData(trackPlayerEntities);
+        mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        EventBus.getDefault().post(new EventSynchronizingAdapter());
+    }
+
+    @Subscribe
+    public void playlistStartSavedTrackEvent(EventPlayAllSavedTracks event) {
+
+        List<TrackPlayerEntity> trackPlayerEntities = Observable.from(event.getTracks()).map(trackEntity -> {
+            TrackPlayerEntity trackPlayerEntity = new TrackPlayerEntity();
+            trackPlayerEntity.setmTrackName(trackEntity.getName());
+            trackPlayerEntity.setmTrackUrl(trackEntity.getPath());
             return trackPlayerEntity;
         }).toList().toBlocking().first();
         MediaPlayerWrapper.getInstance().setFromAlbum(true);
