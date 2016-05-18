@@ -299,6 +299,16 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 .commit();
     }
 
+    public void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl) {
+        BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
+//        AnimationUtil.detailTransitionShared(fragment, imageView, getString(R.string.transition_artist_image));
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, fragment)
+//                .addSharedElement(imageView, getString(R.string.transition_artist_image))
+                .addToBackStack(ArtistContentDetailsFragment.class.getName() + mbid)
+                .commit();
+    }
+
     @Override
     public void navigateToTopTracksScreen() {
         firstFragment = ChartTopTracksFragment.newInstance();
