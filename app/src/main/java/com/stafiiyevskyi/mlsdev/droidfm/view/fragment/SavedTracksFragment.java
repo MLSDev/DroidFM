@@ -37,7 +37,7 @@ public class SavedTracksFragment extends BaseFragment implements SavedTracksAdap
 
     private RecyclerView.LayoutManager layoutManager;
     private SavedTracksAdapter adapter;
-    private List<SavedTrackEntity> tarcks;
+    private List<SavedTrackEntity> tracks;
 
     public static BaseFragment newInstance() {
         BaseFragment fragment = new SavedTracksFragment();
@@ -54,9 +54,9 @@ public class SavedTracksFragment extends BaseFragment implements SavedTracksAdap
     private void loadTracks() {
         File file = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC), "");
         if (file.isDirectory()) {
-            tarcks = Observable.from(file.listFiles()).map(new FileToSavedTrackEntityMapper()).toList().toBlocking().first();
+            tracks = Observable.from(file.listFiles()).map(new FileToSavedTrackEntityMapper()).toList().toBlocking().first();
         }
-        adapter.setData(tarcks);
+        adapter.setData(tracks);
     }
 
     private void setupRvTracks() {
@@ -88,9 +88,11 @@ public class SavedTracksFragment extends BaseFragment implements SavedTracksAdap
     }
 
     @OnClick(R.id.fab)
-    public void onPlayAllTracksClick(){
-        EventPlayAllSavedTracks event = new EventPlayAllSavedTracks();
-        event.setTracks(tarcks);
-        EventBus.getDefault().post(event);
+    public void onPlayAllTracksClick() {
+        if (tracks.size() > 0) {
+            EventPlayAllSavedTracks event = new EventPlayAllSavedTracks();
+            event.setTracks(tracks);
+            EventBus.getDefault().post(event);
+        }
     }
 }
