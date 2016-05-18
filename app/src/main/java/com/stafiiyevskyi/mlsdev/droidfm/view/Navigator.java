@@ -1,6 +1,5 @@
 package com.stafiiyevskyi.mlsdev.droidfm.view;
 
-import android.net.Uri;
 import android.support.v7.widget.AppCompatImageView;
 
 /**
