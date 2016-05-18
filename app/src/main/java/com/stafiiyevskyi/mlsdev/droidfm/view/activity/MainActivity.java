@@ -492,6 +492,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
             tvPlayTrackName.setText(event.getmArtistName() + " - " + event.getmTrackName());
         } else {
             tvPlayTrackName.setText(event.getmTrackName());
+            ivAlbumsTrackImage.setImageResource(android.R.color.transparent);
         }
 
         if (!MediaPlayerWrapper.getInstance().isFromAlbum() || event.getmAlbumImageUrl() != null) {
@@ -550,6 +551,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
             return trackPlayerEntity;
         }).toList().toBlocking().first();
         MediaPlayerWrapper.getInstance().setFromAlbum(true);
+        ivAlbumsTrackImage.setImageResource(android.R.color.transparent);
         playlistAdapter.setData(trackPlayerEntities);
         mSmPlayer.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
         EventBus.getDefault().post(new EventSynchronizingAdapter());
