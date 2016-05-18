@@ -30,7 +30,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  * Created by oleksandr on 27.04.16.
  */
 @RunWith(AndroidJUnit4.class)
-public class MainActivityNavigationViewInstrumentationTest {
+public class A1MainActivityNavigationViewInstrumentationTest {
 
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule =

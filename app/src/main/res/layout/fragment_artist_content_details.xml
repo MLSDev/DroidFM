@@ -34,6 +34,19 @@
                     app:civ_border_width="0dp" />
 
                 <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/tv_artist_name"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:drawableLeft="@drawable/ic_person_black_48dp"
+                    android:gravity="center_vertical"
+                    android:text="Similar"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_artist_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -70,7 +83,6 @@
                 app:tabMode="fixed" />
 
         </android.support.design.widget.AppBarLayout>
-
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_content"
