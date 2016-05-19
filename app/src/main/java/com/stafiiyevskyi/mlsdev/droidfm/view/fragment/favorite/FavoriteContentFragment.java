@@ -11,6 +11,7 @@ import android.view.View;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.activity.BaseActivity;
+import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class FavoriteContentFragment extends BaseFragment implements ViewPager.O
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupViewPager();
+        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(getString(R.string.favorite_section_title));
     }
 
     @Override

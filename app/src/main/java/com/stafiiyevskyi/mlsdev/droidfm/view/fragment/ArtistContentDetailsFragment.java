@@ -18,6 +18,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.FavoriteArtistEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistContentDetailsScreenPresenterImp;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistContentScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +84,7 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
         artistEntity.setName(artistName);
         artistEntity.setMbid(mbid);
         presenter.isArtistFavorite(artistEntity);
+        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(artistName);
     }
 
     @Override
@@ -116,7 +118,7 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
 
     @Override
     public void updateToolbar() {
-
+        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(artistName);
     }
 
     @Override

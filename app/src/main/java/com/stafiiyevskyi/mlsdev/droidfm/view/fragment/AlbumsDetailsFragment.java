@@ -24,6 +24,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.AlbumsDetailScreenPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.AlbumDetailsScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.AlbumsTracksAdapter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -105,6 +106,7 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
         presenter = new AlbumsDetailScreenPresenterImpl(this);
         presenter.getAlbumsDetails(artist, album, mbid);
         ((Navigator) getActivity()).setDrawerToggleNotEnabled();
+        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(album);
     }
 
     @Override

@@ -18,6 +18,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.ArtistDetailScreenPresenter;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistDetailEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistDetailScreenPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistDetailScreenView;
+import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 
 import butterknife.Bind;
 

@@ -285,7 +285,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         BaseFragment fragment = SimilarArtistsFragment.newInstance(artistName);
         AnimationUtil.detailTransition(fragment);
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment)
+                .add(R.id.fragment_container, fragment, SimilarArtistsFragment.class.getName() + artistName)
                 .addToBackStack(SimilarArtistsFragment.class.getName() + artistName)
                 .commit();
     }
@@ -304,7 +304,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
         AnimationUtil.detailTransitionShared(fragment, imageView, getString(R.string.transition_artist_image));
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment)
+                .add(R.id.fragment_container, fragment, ArtistContentDetailsFragment.class.getName() + mbid)
                 .addSharedElement(imageView, getString(R.string.transition_artist_image))
                 .addToBackStack(ArtistContentDetailsFragment.class.getName() + mbid)
                 .commit();
@@ -314,14 +314,14 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
         AnimationUtil.detailTransition(firstFragment);
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment)
+                .add(R.id.fragment_container, fragment, ArtistContentDetailsFragment.class.getName() + mbid)
                 .addToBackStack(ArtistContentDetailsFragment.class.getName() + mbid)
                 .commit();
     }
 
     @Override
     public void navigateToTopTracksScreen() {
-        firstFragment = ChartTopTracksFragment.newInstance();
+        firstFragment = ChartTopTracksFragment.newInstance(false);
         AnimationUtil.detailTransition(firstFragment);
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, firstFragment)
@@ -333,7 +333,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         BaseFragment fragment = ArtistDetailFullFragment.newInstance(mbid);
         AnimationUtil.detailTransition(fragment);
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment)
+                .add(R.id.fragment_container, fragment, ArtistDetailFullFragment.class.getName() + mbid)
                 .addToBackStack(ArtistDetailFullFragment.class.getName() + mbid)
                 .commit();
     }
@@ -343,7 +343,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         BaseFragment fragment = TagTopContentFragment.newInstance(tag);
         AnimationUtil.detailTransition(fragment);
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment)
+                .add(R.id.fragment_container, fragment, TagTopContentFragment.class.getName() + tag)
                 .addToBackStack(TagTopContentFragment.class.getName() + tag)
                 .commit();
     }
@@ -353,7 +353,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         BaseFragment fragment = AlbumsDetailsFragment.newInstance(artist, album, mbid, albumImage);
         AnimationUtil.detailTransition(fragment);
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment)
+                .add(R.id.fragment_container, fragment, AlbumsDetailsFragment.class.getName() + mbid)
                 .addToBackStack(AlbumsDetailsFragment.class.getName() + mbid)
                 .commit();
     }
@@ -363,7 +363,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         BaseFragment fragment = TrackDetailFragment.newInstance(artist, track, mbid);
         AnimationUtil.detailTransition(fragment);
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment)
+                .add(R.id.fragment_container, fragment, TrackDetailFragment.class.getName() + mbid)
                 .addToBackStack(TrackDetailFragment.class.getName() + mbid)
                 .commit();
     }

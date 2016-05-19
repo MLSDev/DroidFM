@@ -3,6 +3,7 @@ package com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TopTrackEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ChartTopTrackPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ChartTopTracksScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.TopTracksAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
@@ -29,6 +31,9 @@ import butterknife.Bind;
  * Created by oleksandr on 22.04.16.
  */
 public class ChartTopTracksFragment extends BaseFragment implements TopTracksAdapter.OnTopTrackClickListener, ChartTopTracksScreenView, SearchView.OnQueryTextListener, SearchView.OnCloseListener, SwipeRefreshLayout.OnRefreshListener {
+
+    private static final String IS_FROM_CHART_BUNDLE_KEY = "is_from_bundle_key_chart_top_tracks_fragment";
+
     @Bind(R.id.rv_toptracks)
     RecyclerView rvTracks;
     @Bind(R.id.pb_progress)
@@ -49,6 +54,7 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
     private int lastVisibleItemPosition;
     private String searchQuery = "";
 
+    private boolean isFromChart;
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -80,8 +86,12 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
     };
     ;
 
-    public static BaseFragment newInstance() {
-        return new ChartTopTracksFragment();
+    public static BaseFragment newInstance(boolean isFromChart) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(IS_FROM_CHART_BUNDLE_KEY, isFromChart);
+        BaseFragment fragment = new ChartTopTracksFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -97,6 +107,8 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
         srlRefresh.setOnRefreshListener(this);
         presenter = new ChartTopTrackPresenterImpl(this);
         presenter.getChartTopTracks(currentPageNumber);
+        if (!getArguments().getBoolean(IS_FROM_CHART_BUNDLE_KEY))
+            ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(getString(R.string.tab_title_top_tracks));
     }
 
 
@@ -136,6 +148,8 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
         if (isVisible())
             ((Navigator) getActivity()).setDrawerToggleEnabled();
         getActivity().supportInvalidateOptionsMenu();
+        if (!getArguments().getBoolean(IS_FROM_CHART_BUNDLE_KEY))
+            ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(getString(R.string.tab_title_top_tracks));
     }
 
     @Override

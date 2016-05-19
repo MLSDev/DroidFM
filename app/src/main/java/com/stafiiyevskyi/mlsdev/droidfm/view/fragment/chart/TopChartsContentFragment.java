@@ -11,6 +11,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.JUnitTestHelper;
 import com.stafiiyevskyi.mlsdev.droidfm.R;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
 import com.stafiiyevskyi.mlsdev.droidfm.view.activity.BaseActivity;
+import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.AnimationUtil;
 
@@ -40,6 +41,7 @@ public class TopChartsContentFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         fragmentManager = getChildFragmentManager();
         prepareBottomNavigationItems();
+        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(getString(R.string.charts_section_title));
     }
 
     private void prepareBottomNavigationItems() {
@@ -93,7 +95,7 @@ public class TopChartsContentFragment extends BaseFragment {
     }
 
     private void selectTopTracks() {
-        currentFragment = ChartTopTracksFragment.newInstance();
+        currentFragment = ChartTopTracksFragment.newInstance(true);
         AnimationUtil.detailTransition(currentFragment);
         fragmentManager.beginTransaction()
                 .replace(R.id.fl_chart_content, currentFragment)

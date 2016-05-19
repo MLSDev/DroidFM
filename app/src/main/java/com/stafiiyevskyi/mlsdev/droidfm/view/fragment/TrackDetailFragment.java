@@ -28,6 +28,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.TrackDetailEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.TrackDetailScreenPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.TrackDetailScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.FileTrackUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.LinkUtil;
 import com.stafiiyevskyi.mlsdev.droidfm.view.util.MusicPlayerUtil;
@@ -125,6 +126,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         presenter.getTrackStreamUrl(artist + " - " + track);
         tvArtistName.setText(artist);
         tvTrackName.setText(track);
+        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(artist + " - " + track);
     }
 
     @Override

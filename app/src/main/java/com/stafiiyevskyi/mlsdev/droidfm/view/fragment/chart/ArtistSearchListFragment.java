@@ -19,6 +19,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.ArtistsScreenPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistsScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.ArtistsAdapter;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 
@@ -137,7 +138,7 @@ public class ArtistSearchListFragment extends BaseFragment implements SearchView
     public void updateToolbar() {
         getActivity().supportInvalidateOptionsMenu();
         ((Navigator) getActivity()).setDrawerToggleEnabled();
-
+        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(getString(R.string.artists_section_title));
     }
 
     @Override

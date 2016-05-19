@@ -16,6 +16,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.presenter.entity.ArtistEntity;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.impl.SimilarArtistsPresenterImpl;
 import com.stafiiyevskyi.mlsdev.droidfm.presenter.view.ArtistsScreenView;
 import com.stafiiyevskyi.mlsdev.droidfm.view.Navigator;
+import com.stafiiyevskyi.mlsdev.droidfm.view.activity.MainActivity;
 import com.stafiiyevskyi.mlsdev.droidfm.view.adapter.ArtistsAdapter;
 
 import java.util.List;
@@ -57,6 +58,7 @@ public class SimilarArtistsFragment extends BaseFragment implements ArtistsScree
         srlRefresh.setOnRefreshListener(this);
         setupRvArtists();
         presenter.getSimilarArtists(artistName);
+//        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(artistName + " similar");
     }
 
     private void setupRvArtists() {
@@ -73,7 +75,7 @@ public class SimilarArtistsFragment extends BaseFragment implements ArtistsScree
 
     @Override
     public void updateToolbar() {
-
+        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(artistName + " similar");
     }
 
     @Override
@@ -90,8 +92,8 @@ public class SimilarArtistsFragment extends BaseFragment implements ArtistsScree
 
     @Override
     public void onArtistClick(ArtistEntity artist, AppCompatImageView imageView) {
-        ((Navigator)getActivity()).navigateToArtistContentDetailsScreen(artist.getArtisMbid()
-                ,artist.getArtistName(),artist.getArtistImages().get(3).getText(),imageView);
+        ((Navigator) getActivity()).navigateToArtistContentDetailsScreen(artist.getArtisMbid()
+                , artist.getArtistName(), artist.getArtistImages().get(3).getText(), imageView);
     }
 
     @Override

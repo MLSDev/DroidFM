@@ -47,6 +47,7 @@ public class SavedTracksFragment extends BaseFragment implements SavedTracksAdap
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((BaseActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.saved_section_title);
         setupRvTracks();
         loadTracks();
     }

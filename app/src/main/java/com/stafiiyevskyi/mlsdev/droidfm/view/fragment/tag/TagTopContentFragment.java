@@ -76,7 +76,7 @@ public class TagTopContentFragment extends BaseFragment implements ViewPager.OnP
 
     @Override
     public void updateToolbar() {
-
+        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(tag);
     }
 
     @Override
