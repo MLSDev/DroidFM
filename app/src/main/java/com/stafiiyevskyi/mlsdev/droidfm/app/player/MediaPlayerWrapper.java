@@ -3,8 +3,8 @@ package com.stafiiyevskyi.mlsdev.droidfm.app.player;
 import android.media.MediaPlayer;
 
 import com.stafiiyevskyi.mlsdev.droidfm.app.event.EventCurrentTrackPause;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VKTrackResponse;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackItemResponse;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.Item;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackNewResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.VKTrackModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.impl.VKTrackModelImpl;
 
@@ -151,7 +151,7 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
                 if (mCurrentTrack.getmTrackUrl() == null) {
                     this.mCurrentTrack = mCurrentTrack;
                     String search = mCurrentTrack.getmArtistName() + " - " + mCurrentTrack.getmTrackName();
-                    mVKTrackModel.getVKTrack(search).subscribe(new Observer<VKTrackResponse>() {
+                    mVKTrackModel.getVKTrack(search).subscribe(new Observer<VkTrackNewResponse>() {
                         @Override
                         public void onCompleted() {
 
@@ -163,9 +163,9 @@ public class MediaPlayerWrapper implements MediaPlayer.OnCompletionListener, Med
                         }
 
                         @Override
-                        public void onNext(VKTrackResponse vkTrackResponse) {
+                        public void onNext(VkTrackNewResponse vkTrackResponse) {
                             if (vkTrackResponse.getResponse() != null) {
-                                VkTrackItemResponse itemResponse = vkTrackResponse.getResponse()[0];
+                                Item itemResponse = vkTrackResponse.getResponse().getItems().get(0);
                                 MediaPlayerWrapper.this.mCurrentTrack.setmTrackUrl(itemResponse.getUrl());
                                 preparedPlayer();
                                 EventBus.getDefault().post(MediaPlayerWrapper.this.mCurrentTrack);

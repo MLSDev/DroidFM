@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail.TrackDetail;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail.TrackDetailResponse;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VKTrackResponse;
-import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackItemResponse;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.Item;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackNewResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBTrackModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.TrackModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.TransactionCallback;
@@ -101,7 +101,7 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
     @Override
     public void getTrackStreamUrl(String trackSearch) {
         Subscription subscription = vkTrackModel.getVKTrack(trackSearch)
-                .subscribe(new Observer<VKTrackResponse>() {
+                .subscribe(new Observer<VkTrackNewResponse>() {
                     @Override
                     public void onCompleted() {
 
@@ -113,8 +113,8 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
                     }
 
                     @Override
-                    public void onNext(VKTrackResponse vkTrackResponse) {
-                        VkTrackItemResponse response = vkTrackResponse.getResponse()[0];
+                    public void onNext(VkTrackNewResponse vkTrackResponse) {
+                        Item response = vkTrackResponse.getResponse().getItems().get(0);
                         view.showTrackStreamUrl(response.getUrl(), response.getDuration());
                     }
                 });
