@@ -40,6 +40,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragme
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.SavedTracksFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.SimilarArtistsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TrackDetailFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
@@ -280,6 +281,16 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     }
 
     @Override
+    public void navigateToSimilarArtistsScreen(String artistName) {
+        BaseFragment fragment = SimilarArtistsFragment.newInstance(artistName);
+        AnimationUtil.detailTransition(fragment);
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, fragment)
+                .addToBackStack(SimilarArtistsFragment.class.getName() + artistName)
+                .commit();
+    }
+
+    @Override
     public void navigateToChartsContentScreen() {
         firstFragment = TopChartsContentFragment.newInstance();
         AnimationUtil.detailTransition(firstFragment);
@@ -301,10 +312,9 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
     public void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl) {
         BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
-//        AnimationUtil.detailTransitionShared(fragment, imageView, getString(R.string.transition_artist_image));
+        AnimationUtil.detailTransition(firstFragment);
         fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment)
-//                .addSharedElement(imageView, getString(R.string.transition_artist_image))
                 .addToBackStack(ArtistContentDetailsFragment.class.getName() + mbid)
                 .commit();
     }
@@ -414,7 +424,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 long currentDuration = MediaPlayerWrapper.getInstance().getPlayerCurrentPosition();
                 tvTrackTotalDuration.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(totalDuration)));
                 tvCurrentTrackPosition.setText(String.valueOf(SeekBarUtils.milliSecondsToTimer(currentDuration)));
-                if (MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() != null){
+                if (MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() != null) {
                     tvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getCurrentTrack().getmArtistName() + " - " + MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
                 } else {
                     tvPlayTrackName.setText(MediaPlayerWrapper.getInstance().getCurrentTrack().getmTrackName());
@@ -498,7 +508,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
 
         if (!MediaPlayerWrapper.getInstance().isFromAlbum()) playlistAdapter.setData(null);
 
-        if (event.getmArtistName() != null){
+        if (event.getmArtistName() != null) {
             tvPlayTrackName.setText(event.getmArtistName() + " - " + event.getmTrackName());
         } else {
             tvPlayTrackName.setText(event.getmTrackName());

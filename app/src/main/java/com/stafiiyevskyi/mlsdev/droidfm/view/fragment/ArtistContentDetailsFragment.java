@@ -161,6 +161,11 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
         }
     }
 
+    @OnClick(R.id.tv_similar_artist)
+    public void onSimilarArtistClick() {
+        ((Navigator) getActivity()).navigateToSimilarArtistsScreen(artistName);
+    }
+
     class FragmentViewPagerAdapter extends FragmentStatePagerAdapter {
         private final List<BaseFragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();

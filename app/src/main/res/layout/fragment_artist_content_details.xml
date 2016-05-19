@@ -34,6 +34,7 @@
                     app:civ_border_width="0dp" />
 
                 <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_similar_artist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/tv_artist_name"

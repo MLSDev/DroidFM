@@ -9,6 +9,8 @@ public interface Navigator {
 
     void navigateToArtistsSearchScreen();
 
+    void navigateToSimilarArtistsScreen(String artistName);
+
     void navigateToChartsContentScreen();
 
     void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl, AppCompatImageView imageView);
