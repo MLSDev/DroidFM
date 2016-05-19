@@ -40,7 +40,7 @@
                     android:layout_above="@+id/tv_artist_name"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:drawableLeft="@drawable/ic_person_black_48dp"
+                    android:drawableLeft="@drawable/ic_human_male_female_white_48dp"
                     android:gravity="center_vertical"
                     android:text="Similar"
                     android:textColor="@color/colorAccent"

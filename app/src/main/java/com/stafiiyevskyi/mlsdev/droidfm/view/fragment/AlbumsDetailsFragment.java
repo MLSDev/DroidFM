@@ -140,6 +140,7 @@ public class AlbumsDetailsFragment extends BaseFragment implements AlbumDetailsS
     @Override
     public void updateToolbar() {
         if (isVisible()) getActivity().supportInvalidateOptionsMenu();
+        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(album);
     }
 
     @Override

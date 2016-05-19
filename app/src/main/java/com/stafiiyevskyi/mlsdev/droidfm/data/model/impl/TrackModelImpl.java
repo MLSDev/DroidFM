@@ -1,6 +1,7 @@
 package com.stafiiyevskyi.mlsdev.droidfm.data.model.impl;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.api.LastFMRestClient;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.similar.track.SimilarTracksResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail.TrackDetailResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.search.TrackSearchResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.TrackModel;
@@ -26,6 +27,15 @@ public class TrackModelImpl implements TrackModel {
     public Observable<TrackDetailResponse> getTrackDetail(String artist, String track, String mbid) {
         return LastFMRestClient.getService()
                 .getTrackDetails(artist, track, mbid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<SimilarTracksResponse> getSimilarTracks(String artist, String track, int page) {
+        return LastFMRestClient.getService()
+                .getSimilarTracks(artist, track, 20, page)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io());

@@ -17,6 +17,8 @@ public interface Navigator {
 
     void navigateToTopTracksScreen();
 
+    void navigateToSimilarTracks(String artistName, String track);
+
     void navigateToArtistFullDetailsScreen(String mbid);
 
     void navigateToTagTopContent(String tag);

@@ -6,6 +6,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.SearchArtist;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.TopChartArtists;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.artist.detail.ArtistInfoResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.similar.artist.SimilarArtistsResponse;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.similar.track.SimilarTracksResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.TopChartTags;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.topalbums.TagTopAlbumsResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tag.topartists.TagTopArtistsResponse;
@@ -64,6 +65,9 @@ public interface LastFMService {
 
     @GET("?method=track.getinfo")
     Observable<TrackDetailResponse> getTrackDetails(@Query("artist") String artist, @Query("track") String track, @Query("mbid") String mbid);
+
+    @GET("?method=track.getsimilar")
+    Observable<SimilarTracksResponse> getSimilarTracks(@Query("artist") String artisName, @Query("track") String track, @Query("limit") int limit, @Query("page") int page);
 
     // Tag Requests ///////////////////////////////////////////////////////
 

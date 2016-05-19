@@ -144,6 +144,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     @Override
     public void updateToolbar() {
         if (isVisible()) getActivity().supportInvalidateOptionsMenu();
+        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(artist + " - " + track);
     }
 
     @Override
@@ -257,6 +258,11 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     @OnClick(R.id.iv_save_track)
     public void onSaveTrackClick() {
         EventBus.getDefault().post(new EventDownloadTrack(trackUrl, detailEntity));
+    }
+
+    @OnClick(R.id.tv_similar_tracks)
+    public void onSimilarTracksClick() {
+        ((Navigator) getActivity()).navigateToSimilarTracks(artist, track);
     }
 
     @Override

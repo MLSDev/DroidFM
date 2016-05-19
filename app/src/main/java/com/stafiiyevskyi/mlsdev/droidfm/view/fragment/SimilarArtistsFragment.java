@@ -58,7 +58,7 @@ public class SimilarArtistsFragment extends BaseFragment implements ArtistsScree
         srlRefresh.setOnRefreshListener(this);
         setupRvArtists();
         presenter.getSimilarArtists(artistName);
-//        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(artistName + " similar");
+        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(artistName + " similar");
     }
 
     private void setupRvArtists() {

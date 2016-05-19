@@ -41,6 +41,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.SavedTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.SimilarArtistsFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.SimilarTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TrackDetailFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
@@ -224,7 +225,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                     drNavigation.closeDrawers();
                     return true;
                 case R.id.action_favorite_item:
-                    if (!(firstFragment instanceof FavoriteTracksFragment)) {
+                    if (!(firstFragment instanceof FavoriteContentFragment)) {
                         navigateToFavoritesScreen();
                         getSupportActionBar().setSubtitle(getString(R.string.favorite_section_title));
                     }
@@ -325,6 +326,16 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         AnimationUtil.detailTransition(firstFragment);
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, firstFragment)
+                .commit();
+    }
+
+    @Override
+    public void navigateToSimilarTracks(String artistName, String track) {
+        BaseFragment fragment = SimilarTracksFragment.newInstance(artistName, track);
+        AnimationUtil.detailTransition(fragment);
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, fragment, SimilarTracksFragment.class.getName() + artistName + track)
+                .addToBackStack(SimilarTracksFragment.class.getName() + artistName + track)
                 .commit();
     }
 
