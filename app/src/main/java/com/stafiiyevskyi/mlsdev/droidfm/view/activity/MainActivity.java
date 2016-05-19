@@ -286,7 +286,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         BaseFragment fragment = SimilarArtistsFragment.newInstance(artistName);
         AnimationUtil.detailTransition(fragment);
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment, SimilarArtistsFragment.class.getName() + artistName)
+                .replace(R.id.fragment_container, fragment, SimilarArtistsFragment.class.getName() + artistName)
                 .addToBackStack(SimilarArtistsFragment.class.getName() + artistName)
                 .commit();
     }
@@ -305,7 +305,7 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
         AnimationUtil.detailTransitionShared(fragment, imageView, getString(R.string.transition_artist_image));
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment, ArtistContentDetailsFragment.class.getName() + mbid)
+                .replace(R.id.fragment_container, fragment, ArtistContentDetailsFragment.class.getName() + mbid)
                 .addSharedElement(imageView, getString(R.string.transition_artist_image))
                 .addToBackStack(ArtistContentDetailsFragment.class.getName() + mbid)
                 .commit();
