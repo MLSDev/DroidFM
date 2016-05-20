@@ -7,7 +7,7 @@ for information on popular artists, their songs and albums.
 Additionally this app can stream and download any tracks that are available in [VK].
 
 <img src="/screen/S1.jpg" width="200">
-<img src="/screen/S2.jpg" width="200">
+<img src="/screen/S222.jpg" width="200">
 <img src="/screen/S3.jpg" width="200">
 <img src="/screen/S4.jpg" width="200">
 <img src="/screen/S5.jpg" width="200">
