@@ -1,6 +1,8 @@
 package com.stafiiyevskyi.mlsdev.droidfm.view;
 
 import android.support.v7.widget.AppCompatImageView;
+import android.view.View;
+import android.widget.ImageView;
 
 /**
  * Created by oleksandr on 20.04.16.
@@ -13,7 +15,7 @@ public interface Navigator {
 
     void navigateToChartsContentScreen();
 
-    void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl, AppCompatImageView imageView);
+    void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl, String bigImageUrl, AppCompatImageView imageView);
 
     void navigateToTopTracksScreen();
 
@@ -28,6 +30,8 @@ public interface Navigator {
     void navigateToTrackDetails(String artist, String track, String mbid);
 
     void navigateToTrackDetails(String artist, String track, String trackUrl, int duration);
+
+    void navigateToFullImageScreen(String url, ImageView view);
 
     void navigateToSavedTracksScreen();
 

@@ -15,6 +15,8 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.AlbumsDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistContentDetailsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.ArtistDetailFullFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.BaseFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.FullImageFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.SavedTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.SimilarArtistsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.SimilarTracksFragment;
@@ -309,8 +312,8 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     }
 
     @Override
-    public void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl, AppCompatImageView imageView) {
-        BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
+    public void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl, String bigImageUrl, AppCompatImageView imageView) {
+        BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl, bigImageUrl);
         AnimationUtil.detailTransitionShared(fragment, imageView, getString(R.string.transition_artist_image));
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment, ArtistContentDetailsFragment.class.getName() + mbid)
@@ -319,14 +322,14 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                 .commit();
     }
 
-    public void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl) {
-        BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
-        AnimationUtil.detailTransition(firstFragment);
-        fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment, ArtistContentDetailsFragment.class.getName() + mbid)
-                .addToBackStack(ArtistContentDetailsFragment.class.getName() + mbid)
-                .commit();
-    }
+//    public void navigateToArtistContentDetailsScreen(String mbid, String artistName, String imageUrl) {
+//        BaseFragment fragment = ArtistContentDetailsFragment.newInstance(mbid, artistName, imageUrl);
+//        AnimationUtil.detailTransition(firstFragment);
+//        fragmentManager.beginTransaction()
+//                .add(R.id.fragment_container, fragment, ArtistContentDetailsFragment.class.getName() + mbid)
+//                .addToBackStack(ArtistContentDetailsFragment.class.getName() + mbid)
+//                .commit();
+//    }
 
     @Override
     public void navigateToTopTracksScreen() {
@@ -394,6 +397,17 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
         fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment, TrackDetailFragment.class.getName() + trackUrl)
                 .addToBackStack(TrackDetailFragment.class.getName() + trackUrl)
+                .commit();
+    }
+
+    @Override
+    public void navigateToFullImageScreen(String url, ImageView view) {
+        BaseFragment fragment = FullImageFragment.newInstance(url);
+        AnimationUtil.detailTransitionShared(fragment, view, getString(R.string.transition_artist_image));
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, fragment, FullImageFragment.class.getName() + url)
+                .addSharedElement(view, getString(R.string.transition_artist_image))
+                .addToBackStack(FullImageFragment.class.getName() + url)
                 .commit();
     }
 

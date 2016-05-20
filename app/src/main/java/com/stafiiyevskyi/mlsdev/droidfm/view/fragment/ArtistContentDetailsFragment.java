@@ -35,6 +35,7 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
     private static final String ARTIST_MBID_BUNDLE_KEY = "artist_conten_details_fragment_mbid";
     private static final String ARTIST_NAME_BUNDLE_KEY = "artist_conten_details_fragment_name";
     private static final String ARTIST_IMAGE_URL_BUNDLE_KEY = "artist_conten_details_fragment_image_url";
+    private static final String ARTIST_BIG_IMAGE_URL_BUNDLE_KEY = "artist_conten_details_fragment_big_image_url";
     @Bind(R.id.iv_artist)
     CircleImageView ivArtistPhoto;
     @Bind(R.id.vp_content)
@@ -56,12 +57,13 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
     private FragmentViewPagerAdapter adapter;
     private boolean isFavorite = false;
 
-    public static BaseFragment newInstance(@NonNull String artistMbid, @NonNull String artistName, @NonNull String imageUrl) {
+    public static BaseFragment newInstance(@NonNull String artistMbid, @NonNull String artistName, @NonNull String imageUrl, String bigImageUrl) {
 
         Bundle args = new Bundle();
         args.putString(ARTIST_MBID_BUNDLE_KEY, artistMbid);
         args.putString(ARTIST_NAME_BUNDLE_KEY, artistName);
         args.putString(ARTIST_IMAGE_URL_BUNDLE_KEY, imageUrl);
+        args.putString(ARTIST_BIG_IMAGE_URL_BUNDLE_KEY, bigImageUrl);
         BaseFragment fragment = new ArtistContentDetailsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -166,6 +168,11 @@ public class ArtistContentDetailsFragment extends BaseFragment implements ViewPa
     @OnClick(R.id.tv_similar_artist)
     public void onSimilarArtistClick() {
         ((Navigator) getActivity()).navigateToSimilarArtistsScreen(artistName);
+    }
+
+    @OnClick(R.id.iv_artist)
+    public void onArtistImageClick() {
+        ((Navigator) getActivity()).navigateToFullImageScreen(imageUrl, ivArtistPhoto);
     }
 
     class FragmentViewPagerAdapter extends FragmentStatePagerAdapter {

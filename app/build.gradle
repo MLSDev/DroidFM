@@ -74,6 +74,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.aurelhubert:ahbottomnavigation:1.1.4'
     compile 'com.sothree.slidinguppanel:library:3.3.0'
+    compile 'it.sephiroth.android.library.imagezoom:imagezoom:+'
 
 //    Network
     compile 'com.squareup.retrofit2:retrofit:2.0.0'

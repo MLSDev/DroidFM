@@ -91,6 +91,6 @@ public class FavoriteArtistsFragment extends BaseFragment implements FavoriteArt
 
     @Override
     public void onArtistClick(FavoriteArtistEntity artist, AppCompatImageView imageView) {
-        ((Navigator) getActivity()).navigateToArtistContentDetailsScreen(artist.getMbid(), artist.getName(), artist.getImage(), imageView);
+        ((Navigator) getActivity()).navigateToArtistContentDetailsScreen(artist.getMbid(), artist.getName(), artist.getImage(),artist.getImage(), imageView);
     }
 }

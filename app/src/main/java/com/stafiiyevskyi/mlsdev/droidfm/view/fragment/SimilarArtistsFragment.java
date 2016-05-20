@@ -93,7 +93,7 @@ public class SimilarArtistsFragment extends BaseFragment implements ArtistsScree
     @Override
     public void onArtistClick(ArtistEntity artist, AppCompatImageView imageView) {
         ((Navigator) getActivity()).navigateToArtistContentDetailsScreen(artist.getArtisMbid()
-                , artist.getArtistName(), artist.getArtistImages().get(3).getText(), imageView);
+                , artist.getArtistName(), artist.getArtistImages().get(3).getText(),artist.getArtistImages().get(artist.getArtistImages().size()-1).getText(), imageView);
     }
 
     @Override

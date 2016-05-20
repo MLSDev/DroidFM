@@ -43,7 +43,7 @@
                     android:drawableLeft="@drawable/ic_human_male_female_white_48dp"
                     android:gravity="center_vertical"
                     android:text="Similar"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorWhiteBackground"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
