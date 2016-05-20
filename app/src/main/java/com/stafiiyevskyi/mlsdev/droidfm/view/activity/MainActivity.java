@@ -388,6 +388,16 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     }
 
     @Override
+    public void navigateToTrackDetails(String artist, String track, String trackUrl, int duration) {
+        BaseFragment fragment = TrackDetailFragment.newInstance(artist, track, trackUrl, duration);
+        AnimationUtil.detailTransition(fragment);
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, fragment, TrackDetailFragment.class.getName() + trackUrl)
+                .addToBackStack(TrackDetailFragment.class.getName() + trackUrl)
+                .commit();
+    }
+
+    @Override
     public void navigateToSavedTracksScreen() {
         firstFragment = SavedTracksFragment.newInstance();
         AnimationUtil.detailTransition(firstFragment);

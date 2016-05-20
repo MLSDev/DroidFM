@@ -50,6 +50,8 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     private static final String MBID_BUNDLE_KEY = "mbid_bundle_key_track_detail_fragment";
     private static final String ARTIST_BUNDLE_KEY = "artist_bundle_key_track_detail_fragment";
     private static final String TRACK_BUNDLE_KEY = "track_bundle_key_track_detail_fragment";
+    private static final String TRACK_URL_BUNDLE_KEY = "track_url_bundle_key_detail_fragment";
+    private static final String TRACK_DURATION_BUNDLE_KEY = "track_duration_bundle_key_detail_fragment";
 
     @Bind(R.id.tv_track_name)
     AppCompatTextView tvTrackName;
@@ -83,6 +85,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     private String track;
     private String trackUrl;
     private String albumImage;
+    private int duration = 0;
     private boolean isFavorite = false;
 
     private TrackDetailEntity detailEntity;
@@ -93,6 +96,19 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         args.putString(TRACK_BUNDLE_KEY, track);
         args.putString(ARTIST_BUNDLE_KEY, artist);
         args.putString(MBID_BUNDLE_KEY, mbid);
+        TrackDetailFragment fragment = new TrackDetailFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    public static TrackDetailFragment newInstance(String artist, String track, String trackUrl, int duration) {
+
+        Bundle args = new Bundle();
+        args.putString(TRACK_BUNDLE_KEY, track);
+        args.putString(ARTIST_BUNDLE_KEY, artist);
+        args.putInt(TRACK_DURATION_BUNDLE_KEY, duration);
+        args.putString(TRACK_URL_BUNDLE_KEY, trackUrl);
         TrackDetailFragment fragment = new TrackDetailFragment();
         fragment.setArguments(args);
 
@@ -121,9 +137,15 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         mbid = args.getString(MBID_BUNDLE_KEY);
         track = args.getString(TRACK_BUNDLE_KEY);
         artist = args.getString(ARTIST_BUNDLE_KEY);
+        trackUrl = args.getString(TRACK_URL_BUNDLE_KEY);
+        duration = args.getInt(TRACK_DURATION_BUNDLE_KEY);
         presenter = new TrackDetailScreenPresenterImpl(this);
         presenter.getTrackDetails(artist, track, mbid);
-        presenter.getTrackStreamUrl(artist + " - " + track);
+
+        if (trackUrl != null)
+            presenter.getTrackStreamUrl(artist + " - " + track);
+        else showTrackStreamUrl(trackUrl, duration);
+
         tvArtistName.setText(artist);
         tvTrackName.setText(track);
         ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(artist + " - " + track);

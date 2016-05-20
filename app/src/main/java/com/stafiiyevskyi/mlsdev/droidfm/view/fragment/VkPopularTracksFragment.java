@@ -43,7 +43,6 @@ public class VkPopularTracksFragment extends BaseFragment implements VkPopularTr
     private int offset = 0;
     private Genre genre;
 
-    private int visibleItemCount;
     private int totalItemCount;
     private int lastVisibleItemPosition;
     private boolean isLoading;
@@ -70,7 +69,6 @@ public class VkPopularTracksFragment extends BaseFragment implements VkPopularTr
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            visibleItemCount = layoutManager.getChildCount();
             totalItemCount = adapter.getItemCount();
             lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
 
@@ -144,7 +142,7 @@ public class VkPopularTracksFragment extends BaseFragment implements VkPopularTr
 
     @Override
     public void onTopTrackClick(VkPopularTrackEntity topTrack) {
-
+        ((Navigator) getActivity()).navigateToTrackDetails(topTrack.getArtist(), topTrack.getTitle(), topTrack.getUrl(), topTrack.getDuration());
     }
 
     @Override

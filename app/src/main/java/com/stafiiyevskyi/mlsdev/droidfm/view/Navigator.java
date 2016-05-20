@@ -27,6 +27,8 @@ public interface Navigator {
 
     void navigateToTrackDetails(String artist, String track, String mbid);
 
+    void navigateToTrackDetails(String artist, String track, String trackUrl, int duration);
+
     void navigateToSavedTracksScreen();
 
     void navigateToPopularVKTracksScreen();
