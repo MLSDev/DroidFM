@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -52,6 +53,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     private static final String TRACK_BUNDLE_KEY = "track_bundle_key_track_detail_fragment";
     private static final String TRACK_URL_BUNDLE_KEY = "track_url_bundle_key_detail_fragment";
     private static final String TRACK_DURATION_BUNDLE_KEY = "track_duration_bundle_key_detail_fragment";
+    private static final String LYRICS_ID_BUNDLE_KEY = "lyrics_id_bundle_key_detail_fragment";
 
     @Bind(R.id.tv_track_name)
     AppCompatTextView tvTrackName;
@@ -85,6 +87,7 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     private String track;
     private String trackUrl;
     private String albumImage;
+    private String lyricsId;
     private int duration = 0;
     private boolean isFavorite = false;
 
@@ -96,6 +99,20 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         args.putString(TRACK_BUNDLE_KEY, track);
         args.putString(ARTIST_BUNDLE_KEY, artist);
         args.putString(MBID_BUNDLE_KEY, mbid);
+        TrackDetailFragment fragment = new TrackDetailFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    public static TrackDetailFragment newInstance(String artist, String track, String trackUrl, int duration, String lyricsId) {
+
+        Bundle args = new Bundle();
+        args.putString(TRACK_BUNDLE_KEY, track);
+        args.putString(ARTIST_BUNDLE_KEY, artist);
+        args.putInt(TRACK_DURATION_BUNDLE_KEY, duration);
+        args.putString(TRACK_URL_BUNDLE_KEY, trackUrl);
+        args.putString(LYRICS_ID_BUNDLE_KEY, lyricsId);
         TrackDetailFragment fragment = new TrackDetailFragment();
         fragment.setArguments(args);
 
@@ -139,12 +156,12 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         artist = args.getString(ARTIST_BUNDLE_KEY);
         trackUrl = args.getString(TRACK_URL_BUNDLE_KEY);
         duration = args.getInt(TRACK_DURATION_BUNDLE_KEY);
+        lyricsId = args.getString(LYRICS_ID_BUNDLE_KEY);
         presenter = new TrackDetailScreenPresenterImpl(this);
         presenter.getTrackDetails(artist, track, mbid);
 
-        if (trackUrl != null)
-            presenter.getTrackStreamUrl(artist + " - " + track);
-        else showTrackStreamUrl(trackUrl, duration);
+        presenter.getTrackStreamUrl(artist + " - " + track);
+
 
         tvArtistName.setText(artist);
         tvTrackName.setText(track);
@@ -199,11 +216,12 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     }
 
     @Override
-    public void showTrackStreamUrl(String url, int trackDuration) {
+    public void showTrackStreamUrl(String url, int trackDuration, String lyricsId) {
         ivPlayPause.setVisibility(View.VISIBLE);
         ivSaveTrack.setVisibility(View.VISIBLE);
         tvTrackDuration.setText(String.format(getString(R.string.duration), TimeFormatUtil.getFormattedTimeSecondsToMinutes(trackDuration)));
         trackUrl = url;
+        this.lyricsId = lyricsId;
         if (MediaPlayerWrapper.getInstance().isTrackPlaying(track)) {
             MusicPlayerUtil.setupPlayIconState(ivPlayPause);
         } else {
@@ -217,6 +235,12 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
         if (isFavorite) {
             ivAddToFavorite.setImageResource(R.drawable.ic_star_grey600_36dp);
         } else ivAddToFavorite.setImageResource(R.drawable.ic_star_outline_grey600_36dp);
+    }
+
+    @Override
+    public void showLyrics(String lyrics) {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        LyricsDialogFragment.newInstance(lyrics).show(fragmentManager, LyricsDialogFragment.class.getName());
     }
 
     @Override
@@ -285,6 +309,11 @@ public class TrackDetailFragment extends BaseFragment implements TrackDetailScre
     @OnClick(R.id.tv_similar_tracks)
     public void onSimilarTracksClick() {
         ((Navigator) getActivity()).navigateToSimilarTracks(artist, track);
+    }
+
+    @OnClick(R.id.tv_show_lyrics)
+    public void onLyricsClick() {
+        presenter.getLyrics(lyricsId);
     }
 
     @Override

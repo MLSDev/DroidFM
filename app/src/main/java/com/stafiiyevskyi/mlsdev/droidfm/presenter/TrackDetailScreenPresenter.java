@@ -17,4 +17,6 @@ public interface TrackDetailScreenPresenter extends Presenter {
     void deleteFromFavorite(FavoriteTrackEntity track);
 
     void isTrackFavorite(TrackDetailEntity trackDetailEntity);
+
+    void getLyrics(String lyricsId);
 }

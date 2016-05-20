@@ -6,6 +6,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail.TrackDetail;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail.TrackDetailResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.Item;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackNewResponse;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.lyrics.LyricsResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.DBTrackModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.TrackModel;
 import com.stafiiyevskyi.mlsdev.droidfm.data.model.TransactionCallback;
@@ -99,6 +100,28 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
     }
 
     @Override
+    public void getLyrics(String lyricsId) {
+        Subscription subscription = vkTrackModel.getTrackLyrics(lyricsId)
+                .subscribe(new Observer<LyricsResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(LyricsResponse lyricsResponse) {
+                        view.showLyrics(lyricsResponse.getResponse().getText());
+                    }
+                });
+        addSubscription(subscription);
+    }
+
+    @Override
     public void getTrackStreamUrl(String trackSearch) {
         Subscription subscription = vkTrackModel.getVKTrack(trackSearch)
                 .subscribe(new Observer<VkTrackNewResponse>() {
@@ -115,7 +138,7 @@ public class TrackDetailScreenPresenterImpl extends BasePresenter implements Tra
                     @Override
                     public void onNext(VkTrackNewResponse vkTrackResponse) {
                         Item response = vkTrackResponse.getResponse().getItems().get(0);
-                        view.showTrackStreamUrl(response.getUrl(), response.getDuration());
+                        view.showTrackStreamUrl(response.getUrl(), response.getDuration(),String.valueOf(response.getLyricsId()));
                     }
                 });
         addSubscription(subscription);

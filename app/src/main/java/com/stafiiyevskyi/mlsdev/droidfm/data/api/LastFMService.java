@@ -16,6 +16,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.TopChartTracks;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.detail.TrackDetailResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.tracks.search.TrackSearchResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackNewResponse;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.lyrics.LyricsResponse;
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.popular.VkPopularTrackResponse;
 
 import retrofit2.http.GET;
@@ -91,4 +92,7 @@ public interface LastFMService {
 
     @GET
     Observable<VkPopularTrackResponse> getVkPopularTrack(@Url String fullRequestUrl);
+
+    @GET
+    Observable<LyricsResponse> getTrackLyrics(@Url String fullRequestUrl);
 }

@@ -9,9 +9,11 @@ public interface TrackDetailScreenView extends BaseScreenView {
 
     void showTrackDetail(TrackDetailEntity track);
 
-    void showTrackStreamUrl(String url, int trackDuration);
+    void showTrackStreamUrl(String url, int trackDuration, String  lyricsId);
 
     void showTrackIsFavorite(boolean isFavorite);
+
+    void showLyrics(String lyrics);
 
     void onSuccess();
 }
