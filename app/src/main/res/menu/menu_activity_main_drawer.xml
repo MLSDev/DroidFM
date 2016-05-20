@@ -29,5 +29,11 @@
             android:checked="false"
             android:icon="@drawable/ic_content_save_black_48dp"
             android:title="@string/saved_section_title" />
+
+        <item
+            android:id="@+id/action_vk_popular_item"
+            android:checked="false"
+            android:icon="@drawable/ic_vk_black_48dp"
+            android:title="@string/popular_vk_tracks_section_title" />
     </group>
 </menu>

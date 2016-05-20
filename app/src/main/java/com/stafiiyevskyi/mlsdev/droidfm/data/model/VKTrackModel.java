@@ -1,6 +1,7 @@
 package com.stafiiyevskyi.mlsdev.droidfm.data.model;
 
 import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.VkTrackNewResponse;
+import com.stafiiyevskyi.mlsdev.droidfm.data.dto.vktrack.popular.VkPopularTrackResponse;
 
 import rx.Observable;
 
@@ -10,4 +11,6 @@ import rx.Observable;
 public interface VKTrackModel {
 
     Observable<VkTrackNewResponse> getVKTrack(String trackSearch);
+
+    Observable<VkPopularTrackResponse> getVkPopularTracks(int genreId, int offset, int count);
 }

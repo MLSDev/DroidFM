@@ -43,6 +43,7 @@ import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.SavedTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.SimilarArtistsFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.SimilarTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.TrackDetailFragment;
+import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.VkPopularTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ArtistSearchListFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.ChartTopTracksFragment;
 import com.stafiiyevskyi.mlsdev.droidfm.view.fragment.chart.TopChartsContentFragment;
@@ -238,6 +239,13 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
                     }
                     drNavigation.closeDrawers();
                     return true;
+                case R.id.action_vk_popular_item:
+                    if (!(firstFragment instanceof VkPopularTracksFragment)) {
+                        navigateToPopularVKTracksScreen();
+                        getSupportActionBar().setSubtitle(getString(R.string.popular_vk_tracks_section_title));
+                    }
+                    drNavigation.closeDrawers();
+                    return true;
                 default:
                     return true;
             }
@@ -382,6 +390,15 @@ public class MainActivity extends BaseActivity implements Navigator, SeekBar.OnS
     @Override
     public void navigateToSavedTracksScreen() {
         firstFragment = SavedTracksFragment.newInstance();
+        AnimationUtil.detailTransition(firstFragment);
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, firstFragment)
+                .commit();
+    }
+
+    @Override
+    public void navigateToPopularVKTracksScreen() {
+        firstFragment = VkPopularTracksFragment.newInstance();
         AnimationUtil.detailTransition(firstFragment);
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, firstFragment)

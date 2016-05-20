@@ -29,6 +29,8 @@ public interface Navigator {
 
     void navigateToSavedTracksScreen();
 
+    void navigateToPopularVKTracksScreen();
+
     void navigateToLoginVKDialog();
 
     void navigateToFavoritesScreen();

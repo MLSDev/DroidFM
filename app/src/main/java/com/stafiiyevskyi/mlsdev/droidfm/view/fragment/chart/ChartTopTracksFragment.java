@@ -54,7 +54,6 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
     private int lastVisibleItemPosition;
     private String searchQuery = "";
 
-    private boolean isFromChart;
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -84,7 +83,6 @@ public class ChartTopTracksFragment extends BaseFragment implements TopTracksAda
             }
         }
     };
-    ;
 
     public static BaseFragment newInstance(boolean isFromChart) {
         Bundle bundle = new Bundle();

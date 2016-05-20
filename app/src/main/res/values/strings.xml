@@ -15,6 +15,7 @@
     <string name="artists_section_title">Artists</string>
     <string name="favorite_section_title">Favorites</string>
     <string name="saved_section_title">Saved tracks</string>
+    <string name="popular_vk_tracks_section_title">Popular VK Tracks</string>
 
     <!--Artist content details-->
     <string name="tab_title_top_tracks">Top Tracks</string>
