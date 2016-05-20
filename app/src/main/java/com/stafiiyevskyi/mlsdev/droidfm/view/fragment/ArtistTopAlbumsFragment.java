@@ -127,7 +127,8 @@ public class ArtistTopAlbumsFragment extends BaseFragment implements TopAlbumsAd
 
     @Override
     public void updateToolbar() {
-        getActivity().supportInvalidateOptionsMenu();
+        if (isVisible())
+            getActivity().supportInvalidateOptionsMenu();
     }
 
     @Override
