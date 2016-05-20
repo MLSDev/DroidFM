@@ -28,6 +28,7 @@ Additionally this app can stream and download any tracks that are available in [
 <img src="/screen/S21.jpg" width="200">
 <img src="/screen/S22.jpg" width="200">
 <img src="/screen/S23.jpg" width="200">
+<img src="/screen/S24.jpg" width="200">
 
 ## Requirements
 Install the following software:
