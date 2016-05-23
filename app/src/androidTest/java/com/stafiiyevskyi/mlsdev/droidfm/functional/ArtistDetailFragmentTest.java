@@ -86,7 +86,7 @@ public class ArtistDetailFragmentTest {
 
     private void initWithExpectedResponse() {
         mockWebServer.setDispatcher(new TestDispatcher());
-        activityTestRule.getActivity().navigateToArtistContentDetailsScreen("db36a76f-4cdf-43ac-8cd0-5e48092d2bae", "Rihanna", "http://img2-ak.lst.fm/i/u/300x300/f14ad6c0a9b14b45206c962021b767d7.png");
+//        activityTestRule.getActivity().navigateToArtistContentDetailsScreen("db36a76f-4cdf-43ac-8cd0-5e48092d2bae", "Rihanna", "http://img2-ak.lst.fm/i/u/300x300/f14ad6c0a9b14b45206c962021b767d7.png");
         Spoon.screenshot(activityTestRule.getActivity(), TAG);
     }
 }
