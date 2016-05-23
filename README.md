@@ -66,4 +66,4 @@ Find out more [here][mlsdev] and don't hesitate to [contact us][contact]!
 [Realm]:https://realm.io/
 [LastFM API]:http://www.last.fm/api
 [VK API]:https://vk.com/dev/main
-[VK]:https://vk.com/
+[VK]:https://vk.com
